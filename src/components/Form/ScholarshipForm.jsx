@@ -1,13 +1,14 @@
 
 import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
-import axios from "axios";
+// import axios from "axios";
 import Swal from "sweetalert2";
 import { imageUpload } from "../../api/utils";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+// eslint-disable-next-line no-unused-vars
+import useAxiosSecure, { axiosSecure } from "../../hooks/useAxiosSecure";
 
 const ScholarshipForm = () => {
-  const axiosSecure = useAxiosSecure()
+  // const axiosSecure = useAxiosSecure()
   const [formData, setFormData] = useState({
     scholarshipName: "",
     universityName: "",
@@ -64,64 +65,6 @@ const ScholarshipForm = () => {
   };
 
   // Handle form submission (upload image, submit data)
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!image) {
-  //     Swal.fire({
-  //       title: "Error",
-  //       text: "Please upload a university logo.",
-  //       icon: "error",
-  //     });
-  //     return;
-  //   }
-
-  //   const imageData = new FormData();
-  //   imageData.append("image", image);
-
-  //   try {
-  //     // Upload the image to your image upload function/API
-  //     const photoURL = await imageUpload(image);
-
-  //     // Prepare data to submit
-  //     const dataToSubmit = { ...formData, universityLogo: photoURL };
-
-  //     // Send data to the server (replace with your actual endpoint and token)
-  //     const serverRes = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}/scholarship`,
-  //       dataToSubmit,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json", // Ensure Content-Type is JSON
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`, // Use actual token storage
-  //         },
-  //       }
-  //     );
-
-  //     // Handle success or failure
-  //     if (serverRes.status === 201) {
-  //       Swal.fire({
-  //         title: "Success",
-  //         text: "Scholarship added successfully!",
-  //         icon: "success",
-  //       });
-  //       resetFormData();
-  //     } else {
-  //       Swal.fire({
-  //         title: "Error",
-  //         text: "Could not add scholarship. Please try again.",
-  //         icon: "error",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error submitting scholarship:", error);
-  //     Swal.fire({
-  //       title: "Error",
-  //       text: "An error occurred while processing the form.",
-  //       icon: "error",
-  //     });
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -145,16 +88,13 @@ const ScholarshipForm = () => {
   
       // Upload the image to your image upload function/API
       const photoURL = await imageUpload(image);
-  
+      console.log(photoURL);
       // Prepare data to submit
       const dataToSubmit = { ...formData, universityLogo: photoURL };
   
-    
+    console.log("data",dataToSubmit);
       // Send data to the server (replace with your actual endpoint and token)
-      await axiosSecure .post(
-        "/scholarship",
-        dataToSubmit,
-      );
+     await axiosSecure.post('/scholarship', dataToSubmit);
   
       // Handle success or failure
       
