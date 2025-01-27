@@ -1,5 +1,4 @@
 
-
 // export default CustomerOrderDataRow
 import PropTypes from "prop-types";
 import { useState } from "react";
@@ -15,7 +14,6 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const closeCancelModal = () => setIsCancelModalOpen(false);
 
   const {
-    scholarshipName,
     address,
     feedback,
     subjectCategory,
@@ -24,6 +22,7 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
     status,
     scholarshipCategory,
     _id,
+    universityName
   } = orderData || {};
 
   console.log('order data:  ',orderData);
@@ -71,7 +70,7 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{scholarshipName}</p>
+        <p className="text-gray-900 whitespace-no-wrap">{universityName}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{address}</p>

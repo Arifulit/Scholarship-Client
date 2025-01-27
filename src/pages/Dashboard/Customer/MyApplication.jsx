@@ -11,16 +11,14 @@ const MyApplication = () => {
   const axiosSecure = useAxiosSecure();
 
   const {
-    data: orders = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+    data: orders = [],isLoading,refetch,} = useQuery({
     queryKey: ['orders', user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/customer-orders/${user?.email}`);
       return data;
     },
   });
+   console.log(orders);
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -38,7 +36,7 @@ const MyApplication = () => {
                   <tr>
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
                       
-                     Scholarship Name
+                     universityName
                     </th>
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
                       Address
