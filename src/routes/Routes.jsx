@@ -56,8 +56,9 @@ export const router = createBrowserRouter([
 
        },
       {
-        path:`/application-modal`,
+        path:`/application-modal/:id`,
         element: <ApplicationInModal></ApplicationInModal>,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/checkout/${params.id}`)
 
        },
       {

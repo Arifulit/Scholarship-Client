@@ -1,278 +1,171 @@
 
 
-// // export default CustomerOrderDataRow
-// import PropTypes from "prop-types";
-// import { useState } from "react";
-// import Swal from "sweetalert2";
-// import DeleteModal from "../../Modal/DeleteModal";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// export default CustomerOrderDataRow
+import PropTypes from "prop-types";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import DeleteModal from "../../Modal/DeleteModal";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-// const CustomerOrderDataRow = ({ orderData, refetch }) => {
-//   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-
-//   const axiosSecure = useAxiosSecure();
-
-//   const closeCancelModal = () => setIsCancelModalOpen(false);
-
-  // const {
-  //   scholarshipName,
-  //   address,
-  //   feedback,
-  //   subjectCategory,
-  //   degree,
-  //   serviceCharge,
-  //   status,
-  //   scholarshipCategory,
-  //   _id,
-  // } = orderData || {};
-  // console.log(orderData);
-
-//   const handleDetailsClick = () => {
-//     Swal.fire("Details", "Navigating to details page...", "info");
-//   };
-
-//   const handleEditClick = () => {
-//     if (status === "Pending") {
-//       Swal.fire(
-//         "Edit Application",
-//         "You can now edit your application.",
-//         "success"
-//       );
-//     } else {
-//       Swal.fire(
-//         "Cannot Edit",
-//         "Application is processing or completed.",
-//         "warning"
-//       );
-//     }
-//   };
-
-//   const handleAddReviewClick = () => {
-//     Swal.fire(
-//       "Add Review",
-//       "Add your review functionality coming soon!",
-//       "info"
-//     );
-//   };
-
-//   const handleDelete = async () => {
-//     try {
-//       await axiosSecure.delete(`/orders/${_id}`);
-//       refetch();
-//       Swal.fire("Success", "Order has been canceled successfully.", "success");
-//     } catch (err) {
-//       Swal.fire("Error", `Failed to cancel order: ${err.message}`, "error");
-//     } finally {
-//       closeCancelModal();
-//     }
-//   };
-
-//   return (
-//     <tr>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">{scholarshipName}</p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">{address}</p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">
-//           {feedback || "No Feedback Yet"}
-//         </p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">{subjectCategory}</p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">{degree}</p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">{scholarshipCategory}</p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <p className="text-gray-900 whitespace-no-wrap">${serviceCharge}</p>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-//         <span
-//           className={`px-3 py-1 inline-block font-semibold leading-tight rounded-full ${
-//             status === "Pending"
-//               ? "bg-yellow-200 text-yellow-900"
-//               : status === "Processing"
-//               ? "bg-blue-200 text-blue-900"
-//               : status === "Completed"
-//               ? "bg-green-200 text-green-900"
-//               : "bg-red-200 text-red-900"
-//           }`}
-//         >
-//           {status}
-//         </span>
-//       </td>
-//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex gap-2">
-//         {/* Details Button */}
-//         <button
-//           onClick={handleDetailsClick}
-//           className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-//         >
-//           Details
-//         </button>
-
-//         {/* Edit Button */}
-//         <button
-//           onClick={handleEditClick}
-//           className={`px-3 py-1 rounded ${
-//             status === "Pending"
-//               ? "bg-yellow-500 text-white hover:bg-yellow-600"
-//               : "bg-gray-400 text-gray-800 cursor-not-allowed"
-//           }`}
-//           disabled={status !== "Pending"}
-//         >
-//           Edit
-//         </button>
-
-//         {/* Cancel Button */}
-//         <button
-//           onClick={() => setIsCancelModalOpen(true)}
-//           className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-//         >
-//           Cancel
-//         </button>
-
-//         {/* Add Review Button */}
-//         <button
-//           onClick={handleAddReviewClick}
-//           className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-//         >
-//           Add Review
-//         </button>
-//       </td>
-
-//       {/* Cancel Modal */}
-//       <DeleteModal
-//         isOpen={isCancelModalOpen}
-//         closeModal={closeCancelModal}
-//         handleDelete={handleDelete}
-//       />
-//     </tr>
-//   );
-// };
-
-// CustomerOrderDataRow.propTypes = {
-//   orderData: PropTypes.object.isRequired,
-//   refetch: PropTypes.func.isRequired,
-// };
-
-// export default CustomerOrderDataRow;
-
-
-
-
-
-/* eslint-disable react/prop-types */
-import PropTypes from 'prop-types'
-import { useState } from 'react'
-import DeleteModal from '../../Modal/DeleteModal'
-import useAxiosSecure from '../../../hooks/useAxiosSecure'
-import toast from 'react-hot-toast'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import LoadingSpinner from '../../Shared/LoadingSpinner'
 const CustomerOrderDataRow = ({ orderData, refetch }) => {
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
+  const axiosSecure = useAxiosSecure();
 
-  const axiosSecure = useAxiosSecure()
-  let [isOpen, setIsOpen] = useState(false)
-  
-  const closeModal = () => setIsOpen(false)
-  const { data: order, isLoading } = useQuery({
-    queryKey: ['order'],
-    queryFn: async () => {
-      const { data } = await axios(`${import.meta.env.VITE_API_URL}/order`);
-      return data;
-    },
-  });
+  const closeCancelModal = () => setIsCancelModalOpen(false);
 
-  if (isLoading) return <LoadingSpinner />;
+  const {
+    scholarshipName,
+    address,
+    feedback,
+    subjectCategory,
+    degree,
+    serviceCharge,
+    status,
+    scholarshipCategory,
+    _id,
+  } = orderData || {};
 
-  console.log('Data found:', order);
+  console.log('order data:  ',orderData);
 
+  const handleDetailsClick = () => {
+    Swal.fire("Details", "Navigating to details page...", "info");
+  };
 
-  const { name, image, category, price, quantity, _id, status, plantId } =
-    orderData
+  const handleEditClick = () => {
+    if (status === "Pending") {
+      Swal.fire(
+        "Edit Application",
+        "You can now edit your application.",
+        "success"
+      );
+    } else {
+      Swal.fire(
+        "Cannot Edit",
+        "Application is processing or completed.",
+        "warning"
+      );
+    }
+  };
 
-  // handle order delete/cancellation
+  const handleAddReviewClick = () => {
+    Swal.fire(
+      "Add Review",
+      "Add your review functionality coming soon!",
+      "info"
+    );
+  };
+
   const handleDelete = async () => {
     try {
-      //fetch delete request
-      await axiosSecure.delete(`/orders/${_id}`)
-      // increase quantity from plant collection
-      await axiosSecure.patch(`/plants/quantity/${plantId}`, {
-        quantityToUpdate: quantity,
-        status: 'increase',
-      })
-      // call refetch to refresh ui(fetch orders data again)
-      refetch()
-      toast.success('Order Cancelled.')
+      await axiosSecure.delete(`/orders/${_id}`);
+      refetch();
+      Swal.fire("Success", "Order has been canceled successfully.", "success");
     } catch (err) {
-      console.log(err)
-      toast.error(err.response.data)
+      Swal.fire("Error", `Failed to cancel order: ${err.message}`, "error");
     } finally {
-      closeModal()
+      closeCancelModal();
     }
-  }
+  };
+
   return (
     <tr>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <div className='flex items-center'>
-          <div className='flex-shrink-0'>
-            <div className='block relative'>
-              <img
-                alt='profile'
-                src={image}
-                className='mx-auto object-cover rounded h-10 w-15 '
-              />
-            </div>
-          </div>
-        </div>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">{scholarshipName}</p>
       </td>
-
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>{name}</p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">{address}</p>
       </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>{category}</p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">
+          {feedback || "No Feedback Yet"}
+        </p>
       </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>${price}</p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">{subjectCategory}</p>
       </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>{quantity}</p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">{degree}</p>
       </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>{status}</p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">{scholarshipCategory}</p>
       </td>
-
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <button
-          onClick={() => setIsOpen(true)}
-          className='relative disabled:cursor-not-allowed cursor-pointer inline-block px-3 py-1 font-semibold text-lime-900 leading-tight'
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">${serviceCharge}</p>
+      </td>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <span
+          className={`px-3 py-1 inline-block font-semibold leading-tight rounded-full ${
+            status === "Pending"
+              ? "bg-yellow-200 text-yellow-900"
+              : status === "Processing"
+              ? "bg-blue-200 text-blue-900"
+              : status === "Completed"
+              ? "bg-green-200 text-green-900"
+              : "bg-red-200 text-red-900"
+          }`}
         >
-          <span className='absolute cursor-pointer inset-0 bg-red-200 opacity-50 rounded-full'></span>
-          <span className='relative cursor-pointer'>Cancel</span>
+          {status}
+        </span>
+      </td>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex gap-2">
+        {/* Details Button */}
+        <button
+          onClick={handleDetailsClick}
+          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+        >
+          Details
         </button>
 
-        <DeleteModal
-          handleDelete={handleDelete}
-          isOpen={isOpen}
-          closeModal={closeModal}
-        />
+        {/* Edit Button */}
+        <button
+          onClick={handleEditClick}
+          className={`px-3 py-1 rounded ${
+            status === "Pending"
+              ? "bg-yellow-500 text-white hover:bg-yellow-600"
+              : "bg-gray-400 text-gray-800 cursor-not-allowed"
+          }`}
+          disabled={status !== "Pending"}
+        >
+          Edit
+        </button>
+
+        {/* Cancel Button */}
+        <button
+          onClick={() => setIsCancelModalOpen(true)}
+          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+        >
+          Cancel
+        </button>
+
+        {/* Add Review Button */}
+        <button
+          onClick={handleAddReviewClick}
+          className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+        >
+          Add Review
+        </button>
       </td>
+
+      {/* Cancel Modal */}
+      <DeleteModal
+        isOpen={isCancelModalOpen}
+        closeModal={closeCancelModal}
+        handleDelete={handleDelete}
+      />
     </tr>
-  )
-}
+  );
+};
 
 CustomerOrderDataRow.propTypes = {
-  order: PropTypes.object,
-  refetch: PropTypes.func,
-}
+  orderData: PropTypes.object.isRequired,
+  refetch: PropTypes.func.isRequired,
+};
 
-export default CustomerOrderDataRow
+export default CustomerOrderDataRow;
+
+
+
+
+
+
