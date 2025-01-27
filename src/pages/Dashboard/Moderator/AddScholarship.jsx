@@ -5,13 +5,13 @@ import ScholarshipForm from '../../../components/Form/ScholarshipForm'
 
 // import CategorisForm from '../../../components/Form/CategorisForm'
 
-const Managescholarship= () => {
+const AddScholarship= () => {
 
 
   return (
     <div>
       <Helmet>
-        <title>Manage Scholarship| Dashboard</title>
+        <title>Add Scholarship| Dashboard</title>
       </Helmet>
 
       
@@ -24,4 +24,4 @@ const Managescholarship= () => {
   )
 }
 
-export default Managescholarship
+export default AddScholarship

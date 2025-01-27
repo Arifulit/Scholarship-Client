@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-import SellerOrderDataRow from '../../../components/Dashboard/TableRows/SellerOrderDataRow'
+import ModeratorOrderDataRow from '../../../components/Dashboard/TableRows/ModeratorOrderDataRow'
 
 const ManageOrders = () => {
   return (
@@ -61,7 +61,7 @@ const ManageOrders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <SellerOrderDataRow />
+                  <ModeratorOrderDataRow />
                 </tbody>
               </table>
             </div>

@@ -1,14 +1,20 @@
-import { BsFillHouseAddFill } from 'react-icons/bs'
+import { Bs1SquareFill, Bs7SquareFill, BsCSquareFill, BsFillHouseAddFill } from 'react-icons/bs'
 import { MdHomeWork, MdOutlineManageHistory } from 'react-icons/md'
 import MenuItem from './MenuItem'
-const SellerMenu = () => {
+const ModeratorMenu = () => {
   return (
     <>
       <MenuItem
         icon={BsFillHouseAddFill}
         label='manage-scholarship'
-        // address='add-plant'
+        // address='manage-scholarship'
         address='manage-scholarship'
+      />
+      <MenuItem
+        icon={Bs7SquareFill}
+        label='add-scholarship'
+        // address='add-scholarship'
+        address='add-scholarship'
       />
       <MenuItem icon={MdHomeWork} label='My Inventory' address='my-inventory' />
       <MenuItem
@@ -20,4 +26,4 @@ const SellerMenu = () => {
   )
 }
 
-export default SellerMenu
+export default ModeratorMenu

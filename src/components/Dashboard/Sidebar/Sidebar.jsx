@@ -9,7 +9,7 @@ import useAuth from '../../../hooks/useAuth'
 
 import AdminMenu from './Menu/AdminMenu'
 import { Link } from 'react-router-dom'
-import SellerMenu from './Menu/SellerMenu'
+import ModeratorMenu from './Menu/ModeratorMenu'
 import CustomerMenu from './Menu/CustomerMenu'
 import logo from '../../../assets/images/logo-flat.png'
 const Sidebar = () => {
@@ -72,7 +72,7 @@ const Sidebar = () => {
             <nav>
               {/*  Menu Items */}
               <CustomerMenu />
-              <SellerMenu />
+              <ModeratorMenu/>
 
               <MenuItem
                 icon={BsGraphUp}

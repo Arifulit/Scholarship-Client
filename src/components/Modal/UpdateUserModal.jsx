@@ -13,7 +13,7 @@ import {
 } from '@headlessui/react'
 import { BsCheckLg } from 'react-icons/bs'
 import { AiOutlineDown } from 'react-icons/ai'
-const roles = ['customer', 'seller', 'admin']
+const roles = ['customer', 'Moderator', 'admin']
 
 const UpdateUserModal = ({ setIsOpen, isOpen }) => {
   const [selected, setSelected] = useState('')

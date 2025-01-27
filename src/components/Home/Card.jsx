@@ -7,7 +7,7 @@ const Card = ({ scholar }) => {
   const {
     scholarshipName,
     universityName, 
-    universityImage,
+    universityLogo,
     universityCountry,
     universityCity,
     universityWorldRank,
@@ -28,7 +28,7 @@ const Card = ({ scholar }) => {
       {/* University Logo and Header */}
       <div className="p-4 flex items-center bg-blue-100">
         <img
-          src={ universityImage}
+          src={ universityLogo}
           alt={`${universityName} Logo`}
           className="w-16 h-16 rounded-full object-cover border border-gray-300"
         />

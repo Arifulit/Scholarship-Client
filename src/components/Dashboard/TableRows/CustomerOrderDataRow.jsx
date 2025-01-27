@@ -1,10 +1,224 @@
+
+
+// // export default CustomerOrderDataRow
+// import PropTypes from "prop-types";
+// import { useState } from "react";
+// import Swal from "sweetalert2";
+// import DeleteModal from "../../Modal/DeleteModal";
+// import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
+// const CustomerOrderDataRow = ({ orderData, refetch }) => {
+//   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+
+//   const axiosSecure = useAxiosSecure();
+
+//   const closeCancelModal = () => setIsCancelModalOpen(false);
+
+  // const {
+  //   scholarshipName,
+  //   address,
+  //   feedback,
+  //   subjectCategory,
+  //   degree,
+  //   serviceCharge,
+  //   status,
+  //   scholarshipCategory,
+  //   _id,
+  // } = orderData || {};
+  // console.log(orderData);
+
+//   const handleDetailsClick = () => {
+//     Swal.fire("Details", "Navigating to details page...", "info");
+//   };
+
+//   const handleEditClick = () => {
+//     if (status === "Pending") {
+//       Swal.fire(
+//         "Edit Application",
+//         "You can now edit your application.",
+//         "success"
+//       );
+//     } else {
+//       Swal.fire(
+//         "Cannot Edit",
+//         "Application is processing or completed.",
+//         "warning"
+//       );
+//     }
+//   };
+
+//   const handleAddReviewClick = () => {
+//     Swal.fire(
+//       "Add Review",
+//       "Add your review functionality coming soon!",
+//       "info"
+//     );
+//   };
+
+//   const handleDelete = async () => {
+//     try {
+//       await axiosSecure.delete(`/orders/${_id}`);
+//       refetch();
+//       Swal.fire("Success", "Order has been canceled successfully.", "success");
+//     } catch (err) {
+//       Swal.fire("Error", `Failed to cancel order: ${err.message}`, "error");
+//     } finally {
+//       closeCancelModal();
+//     }
+//   };
+
+//   return (
+//     <tr>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">{scholarshipName}</p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">{address}</p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">
+//           {feedback || "No Feedback Yet"}
+//         </p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">{subjectCategory}</p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">{degree}</p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">{scholarshipCategory}</p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <p className="text-gray-900 whitespace-no-wrap">${serviceCharge}</p>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+//         <span
+//           className={`px-3 py-1 inline-block font-semibold leading-tight rounded-full ${
+//             status === "Pending"
+//               ? "bg-yellow-200 text-yellow-900"
+//               : status === "Processing"
+//               ? "bg-blue-200 text-blue-900"
+//               : status === "Completed"
+//               ? "bg-green-200 text-green-900"
+//               : "bg-red-200 text-red-900"
+//           }`}
+//         >
+//           {status}
+//         </span>
+//       </td>
+//       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex gap-2">
+//         {/* Details Button */}
+//         <button
+//           onClick={handleDetailsClick}
+//           className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+//         >
+//           Details
+//         </button>
+
+//         {/* Edit Button */}
+//         <button
+//           onClick={handleEditClick}
+//           className={`px-3 py-1 rounded ${
+//             status === "Pending"
+//               ? "bg-yellow-500 text-white hover:bg-yellow-600"
+//               : "bg-gray-400 text-gray-800 cursor-not-allowed"
+//           }`}
+//           disabled={status !== "Pending"}
+//         >
+//           Edit
+//         </button>
+
+//         {/* Cancel Button */}
+//         <button
+//           onClick={() => setIsCancelModalOpen(true)}
+//           className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+//         >
+//           Cancel
+//         </button>
+
+//         {/* Add Review Button */}
+//         <button
+//           onClick={handleAddReviewClick}
+//           className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+//         >
+//           Add Review
+//         </button>
+//       </td>
+
+//       {/* Cancel Modal */}
+//       <DeleteModal
+//         isOpen={isCancelModalOpen}
+//         closeModal={closeCancelModal}
+//         handleDelete={handleDelete}
+//       />
+//     </tr>
+//   );
+// };
+
+// CustomerOrderDataRow.propTypes = {
+//   orderData: PropTypes.object.isRequired,
+//   refetch: PropTypes.func.isRequired,
+// };
+
+// export default CustomerOrderDataRow;
+
+
+
+
+
+/* eslint-disable react/prop-types */
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import DeleteModal from '../../Modal/DeleteModal'
-const CustomerOrderDataRow = () => {
-  let [isOpen, setIsOpen] = useState(false)
-  const closeModal = () => setIsOpen(false)
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import toast from 'react-hot-toast'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import LoadingSpinner from '../../Shared/LoadingSpinner'
+const CustomerOrderDataRow = ({ orderData, refetch }) => {
 
+
+  const axiosSecure = useAxiosSecure()
+  let [isOpen, setIsOpen] = useState(false)
+  
+  const closeModal = () => setIsOpen(false)
+  const { data: order, isLoading } = useQuery({
+    queryKey: ['order'],
+    queryFn: async () => {
+      const { data } = await axios(`${import.meta.env.VITE_API_URL}/order`);
+      return data;
+    },
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+
+  console.log('Data found:', order);
+
+
+  const { name, image, category, price, quantity, _id, status, plantId } =
+    orderData
+
+  // handle order delete/cancellation
+  const handleDelete = async () => {
+    try {
+      //fetch delete request
+      await axiosSecure.delete(`/orders/${_id}`)
+      // increase quantity from plant collection
+      await axiosSecure.patch(`/plants/quantity/${plantId}`, {
+        quantityToUpdate: quantity,
+        status: 'increase',
+      })
+      // call refetch to refresh ui(fetch orders data again)
+      refetch()
+      toast.success('Order Cancelled.')
+    } catch (err) {
+      console.log(err)
+      toast.error(err.response.data)
+    } finally {
+      closeModal()
+    }
+  }
   return (
     <tr>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -13,7 +227,7 @@ const CustomerOrderDataRow = () => {
             <div className='block relative'>
               <img
                 alt='profile'
-                src='https://i.ibb.co.com/rMHmQP2/money-plant-in-feng-shui-brings-luck.jpg'
+                src={image}
                 className='mx-auto object-cover rounded h-10 w-15 '
               />
             </div>
@@ -22,19 +236,19 @@ const CustomerOrderDataRow = () => {
       </td>
 
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>Money Plant</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{name}</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>Indoor</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{category}</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>$120</p>
+        <p className='text-gray-900 whitespace-no-wrap'>${price}</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>5</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{quantity}</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>Pending</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{status}</p>
       </td>
 
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -46,7 +260,11 @@ const CustomerOrderDataRow = () => {
           <span className='relative cursor-pointer'>Cancel</span>
         </button>
 
-        <DeleteModal isOpen={isOpen} closeModal={closeModal} />
+        <DeleteModal
+          handleDelete={handleDelete}
+          isOpen={isOpen}
+          closeModal={closeModal}
+        />
       </td>
     </tr>
   )
