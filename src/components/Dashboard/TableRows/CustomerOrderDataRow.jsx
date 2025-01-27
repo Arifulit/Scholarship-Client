@@ -14,11 +14,11 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const closeCancelModal = () => setIsCancelModalOpen(false);
 
   const {
-    address,
-    feedback,
+  
+    
     subjectCategory,
-    degree,
-    serviceCharge,
+  
+    
     status,
     scholarshipCategory,
     _id,
@@ -72,26 +72,16 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{universityName}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{address}</p>
-      </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">
-          {feedback || "No Feedback Yet"}
-        </p>
-      </td>
+      
+      
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{subjectCategory}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{degree}</p>
-      </td>
+    
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{scholarshipCategory}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">${serviceCharge}</p>
-      </td>
+      
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <span
           className={`px-3 py-1 inline-block font-semibold leading-tight rounded-full ${

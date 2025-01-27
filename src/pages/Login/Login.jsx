@@ -13,6 +13,7 @@ const Login = () => {
   const from = location?.state?.from?.pathname || '/'
   if (user) return <Navigate to={from} replace={true} />
   if (loading) return <LoadingSpinner />
+  
   // form submit handler
   const handleSubmit = async event => {
     event.preventDefault()
@@ -42,7 +43,7 @@ const Login = () => {
 
       //save user in in db user is new 
       await saveUser(data?.user)
-      
+
       navigate(from, { replace: true })
       toast.success('Login Successful')
     } catch (err) {
