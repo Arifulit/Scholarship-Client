@@ -22,8 +22,10 @@ import AllScholarship from '../pages/AllScholarship/AllScholarship'
 import AddScholarship from '../pages/Dashboard/Moderator/AddScholarship'
 import Payment from '../pages/Dashboard/Payment/Payment'
 import PaymentHistory from '../pages/Dashboard/PaymentHistory/PaymentHistory'
-import ApplicationModal from '../components/Modal/ApplicationInModal'
+// import ApplicationModal from '../components/Modal/ApplicationInModal'
 import ApplicationInModal from '../components/Modal/ApplicationInModal'
+import ModeratorRoute from './ModeratorRoute'
+import AdminRoute from './AdminRoute'
 // import ApplicationModal from '../components/Modal/ApplicationModal'
 
 export const router = createBrowserRouter([
@@ -97,7 +99,7 @@ export const router = createBrowserRouter([
         path: 'add-scholarship',
         element: (
           <PrivateRoute>
-            <AddScholarship></AddScholarship>
+            <ModeratorRoute><AddScholarship></AddScholarship></ModeratorRoute>
           </PrivateRoute>
         ),
       },
@@ -107,7 +109,7 @@ export const router = createBrowserRouter([
         path: 'my-inventory',
         element: (
           <PrivateRoute>
-            <MyInventory />
+           <ModeratorRoute> <MyInventory /></ModeratorRoute>
           </PrivateRoute>
         ),
       },
@@ -115,7 +117,7 @@ export const router = createBrowserRouter([
         path: 'manage-users',
         element: (
           <PrivateRoute>
-            <ManageUsers />
+            <AdminRoute><ManageUsers /></AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -137,7 +139,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'manage-orders',
-        element: <ManageOrders />,
+        element:<PrivateRoute><ModeratorRoute><ManageOrders/></ModeratorRoute></PrivateRoute>
       },
     ],
   },

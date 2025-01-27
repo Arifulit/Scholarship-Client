@@ -1,7 +1,7 @@
 
 import "react-toastify/dist/ReactToastify.css";
 
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 import Swal from "sweetalert2";
@@ -13,7 +13,7 @@ const ApplicationInModal = () => {
    const { user } = useAuth();
    const axiosSecure = useAxiosSecure();
    const data = useLoaderData()
-  
+   const navigate =useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,6 +62,8 @@ const ApplicationInModal = () => {
           title: "Application Submitted",
           text: "Your scholarship application has been submitted successfully.",
         });
+        navigate("my-application");
+
       }
     } catch (error) {
       Swal.fire({
