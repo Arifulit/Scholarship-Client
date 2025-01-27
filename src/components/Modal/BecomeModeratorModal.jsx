@@ -7,7 +7,7 @@ import {
   DialogPanel,
 } from '@headlessui/react'
 import { Fragment } from 'react'
-const BecomeModeratorModal = ({ closeModal, isOpen }) => {
+const BecomeModeratorModal = ({ closeModal, isOpen, requestHandler }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -39,7 +39,7 @@ const BecomeModeratorModal = ({ closeModal, isOpen }) => {
                   as='h3'
                   className='text-lg font-medium text-center leading-6 text-gray-900'
                 >
-                  Become A !
+                  Become A Moderator
                 </DialogTitle>
                 <div className='mt-2'>
                   <p className='text-sm text-gray-500'>
@@ -50,10 +50,11 @@ const BecomeModeratorModal = ({ closeModal, isOpen }) => {
                 <hr className='mt-8 ' />
                 <div className='flex mt-2 justify-around'>
                   <button
+                    onClick={requestHandler}
                     type='button'
                     className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
                   >
-                    Continue
+                    Send Request
                   </button>
                   <button
                     type='button'
@@ -75,6 +76,7 @@ const BecomeModeratorModal = ({ closeModal, isOpen }) => {
 BecomeModeratorModal.propTypes = {
   modalHandler: PropTypes.func,
   closeModal: PropTypes.func,
+  requestHandler: PropTypes.func,
   isOpen: PropTypes.bool,
 }
 
