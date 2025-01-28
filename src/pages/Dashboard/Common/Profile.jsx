@@ -39,10 +39,7 @@ const Profile = () => {
       photoURL: selectedImage ? URL.createObjectURL(selectedImage) : prev.photoURL, // Use preview URL for immediate update
     }));
 
-    // Example: Send the data to the server
-    // axios.put('/api/update-profile', formData)
-    //   .then(response => console.log(response))
-    //   .catch(error => console.error(error));
+   
 
     closeModal();
   };

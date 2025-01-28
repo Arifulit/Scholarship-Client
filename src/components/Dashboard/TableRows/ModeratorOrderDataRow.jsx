@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { FaInfoCircle, FaTimes } from 'react-icons/fa';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -30,6 +31,7 @@ const ModeratorOrderDataRow = ({ orderData, refetch }) => {
   
 
   // Handle feedback submission
+  // eslint-disable-next-line no-unused-vars
   const handleFeedbackSubmit = async () => {
     if (feedback.trim() === '') {
       toast.error('Please provide some feedback');

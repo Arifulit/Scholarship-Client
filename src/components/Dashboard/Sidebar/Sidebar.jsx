@@ -18,6 +18,7 @@ const Sidebar = () => {
   const { logOut } = useAuth()
   const [isActive, setActive] = useState(false)
 
+  // eslint-disable-next-line no-unused-vars
   const [role,isLoading] =useRole()
   // Sidebar Responsive Handler
   const handleToggle = () => {

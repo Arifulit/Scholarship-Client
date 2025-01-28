@@ -1,11 +1,5 @@
-// import { BsFingerprint } from 'react-icons/bs'
-// import { GrUserAdmin } from 'react-icons/gr'
-// import MenuItem from './MenuItem'
-// import { useState } from 'react'
-import BecomeModeratorModal from '../../../Modal/BecomeModeratorModal'
-// import useAxiosSecure from '../../../../hooks/useAxiosSecure'
-// import useAuth from '../../../../hooks/useAuth'
 
+import BecomeModeratorModal from '../../../Modal/BecomeModeratorModal'
 import { useState } from "react"
 import useAuth from "../../../../hooks/useAuth"
 import useAxiosSecure from "../../../../hooks/useAxiosSecure"
@@ -15,7 +9,7 @@ import { BsFingerprint } from "react-icons/bs"
 import { GrUserAdmin } from "react-icons/gr"
 import MenuItem from './MenuItem'
 
-// import toast from 'react-hot-toast'
+
 const CustomerMenu = () => {
   const { user } = useAuth()
   const axiosSecure = useAxiosSecure()

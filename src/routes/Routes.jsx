@@ -15,8 +15,7 @@ import MainLayout from '../layouts/MainLayout'
 // import ManageOrders from '../pages/Dashboard/Moderator/ManageOrders'
 import MyApplication from '../pages/Dashboard/Customer/MyApplication'
 import Managescholarship from '../pages/Dashboard/Moderator/ManageScholarship'
-// import ScholarDetails from '../pages/ScholarDetails/ScholarDetails'
-// import AllScholarship from '../pages/AllScholarship/AllScholarship'
+
 import ScholarDetails from '../pages/ScholarDetails/ScholarDetails'
 import AllScholarship from '../pages/AllScholarship/AllScholarship'
 import AddScholarship from '../pages/Dashboard/Moderator/AddScholarship'
@@ -40,10 +39,7 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Home />,
       },
-      // {
-      //   path: '/plant/:id',
-      //   element: <PlantDetails />,
-      // },
+      
       {
         path:'/scholar/:id' ,
         element:<ScholarDetails></ScholarDetails>
@@ -107,14 +103,8 @@ export const router = createBrowserRouter([
       },
 
       
-      // {
-      //   path: 'my-inventory',
-      //   element: (
-      //     <PrivateRoute>
-      //      <ModeratorRoute> <MyInventory /></ModeratorRoute>
-      //     </PrivateRoute>
-      //   ),
-      // },
+    
+  
       {
         path: 'manage-users',
         element: (
