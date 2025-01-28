@@ -91,13 +91,13 @@ const Navbar = () => {
                       >
                         Dashboard
                       </Link>
-                      <Link
+                      <NavLink
                         to="/profile"
                         className="block px-4 py-3 hover:bg-gray-100"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Update Profile
-                      </Link>
+                      </NavLink>
                       <div
                         onClick={handleLogout}
                         className="block px-4 py-3 hover:bg-gray-100 cursor-pointer"
@@ -146,7 +146,7 @@ const Navbar = () => {
                 {isMenuOpen && (
                   <div className="absolute right-0 top-12 bg-white shadow-md rounded-md w-[14vw] p-2">
                     <Link
-                      to="/profile"
+                      to="/dashboard/profile"
                       className="block px-4 py-3 hover:bg-gray-100"
                       onClick={() => setIsMenuOpen(false)}
                     >

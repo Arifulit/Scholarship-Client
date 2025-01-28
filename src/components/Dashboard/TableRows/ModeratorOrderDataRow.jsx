@@ -25,12 +25,12 @@ const ModeratorOrderDataRow = ({ orderData, refetch }) => {
       await axiosSecure.delete(`/orders/${_id}`)
       // increase quantity from plant collection
       await axiosSecure.patch(`/scholar/moderator/${_id}`, {
-        quantityToUpdate: quantity,
         status: 'increase',
       })
       // call refetch to refresh ui(fetch orders data again)
-      refetch()
+      
       toast.success('Order Cancelled.')
+      refetch()
     } catch (err) {
       console.log(err)
       toast.error(err.response.data)

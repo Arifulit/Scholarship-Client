@@ -62,7 +62,7 @@ const ApplicationInModal = () => {
           title: "Application Submitted",
           text: "Your scholarship application has been submitted successfully.",
         });
-        navigate("dashboard/my-application");
+        navigate("/");
 
       }
     } catch (error) {
