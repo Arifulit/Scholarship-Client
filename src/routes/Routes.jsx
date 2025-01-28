@@ -12,7 +12,7 @@ import Profile from '../pages/Dashboard/Common/Profile'
 import Statistics from '../pages/Dashboard/Common/Statistics'
 import MainLayout from '../layouts/MainLayout'
 import MyInventory from '../pages/Dashboard/Moderator/MyInventory'
-import ManageOrders from '../pages/Dashboard/Moderator/ManageOrders'
+// import ManageOrders from '../pages/Dashboard/Moderator/ManageOrders'
 import MyApplication from '../pages/Dashboard/Customer/MyApplication'
 import Managescholarship from '../pages/Dashboard/Moderator/ManageScholarship'
 // import ScholarDetails from '../pages/ScholarDetails/ScholarDetails'
@@ -26,6 +26,7 @@ import PaymentHistory from '../pages/Dashboard/PaymentHistory/PaymentHistory'
 import ApplicationInModal from '../components/Modal/ApplicationInModal'
 import ModeratorRoute from './ModeratorRoute'
 import AdminRoute from './AdminRoute'
+import AllAppliedScholarship from '../pages/Dashboard/Moderator/AllAppliedScholarship'
 // import ApplicationModal from '../components/Modal/ApplicationModal'
 
 export const router = createBrowserRouter([
@@ -139,7 +140,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'manage-orders',
-        element:<PrivateRoute><ModeratorRoute><ManageOrders/></ModeratorRoute></PrivateRoute>
+        element:<PrivateRoute><ModeratorRoute><AllAppliedScholarship/></ModeratorRoute></PrivateRoute>
       },
     ],
   },

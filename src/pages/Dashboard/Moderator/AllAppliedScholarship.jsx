@@ -1,12 +1,35 @@
 import { Helmet } from 'react-helmet-async'
 
 import ModeratorOrderDataRow from '../../../components/Dashboard/TableRows/ModeratorOrderDataRow'
+import useAuth from '../../../hooks/useAuth'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import { useQuery } from '@tanstack/react-query'
+import LoadingSpinner from '../../../components/Shared/LoadingSpinner'
 
-const ManageOrders = () => {
+const AllAppliedScholarship = () => {
+  const { user } = useAuth()
+  const axiosSecure = useAxiosSecure()
+  const {
+    data: orders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['orders', user?.email],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/scholar/moderator`)
+
+      return data
+    },
+  })
+
+  console.log('orders data get ..', orders)
+
+
+  if (isLoading) return <LoadingSpinner />
   return (
     <>
       <Helmet>
-        <title>Manage Orders</title>
+        <title>Manage applied scholarship</title>
       </Helmet>
       <div className='container mx-auto px-4 sm:px-8'>
         <div className='py-8'>
@@ -19,32 +42,27 @@ const ManageOrders = () => {
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Name
+                     universityName
                     </th>
                     <th
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Customer
+                      scholarshipCategory
                     </th>
                     <th
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Price
+                      subjectCategory
                     </th>
                     <th
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Quantity
+                      ApplyingDegree
                     </th>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Address
-                    </th>
+                  
                     <th
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
@@ -61,7 +79,13 @@ const ManageOrders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <ModeratorOrderDataRow />
+                  {orders.map(orderData => (
+                    <ModeratorOrderDataRow
+                      key={orderData?._id}
+                      orderData={orderData}
+                      refetch={refetch}
+                    />
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -72,4 +96,4 @@ const ManageOrders = () => {
   )
 }
 
-export default ManageOrders
+export default AllAppliedScholarship

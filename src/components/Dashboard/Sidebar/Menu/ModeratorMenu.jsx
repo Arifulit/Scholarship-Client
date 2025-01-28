@@ -19,7 +19,7 @@ const ModeratorMenu = () => {
       <MenuItem icon={MdHomeWork} label='My Inventory' address='my-inventory' />
       <MenuItem
         icon={MdOutlineManageHistory}
-        label='Manage Orders'
+        label='All Applied Scholarship'
         address='manage-orders'
       />
     </>

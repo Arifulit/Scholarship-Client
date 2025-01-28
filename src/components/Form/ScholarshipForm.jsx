@@ -6,8 +6,10 @@ import Swal from "sweetalert2";
 import { imageUpload } from "../../api/utils";
 // eslint-disable-next-line no-unused-vars
 import useAxiosSecure, { axiosSecure } from "../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 
 const ScholarshipForm = () => {
+  const navigate = useNavigate();
   // const axiosSecure = useAxiosSecure()
   const [formData, setFormData] = useState({
     scholarshipName: "",
@@ -104,6 +106,7 @@ const ScholarshipForm = () => {
           icon: "success",
         });
         resetFormData();
+        navigate('/dashboard/my-inventory');
       } 
     
      catch (error) {

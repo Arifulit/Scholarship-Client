@@ -14,11 +14,7 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const closeCancelModal = () => setIsCancelModalOpen(false);
 
   const {
-  
-    
     subjectCategory,
-  
-    
     status,
     scholarshipCategory,
     _id,

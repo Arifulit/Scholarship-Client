@@ -1,35 +1,84 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import DeleteModal from '../../Modal/DeleteModal'
-const ModeratorOrderDataRow = () => {
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
+import toast from 'react-hot-toast'
+const ModeratorOrderDataRow = ({ orderData, refetch }) => {
+  const axiosSecure = useAxiosSecure()
   let [isOpen, setIsOpen] = useState(false)
   const closeModal = () => setIsOpen(false)
 
+   const {
+    subjectCategory,
+    status,
+    scholarshipCategory,
+    _id,
+    universityName,
+    address,
+  } = orderData || {};
+
+
+  // handle order delete/cancellation
+  const handleDelete = async () => {
+    try {
+      //fetch delete request
+      await axiosSecure.delete(`/orders/${_id}`)
+      // increase quantity from plant collection
+      await axiosSecure.patch(`/scholar/moderator/${_id}`, {
+        quantityToUpdate: quantity,
+        status: 'increase',
+      })
+      // call refetch to refresh ui(fetch orders data again)
+      refetch()
+      toast.success('Order Cancelled.')
+    } catch (err) {
+      console.log(err)
+      toast.error(err.response.data)
+    } finally {
+      closeModal()
+    }
+  }
+
+  // handle status change
+  const handleStatus = async newStatus => {
+    if (status === newStatus) return
+    try {
+      // update order status
+      await axiosSecure.patch(`/orders/${_id}`, {
+        status: newStatus,
+      })
+      // call refetch to refresh ui(fetch orders data again)
+      refetch()
+      toast.success('Status Updated')
+    } catch (err) {
+      console.log(err)
+      toast.error(err.response.data)
+    }
+  }
   return (
     <tr>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>{name}</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{universityName}</p>
+      </td>
+    
+      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+        <p className='text-gray-900 whitespace-no-wrap'>${scholarshipCategory}</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>abc@gmail.com</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{subjectCategory}</p>
       </td>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>$120</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{address}</p>
       </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>5</p>
-      </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>Dhaka</p>
-      </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>Pending</p>
-      </td>
+      
 
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
         <div className='flex items-center gap-2'>
           <select
             required
+            defaultValue={status}
+            onChange={e => handleStatus(e.target.value)}
+            disabled={status === 'Delivered'}
             className='p-1 border-2 border-lime-300 focus:outline-lime-500 rounded-md text-gray-900 whitespace-no-wrap bg-white'
             name='category'
           >
@@ -48,14 +97,18 @@ const ModeratorOrderDataRow = () => {
             <span className='relative'>Cancel</span>
           </button>
         </div>
-        <DeleteModal isOpen={isOpen} closeModal={closeModal} />
+        <DeleteModal
+          handleDelete={handleDelete}
+          isOpen={isOpen}
+          closeModal={closeModal}
+        />
       </td>
     </tr>
   )
 }
 
 ModeratorOrderDataRow.propTypes = {
-  order: PropTypes.object,
+  orderData: PropTypes.object,
   refetch: PropTypes.func,
 }
 

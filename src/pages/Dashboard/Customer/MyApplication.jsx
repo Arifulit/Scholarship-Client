@@ -18,7 +18,7 @@ const MyApplication = () => {
       return data;
     },
   });
-   console.log(orders);
+   console.log('ordars data ,,',orders);
 
   if (isLoading) return <LoadingSpinner />;
 
