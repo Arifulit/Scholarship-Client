@@ -107,6 +107,6 @@ const CheckoutPage = () => {
       )}
     </div>
   );
-};
+}
 
 export default CheckoutPage;

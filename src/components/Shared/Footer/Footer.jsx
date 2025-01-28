@@ -1,18 +1,3 @@
-// const Footer = () => {
-//   return (
-//     <footer className='px-4 divide-y  text-gray-800 relative bottom-0 left-0'>
-//       <div className='py-6 text-sm text-center text-gray-400'>
-//         © 2024-2025 PlantNet Inc. All rights reserved.
-//       </div>
-//     </footer>
-//   )
-// }
-
-// export default Footer
-
-
-
-
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
@@ -23,9 +8,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo & About */}
           <div>
-            <h2 className="text-xl font-semibold mb-4">MediCart</h2>
+            <h2 className="text-xl font-semibold mb-4">ScholarHub</h2>
             <p className="text-gray-300">
-              Your trusted multi-vendor platform for medicines and healthcare products.
+              Your trusted platform for discovering scholarships and funding opportunities.
             </p>
           </div>
 
@@ -39,18 +24,18 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/shop" className="text-gray-300 hover:text-white">
-                  Shop
+                <a href="/scholarships" className="text-gray-300 hover:text-white">
+                  Scholarships
                 </a>
               </li>
               <li>
-                <a href="/cart" className="text-gray-300 hover:text-white">
-                  Cart
+                <a href="/contact" className="text-gray-300 hover:text-white">
+                  Contact Us
                 </a>
               </li>
               <li>
-                <a href="/dashboard" className="text-gray-300 hover:text-white">
-                  Dashboard
+                <a href="/about" className="text-gray-300 hover:text-white">
+                  About Us
                 </a>
               </li>
             </ul>
@@ -61,13 +46,13 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul>
               <li>
-                <p className="text-gray-300">Email: support@medicart.com</p>
+                <p className="text-gray-300">Email: support@scholarhub.com</p>
               </li>
               <li>
                 <p className="text-gray-300">Phone: +1-800-555-0199</p>
               </li>
               <li>
-                <p className="text-gray-300">Address: 123 Health St, Wellness City</p>
+                <p className="text-gray-300">Address: 456 Learning Ave, Education City</p>
               </li>
             </ul>
           </div>
@@ -115,7 +100,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="border-t border-gray-700 mt-8 pt-4 text-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} MediCart. All rights reserved.
+            &copy; {new Date().getFullYear()} ScholarHub. All rights reserved.
           </p>
         </div>
       </div>

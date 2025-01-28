@@ -146,7 +146,7 @@ const Navbar = () => {
                 {isMenuOpen && (
                   <div className="absolute right-0 top-12 bg-white shadow-md rounded-md w-[14vw] p-2">
                     <Link
-                      to="/dashboard/profile"
+                      to="/profile"
                       className="block px-4 py-3 hover:bg-gray-100"
                       onClick={() => setIsMenuOpen(false)}
                     >

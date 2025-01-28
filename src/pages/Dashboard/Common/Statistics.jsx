@@ -11,7 +11,7 @@ const Statistics = () => {
 
   if (isLoading) return <LoadingSpinner />
   if (role === 'customer') return <Navigate to='/dashboard/my-application' />
-  if (role === 'moderator') return <Navigate to='/dashboard/my-inventory' />
+  if (role === 'moderator') return <Navigate to='/dashboard' />
   return (
     <div>
       <Helmet>

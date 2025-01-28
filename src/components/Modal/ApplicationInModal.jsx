@@ -1,42 +1,58 @@
-
-import "react-toastify/dist/ReactToastify.css";
-
+import React, { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { ToastContainer } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
+import { imageUpload } from "../../api/utils";
 
 const ApplicationInModal = () => {
-   const { user } = useAuth();
-   const axiosSecure = useAxiosSecure();
-   const data = useLoaderData()
-   const navigate =useNavigate();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const data = useLoaderData();
+  const navigate = useNavigate();
+
+  const [image, setImage] = useState(null);
+
+  // Handle file input changes
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   const phoneNumber = e.target.phone.value;
-   const photo = e.target.photo.files[0];
-   const gender = e.target.gender.value;
-   const applyingDegree = e.target.applyingDegree.value;
-   const sscResult = e.target.sscResult.value;
-   const hscResult = e.target.hscResult.value;
-   const studyGap = e.target.studyGap.value;
-   const universityName = data.universityName;
-   const scholarshipCategory = data.scholarshipCategory;
-   const subjectCategory = data.subjectCategory;
-   const userName = user?.displayName;
-   const userEmail = user?.email;
-   const id = data.id;
+    const phoneNumber = e.target.phone.value;
+    const gender = e.target.gender.value;
+    const applyingDegree = e.target.applyingDegree.value;
+    const sscResult = e.target.sscResult.value;
+    const hscResult = e.target.hscResult.value;
+    const studyGap = e.target.studyGap.value;
+    const universityName = data.universityName;
+    const scholarshipCategory = data.scholarshipCategory;
+    const subjectCategory = data.subjectCategory;
+    const userName = user?.displayName;
+    const userEmail = user?.email;
+    const id = data.id;
 
+    // Upload the image
+    let photoURL = "";
+    if (image) {
+      try {
+        photoURL = await imageUpload(image);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Image Upload Failed",
+          text: `An error occurred while uploading the image. Error: ${error.message}`,
+        });
+        return;
+      }
+    }
 
-
- const applicationData = {
+    const applicationData = {
       phoneNumber,
-      photo,
       gender,
       applyingDegree,
       sscResult,
@@ -47,14 +63,12 @@ const ApplicationInModal = () => {
       subjectCategory,
       userName,
       userEmail,
-      id
- 
- }
-
-
+      id,
+      photoURL,
+    };
 
     try {
-      const response = await axiosSecure.post("/order", applicationData); 
+      const response = await axiosSecure.post("/order", applicationData);
 
       if (response.data.insertedId) {
         Swal.fire({
@@ -63,7 +77,6 @@ const ApplicationInModal = () => {
           text: "Your scholarship application has been submitted successfully.",
         });
         navigate("/");
-
       }
     } catch (error) {
       Swal.fire({
@@ -83,7 +96,6 @@ const ApplicationInModal = () => {
           <input
             type="text"
             name="phone"
-            
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
             required
           />
@@ -91,6 +103,7 @@ const ApplicationInModal = () => {
         <div>
           <label className="block text-sm font-medium text-gray-700">Photo</label>
           <input
+            onChange={handleFileChange}
             type="file"
             name="photo"
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
@@ -101,7 +114,6 @@ const ApplicationInModal = () => {
           <label className="block text-sm font-medium text-gray-700">Gender</label>
           <select
             name="gender"
-            
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
             required
           >
@@ -115,7 +127,6 @@ const ApplicationInModal = () => {
           <label className="block text-sm font-medium text-gray-700">Applying Degree</label>
           <select
             name="applyingDegree"
-           
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
             required
           >
@@ -130,7 +141,6 @@ const ApplicationInModal = () => {
           <input
             type="text"
             name="sscResult"
-            
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
             required
           />
@@ -140,7 +150,6 @@ const ApplicationInModal = () => {
           <input
             type="text"
             name="hscResult"
-           
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
             required
           />
@@ -149,7 +158,6 @@ const ApplicationInModal = () => {
           <label className="block text-sm font-medium text-gray-700">Study Gap (if any)</label>
           <select
             name="studyGap"
-            
             className="mt-1 w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
           >
             <option value="">No Gap</option>
@@ -172,7 +180,6 @@ const ApplicationInModal = () => {
           <input
             type="text"
             value={data.scholarshipCategory}
-            
             className="w-full p-2 border rounded-md bg-gray-100"
             readOnly
           />
@@ -182,7 +189,6 @@ const ApplicationInModal = () => {
           <input
             type="text"
             value={data.subjectCategory}
-            
             className="w-full p-2 border rounded-md bg-gray-100"
             readOnly
           />
@@ -196,16 +202,7 @@ const ApplicationInModal = () => {
       </form>
       <ToastContainer />
     </div>
-  
   );
 };
 
 export default ApplicationInModal;
-
-
-
-
-
-
-
-

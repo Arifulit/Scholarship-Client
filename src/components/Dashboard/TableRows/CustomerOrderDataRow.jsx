@@ -6,7 +6,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null); // 'details', 'delete', or 'edit'
-  const [formData, setFormData] = useState({}); // For handling form data
+  const [formData, setFormData] = useState({});
   const axiosSecure = useAxiosSecure();
 
   const {
@@ -16,13 +16,13 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
     applyingDegree,
     studyGap,
     userName,
-    status,
     _id,
   } = orderData || {};
 
   useEffect(() => {
     if (modalType === 'edit') {
       setFormData({
+        userName,
         universityName,
         scholarshipCategory,
         subjectCategory,
@@ -30,7 +30,7 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
         studyGap,
       });
     }
-  }, [modalType, universityName, scholarshipCategory, subjectCategory, applyingDegree, studyGap]);
+  }, [modalType, userName, universityName, scholarshipCategory, subjectCategory, applyingDegree, studyGap]);
 
   const handleDetailsClick = () => {
     setModalType('details');
@@ -47,24 +47,35 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
     setModalType(null);
   };
 
-  const handleEditClick = () => {
-    if (status === 'Pending') {
-      setModalType('edit');
-      setIsModalOpen(true);
-    } else {
-      Swal.fire('Cannot Edit', 'Application is processing or completed.', 'warning');
+  const handleUpdateData = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedCategory = {
+        userName: formData.userName,
+        universityName: formData.universityName,
+        scholarshipCategory: formData.scholarshipCategory,
+        subjectCategory: formData.subjectCategory,
+        applyingDegree: formData.applyingDegree,
+        studyGap: formData.studyGap,
+      };
+
+      await axiosSecure.put(`/orders/${_id}`, updatedCategory);
+      Swal.fire('Success', 'Data updated successfully.', 'success');
+      closeModal();
+      refetch();
+    } catch (err) {
+      Swal.fire('Error', `Failed to update data: ${err.message}`, 'error');
     }
   };
 
   const handleDelete = async () => {
     try {
       await axiosSecure.delete(`/orders/${_id}`);
-      refetch();
       Swal.fire('Success', 'Order has been canceled successfully.', 'success');
+      closeModal();
+      refetch();
     } catch (err) {
       Swal.fire('Error', `Failed to cancel order: ${err.message}`, 'error');
-    } finally {
-      closeModal();
     }
   };
 
@@ -76,40 +87,16 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axiosSecure.put(`/orders/${_id}`, formData);
-      refetch();
-      Swal.fire('Success', 'Order has been updated successfully.', 'success');
-      closeModal();
-    } catch (err) {
-      Swal.fire('Error', `Failed to update order: ${err.message}`, 'error');
-    }
-  };
-
   return (
     <>
       <tr>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{userName}</p>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{universityName}</p>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{scholarshipCategory}</p>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{subjectCategory}</p>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{applyingDegree}</p>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{studyGap}</p>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex gap-2">
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black">{userName}</td>
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black">{universityName}</td>
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black">{scholarshipCategory}</td>
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black">{subjectCategory}</td>
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black">{applyingDegree}</td>
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black">{studyGap}</td>
+        <td className="px-5 py-5 border-b border-gray-200 bg-white text-black flex gap-2">
           <button
             onClick={handleDetailsClick}
             className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
@@ -117,13 +104,8 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
             Details
           </button>
           <button
-            onClick={handleEditClick}
-            className={`px-3 py-1 rounded ${
-              status === 'Pending'
-                ? 'bg-yellow-500 text-white hover:bg-yellow-600'
-                : 'bg-gray-400 text-gray-800 cursor-not-allowed'
-            }`}
-            disabled={status !== 'Pending'}
+            onClick={() => setModalType('edit') || setIsModalOpen(true)}
+            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
           >
             Edit
           </button>
@@ -136,7 +118,6 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
         </td>
       </tr>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-96">
@@ -156,48 +137,19 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
             {modalType === 'edit' && (
               <>
                 <h2 className="text-lg font-semibold mb-4">Edit Application</h2>
-                <form onSubmit={handleSubmit}>
-                  <div className="space-y-2">
-                    <input
-                      type="text"
-                      name="universityName"
-                      value={formData.universityName || ''}
-                      onChange={handleChange}
-                      className="border p-2 rounded w-full"
-                      placeholder="University Name"
-                    />
-                    <input
-                      type="text"
-                      name="scholarshipCategory"
-                      value={formData.scholarshipCategory || ''}
-                      onChange={handleChange}
-                      className="border p-2 rounded w-full"
-                      placeholder="Scholarship Category"
-                    />
-                    <input
-                      type="text"
-                      name="subjectCategory"
-                      value={formData.subjectCategory || ''}
-                      onChange={handleChange}
-                      className="border p-2 rounded w-full"
-                      placeholder="Subject Category"
-                    />
-                    <input
-                      type="text"
-                      name="applyingDegree"
-                      value={formData.applyingDegree || ''}
-                      onChange={handleChange}
-                      className="border p-2 rounded w-full"
-                      placeholder="Applying Degree"
-                    />
-                    <input
-                      type="text"
-                      name="studyGap"
-                      value={formData.studyGap || ''}
-                      onChange={handleChange}
-                      className="border p-2 rounded w-full"
-                      placeholder="Study Gap"
-                    />
+                <form onSubmit={handleUpdateData}>
+                  <div className="space-y-4">
+                    {['userName', 'universityName', 'scholarshipCategory', 'subjectCategory', 'applyingDegree', 'studyGap'].map((field) => (
+                      <input
+                        key={field}
+                        type="text"
+                        name={field}
+                        value={formData[field] || ''}
+                        onChange={handleChange}
+                        className="border p-2 rounded w-full bg-white"
+                        placeholder={field.replace(/([A-Z])/g, ' $1').trim()}
+                      />
+                    ))}
                   </div>
                   <div className="mt-4 text-right">
                     <button
@@ -237,14 +189,6 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
                 </div>
               </>
             )}
-            <div className="mt-4 text-right">
-              <button
-                onClick={closeModal}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       )}
