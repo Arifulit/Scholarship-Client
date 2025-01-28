@@ -106,7 +106,7 @@ const ScholarshipForm = () => {
           icon: "success",
         });
         resetFormData();
-        navigate('/dashboard/my-inventory');
+        navigate('/dashboard/manage-scholarship');
       } 
     
      catch (error) {

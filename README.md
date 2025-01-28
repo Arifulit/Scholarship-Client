@@ -25,8 +25,8 @@ The **Scholarship Management System** is a full-stack web application aimed at s
 ---
 
 ## 🚀 Live Demo
-Access the live project: [Scholarship Management System](#)  
-*(Replace `#` with your deployed project URL)*
+Access the live project: [Scholarship Management System](https://scholarships-d1fc8.web.app/)  
+
 
 ---
 

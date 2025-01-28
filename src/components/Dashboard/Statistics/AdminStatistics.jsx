@@ -1,8 +1,45 @@
 import { Calendar } from 'react-date-range'
 import { FaUserAlt, FaDollarSign } from 'react-icons/fa'
 import { BsFillCartPlusFill, BsFillHouseDoorFill } from 'react-icons/bs'
+import { Bar } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
+
+// Register necessary Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const AdminStatistics = () => {
+  // Example data for the bar chart (total revenue per month)
+  const data = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Months
+    datasets: [
+      {
+        label: 'Total Revenue ($)',
+        data: [500, 600, 800, 1200, 1500, 2000], // Example revenue data
+        backgroundColor: 'rgba(75, 192, 192, 0.5)', // Bar color
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }
+    ]
+  }
+
+  const options = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Monthly Revenue Analytics',
+      },
+      legend: {
+        position: 'top',
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+
   return (
     <div>
       <div className='mt-12'>
@@ -75,11 +112,11 @@ const AdminStatistics = () => {
         </div>
 
         <div className='mb-4 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3'>
-          {/*Sales Bar Chart */}
+          {/* Sales Bar Chart */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2'>
-            {/* Chart goes here.. */}
+            <Bar data={data} options={options} />
           </div>
-          {/* Calender */}
+          {/* Calendar */}
           <div className=' relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden'>
             <Calendar color='#4cc718' />
           </div>
