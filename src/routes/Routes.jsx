@@ -27,6 +27,7 @@ import ApplicationInModal from '../components/Modal/ApplicationInModal'
 import ModeratorRoute from './ModeratorRoute'
 import AdminRoute from './AdminRoute'
 import AllAppliedScholarship from '../pages/Dashboard/Moderator/AllAppliedScholarship'
+import AnalyticsChartPage from '../pages/Dashboard/Admin/AnalyticsChartPage'
 // import ApplicationModal from '../components/Modal/ApplicationModal'
 
 export const router = createBrowserRouter([
@@ -119,6 +120,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute><ManageUsers /></AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'chart-page',
+        element: (
+          <PrivateRoute>
+            <AdminRoute><AnalyticsChartPage /></AdminRoute>
           </PrivateRoute>
         ),
       },

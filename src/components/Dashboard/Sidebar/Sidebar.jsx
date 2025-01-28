@@ -91,7 +91,7 @@ const Sidebar = () => {
 
           <MenuItem
             icon={FcSettings}
-            label='Profile'
+            label=' My Profile'
             address='/dashboard/profile'
           />
           <button

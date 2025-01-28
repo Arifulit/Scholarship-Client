@@ -1,4 +1,3 @@
-
 import { Helmet } from 'react-helmet-async';
 import CustomerOrderDataRow from '../../../components/Dashboard/TableRows/CustomerOrderDataRow';
 import useAuth from '../../../hooks/useAuth';
@@ -10,15 +9,13 @@ const MyApplication = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: orders = [],isLoading,refetch,} = useQuery({
+  const { data: orders = [], isLoading, refetch } = useQuery({
     queryKey: ['orders', user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure(`/customer-orders/${user?.email}`);
       return data;
     },
   });
-   console.log('ordars data ,,',orders);
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -35,21 +32,22 @@ const MyApplication = () => {
                 <thead>
                   <tr>
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                      
-                     universityName
+                      User Name
                     </th>
-                   
-                  
+                    <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
+                      University Name
+                    </th>
+                    <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
+                      Scholarship Category
+                    </th>
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
                       Subject Category
                     </th>
-                 
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                    Scholarship Category
+                      Applying Degree
                     </th>
-                    
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                      Status
+                      Study Gap
                     </th>
                     <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
                       Actions
