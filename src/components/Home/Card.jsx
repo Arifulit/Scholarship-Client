@@ -60,7 +60,7 @@ const Card = ({ scholar }) => {
           <span className="font-medium">Application Fees:</span> ${applicationFees}
         </p>
         <p className="text-sm text-gray-600 mb-4">
-          <span className="font-medium">World Rank:</span> #{universityWorldRank}
+          <span className="font-medium">World Rank:</span> {universityWorldRank}
         </p>
 
         {/* Rating */}
