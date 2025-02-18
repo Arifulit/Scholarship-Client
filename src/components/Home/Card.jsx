@@ -33,8 +33,8 @@ const Card = ({ scholar }) => {
           className="w-16 h-16 rounded-full object-cover border border-gray-300"
         />
         <div className="ml-4">
-          <h2 className="text-lg font-bold text-gray-800">{universityName}</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-lg font-bold ">{universityName}</h2>
+          <p className="text-sm ">
             {universityCity}, {universityCountry}
           </p>
         </div>
@@ -42,24 +42,24 @@ const Card = ({ scholar }) => {
 
       {/* Card Details */}
       <div className="p-4">
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm  mb-2">
           <span className="font-medium">Scholarship Name:</span>{" "}
           {scholarshipName}
         </p>
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm  mb-2">
           <span className="font-medium">Scholarship Category:</span>{" "}
           {scholarshipCategory}
         </p>
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm  mb-2">
           <span className="font-medium">Subjects:</span> {subjectCategory}
         </p>
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm  mb-2">
           <span className="font-medium">Application Deadline:</span> {applicationDeadline}
         </p>
-        <p className="text-sm text-gray-600 mb-2">
+        <p className="text-sm  mb-2">
           <span className="font-medium">Application Fees:</span> ${applicationFees}
         </p>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm  mb-4">
           <span className="font-medium">World Rank:</span> {universityRank
           }
         </p>
@@ -72,7 +72,7 @@ const Card = ({ scholar }) => {
 
         {/* Scholarship Details Button */}
         <button
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+          className="w-full bg-blue-500  py-2 rounded hover:bg-blue-600 transition"
         >
           View Scholarship Details
         </button>

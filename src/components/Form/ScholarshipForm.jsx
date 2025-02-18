@@ -121,13 +121,13 @@ const ScholarshipForm = () => {
   
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="w-full max-w-2xl mx-auto mt-10 p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-6">Add New Scholarship</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Scholarship Name */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               Scholarship Name
             </label>
             <input
@@ -135,14 +135,14 @@ const ScholarshipForm = () => {
               name="scholarshipName"
               value={formData.scholarshipName}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           {/* University Name */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               University Name
             </label>
             <input
@@ -150,20 +150,20 @@ const ScholarshipForm = () => {
               name="universityName"
               value={formData.universityName}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           {/* University Logo */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               University Logo
             </label>
             <input
               type="file"
               onChange={handleFileChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -178,7 +178,7 @@ const ScholarshipForm = () => {
               name="universityCountry"
               value={formData.universityCountry}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -193,14 +193,14 @@ const ScholarshipForm = () => {
               name="universityCity"
               value={formData.universityCity}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           {/* University Rank */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block font-semibold mb-2">
               University Rank
             </label>
             <input
@@ -208,21 +208,21 @@ const ScholarshipForm = () => {
               name="universityRank"
               value={formData.universityRank}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           {/* Subject Category */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               Subject Category
             </label>
             <select
               name="subjectCategory"
               value={formData.subjectCategory}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
               <option value="">Select</option>
@@ -234,14 +234,14 @@ const ScholarshipForm = () => {
 
           {/* Scholarship Category */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block font-semibold mb-2">
               Scholarship Category
             </label>
             <select
               name="scholarshipCategory"
               value={formData.scholarshipCategory}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
               <option value="">Select</option>
@@ -253,14 +253,14 @@ const ScholarshipForm = () => {
 
           {/* Degree */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               Degree
             </label>
             <select
               name="degree"
               value={formData.degree}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
               <option value="">Select</option>
@@ -272,7 +272,7 @@ const ScholarshipForm = () => {
 
           {/* Tuition Fees (Optional) */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               Tuition Fees (Optional)
             </label>
             <input
@@ -280,13 +280,13 @@ const ScholarshipForm = () => {
               name="tuitionFees"
               value={formData.tuitionFees}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Application Fees */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               Application Fees
             </label>
             <input
@@ -294,7 +294,7 @@ const ScholarshipForm = () => {
               name="applicationFees"
               value={formData.applicationFees}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -309,7 +309,7 @@ const ScholarshipForm = () => {
               name="serviceCharge"
               value={formData.serviceCharge}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -324,7 +324,7 @@ const ScholarshipForm = () => {
               name="applicationDeadline"
               value={formData.applicationDeadline}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -339,14 +339,14 @@ const ScholarshipForm = () => {
               name="scholarshipPostDate"
               value={formData.scholarshipPostDate}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           {/* Posted User Email */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block  font-semibold mb-2">
               Posted User Email
             </label>
             <input
@@ -354,7 +354,7 @@ const ScholarshipForm = () => {
               name="postedUserEmail"
               value={formData.postedUserEmail}
               onChange={handleChange}
-              className="w-full p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3  border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -364,7 +364,7 @@ const ScholarshipForm = () => {
         <div>
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
+            className="w-full py-3 bg-blue-600 font-semibold rounded-md hover:bg-blue-700 transition duration-300"
           >
             Add Scholarship
           </button>

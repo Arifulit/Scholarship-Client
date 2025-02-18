@@ -24,7 +24,7 @@ const MyApplication = () => {
       <Helmet>
         <title>My Applications</title>
       </Helmet>
-      <div className="container mx-auto px-4 sm:px-8">
+      <div className="container mx-auto px-4 mt-6 sm:px-8">
         <div className="py-8">
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

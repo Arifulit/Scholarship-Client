@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import useAuth from "../../../hooks/useAuth";
 import Container from "../Container";
+// eslint-disable-next-line no-unused-vars
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import logo from "../../../assets/images/logo-flat.png";
 
@@ -111,12 +112,26 @@ const Navbar = () => {
                     </svg>
                   ) : (
                     <svg
-                      className="h-6 w-6 fill-current text-yellow-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 5a1 1 0 001-1V3a1 1 0 00-2 0V4a1 1 0 001 1zM5.64 7.05a1 1 0 001.41 0l.71-.71a1 1 0 10-1.41-1.41l-.71.71A1 1 0 005.64 7.05zM4 13H3a1 1 0 100 2h1a1 1 0 100-2zM12 19a1 1 0 00-1 1v1a1 1 0 002 0V20A1 1 0 0012 19z" />
-                    </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-8 w-8 transition-colors duration-300 dark:text-yellow-400 text-yellow-500"
+                  >
+                    
+                    <circle cx="12" cy="12" r="5" fill="currentColor" />
+                  
+                   
+                    <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="4" y1="4" x2="6.5" y2="6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="19.5" y1="19.5" x2="17" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="4" y1="20" x2="6.5" y2="17.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="19.5" y1="4.5" x2="17" y2="7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                  
+                  
                   )}
                 </button>
 

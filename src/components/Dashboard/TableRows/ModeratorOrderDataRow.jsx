@@ -52,20 +52,20 @@ const ModeratorOrderDataRow = ({ orderData, refetch }) => {
   return (
     <>
       <tr>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{universityName}</p>
+        <td className="px-5 py-5 border-b border-gray-200  text-sm">
+          <p className=" whitespace-no-wrap">{universityName}</p>
         </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{scholarshipCategory}</p>
+        <td className="px-5 py-5 border-b border-gray-200  text-sm">
+          <p className=" whitespace-no-wrap">{scholarshipCategory}</p>
         </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{subjectCategory}</p>
+        <td className="px-5 py-5 border-b border-gray-200  text-sm">
+          <p className=" whitespace-no-wrap">{subjectCategory}</p>
         </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">{applyingDegree}</p>
+        <td className="px-5 py-5 border-b border-gray-200  text-sm">
+          <p className=" whitespace-no-wrap">{applyingDegree}</p>
         </td>
        
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <td className="px-5 py-5 border-b border-gray-200  text-sm">
           <div className="flex items-center gap-2">
             <button onClick={() => setDetailsModalOpen(true)} className="text-blue-500 hover:underline">
               <FaInfoCircle /> Details
@@ -80,14 +80,14 @@ const ModeratorOrderDataRow = ({ orderData, refetch }) => {
 
       {/* Details Modal */}
       {isDetailsModalOpen && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg max-w-lg w-full">
+        <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center">
+          <div className=" p-6 rounded-lg max-w-lg w-full">
             <h2 className="text-xl font-semibold mb-4">Application Details</h2>
             <p><strong>University:</strong> {universityName}</p>
             <p><strong>Degree:</strong> {applyingDegree}</p>
             <p><strong>Scholarship Category:</strong> {scholarshipCategory}</p>
             <div className="mt-4">
-              <button onClick={() => setDetailsModalOpen(false)} className="px-4 py-2 bg-gray-500 text-white rounded">Close</button>
+              <button onClick={() => setDetailsModalOpen(false)} className="px-4 py-2  rounded">Close</button>
             </div>
           </div>
         </div>
@@ -96,12 +96,12 @@ const ModeratorOrderDataRow = ({ orderData, refetch }) => {
   
       {/* Delete Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg max-w-lg w-full">
+        <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center">
+          <div className=" p-6 rounded-lg max-w-lg w-full">
             <h2 className="text-xl font-semibold mb-4">Are you sure you want to reject this application?</h2>
             <div className="flex justify-between">
-              <button onClick={() => setDeleteModalOpen(false)} className="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
-              <button onClick={handleDelete} className="px-4 py-2 bg-red-500 text-white rounded">Reject</button>
+              <button onClick={() => setDeleteModalOpen(false)} className="px-4 py-2  rounded">Cancel</button>
+              <button onClick={handleDelete} className="px-4 py-2 bg-red-500 rounded">Reject</button>
             </div>
           </div>
         </div>

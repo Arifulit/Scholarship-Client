@@ -42,15 +42,15 @@ const AdminStatistics = () => {
 
   return (
     <div>
-      <div className='mt-12'>
+      <div className='mt-20'>
         {/* small cards */}
         <div className='mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-grow'>
           {/* Sales Card */}
-          <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md'>
+          <div className='relative flex flex-col bg-clip-border rounded-xl   shadow-md'>
             <div
               className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-orange-600 to-orange-400 text-white shadow-orange-500/40`}
             >
-              <FaDollarSign className='w-6 h-6 text-white' />
+              <FaDollarSign className='w-6 h-6 ' />
             </div>
             <div className='p-4 text-right'>
               <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
@@ -62,11 +62,11 @@ const AdminStatistics = () => {
             </div>
           </div>
           {/* Total Orders */}
-          <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md'>
+          <div className='relative flex flex-col bg-clip-border rounded-xl   shadow-md'>
             <div
-              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-blue-600 to-blue-400 text-white shadow-blue-500/40`}
+              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-blue-600 to-blue-400  shadow-blue-500/40`}
             >
-              <BsFillCartPlusFill className='w-6 h-6 text-white' />
+              <BsFillCartPlusFill className='w-6 h-6 ' />
             </div>
             <div className='p-4 text-right'>
               <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
@@ -78,11 +78,11 @@ const AdminStatistics = () => {
             </div>
           </div>
           {/* Total Plants */}
-          <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md'>
+          <div className='relative flex flex-col bg-clip-border rounded-xl  shadow-md'>
             <div
-              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-pink-600 to-pink-400 text-white shadow-pink-500/40`}
+              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-pink-600 to-pink-400  shadow-pink-500/40`}
             >
-              <BsFillHouseDoorFill className='w-6 h-6 text-white' />
+              <BsFillHouseDoorFill className='w-6 h-6 ' />
             </div>
             <div className='p-4 text-right'>
               <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
@@ -94,11 +94,11 @@ const AdminStatistics = () => {
             </div>
           </div>
           {/* Users Card */}
-          <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md'>
+          <div className='relative flex flex-col bg-clip-border rounded-xl  shadow-md'>
             <div
-              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-green-600 to-green-400 text-white shadow-green-500/40`}
+              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-green-600 to-green-400  shadow-green-500/40`}
             >
-              <FaUserAlt className='w-6 h-6 text-white' />
+              <FaUserAlt className='w-6 h-6 ' />
             </div>
             <div className='p-4 text-right'>
               <p className='block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600'>
@@ -113,11 +113,11 @@ const AdminStatistics = () => {
 
         <div className='mb-4 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3'>
           {/* Sales Bar Chart */}
-          <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2'>
+          <div className='relative flex flex-col bg-clip-border rounded-xl  shadow-md overflow-hidden xl:col-span-2'>
             <Bar data={data} options={options} />
           </div>
           {/* Calendar */}
-          <div className=' relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden'>
+          <div className=' relative flex flex-col bg-clip-border rounded-xl  shadow-md overflow-hidden'>
             <Calendar color='#4cc718' />
           </div>
         </div>

@@ -39,7 +39,7 @@ const Scholars = () => {
       {scholarships?.length > 0 ? (
         <section className="pt-6">
           {/* Title */}
-          <h2 className="text-center text-3xl font-bold text-gray-800 mb-6">
+          <h2 className="text-center text-3xl font-bold mb-6">
             Top Scholarships
           </h2>
 
@@ -55,7 +55,7 @@ const Scholars = () => {
             <div className="mt-8 flex justify-center">
               <Link
                 to="/all-scholarship"
-                className="px-6 py-3 text-lg font-semibold bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+                className="px-6 py-3 text-lg font-semibold bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300"
               >
                 View All Scholarships
               </Link>
@@ -63,7 +63,7 @@ const Scholars = () => {
           )}
         </section>
       ) : (
-        <p className="text-center text-gray-500 mt-10">No scholarships available at the moment.</p>
+        <p className="text-center  mt-10">No scholarships available at the moment.</p>
       )}
     </Container>
   );
