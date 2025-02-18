@@ -1,63 +1,136 @@
 
-import Card from './Card';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import LoadingSpinner from '../Shared/LoadingSpinner';
-import Container from '../Shared/Container';
-import { Link } from 'react-router-dom';
+// import Card from './Card';
+// import { useQuery } from '@tanstack/react-query';
+// import axios from 'axios';
+// import LoadingSpinner from '../Shared/LoadingSpinner';
+// import Container from '../Shared/Container';
+// import { Link } from 'react-router-dom';
+
+// const Scholars = () => {
+//   // Use tanstack query to fetch data from the backend
+//   const { data: scholarship, isLoading } = useQuery({
+//     queryKey: ['scholarship'],
+//     queryFn: async () => {
+//       const { data } = await axios(`${import.meta.env.VITE_API_URL}/scholarship`);
+//       return data;
+//     },
+//   });
+
+//   if (isLoading) return <LoadingSpinner />;
+
+//   console.log('Data found:', scholarship);
+
+//   // Sorting based on low application fees and recent posts
+//   const sortedScholarships = scholarship
+//     ? [...scholarship].sort((a, b) => {
+//         // Sort by application fees in ascending order
+//         if (a.applicationFee !== b.applicationFee) {
+//           return a.applicationFee - b.applicationFee;
+//         }
+//         // If application fees are equal, sort by date (recent first)
+//         return new Date(b.postedDate) - new Date(a.postedDate);
+//       })
+//     : [];
+
+//   // Display only the first 6 scholarships
+//   const topScholarships = sortedScholarships.slice(0, 6);
+
+//   return (
+//     <Container>
+//       {scholarship && scholarship.length > 0 ? (
+//         <div className="pt-12">
+//           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+//             {topScholarships.map((scholar) => (
+//               <Card key={scholar._id} scholar={scholar} />
+//             ))}
+//           </div>
+//           {/* "All Scholarship" button */}
+//           {sortedScholarships.length > 6 && (
+//             <div className="mt-8 flex justify-center">
+//               <Link
+//                 to="/all-scholarship"
+//                 className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+//               >
+//                 View All Scholarships
+//               </Link>
+//             </div>
+//           )}
+//         </div>
+//       ) : (
+//         <p>No data available</p>
+//       )}
+//     </Container>
+//   );
+// };
+
+// export default Scholars;
+
+
+import Card from "./Card";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import LoadingSpinner from "../Shared/LoadingSpinner";
+import Container from "../Shared/Container";
+import { Link } from "react-router-dom";
 
 const Scholars = () => {
-  // Use tanstack query to fetch data from the backend
-  const { data: scholarship, isLoading } = useQuery({
-    queryKey: ['scholarship'],
+  // Fetching scholarship data using React Query
+  const { data: scholarships, isLoading } = useQuery({
+    queryKey: ["scholarships"],
     queryFn: async () => {
-      const { data } = await axios(`${import.meta.env.VITE_API_URL}/scholarship`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/scholarship`
+      );
       return data;
     },
   });
 
   if (isLoading) return <LoadingSpinner />;
 
-  console.log('Data found:', scholarship);
+  console.log("Fetched Scholarships:", scholarships);
 
-  // Sorting based on low application fees and recent posts
-  const sortedScholarships = scholarship
-    ? [...scholarship].sort((a, b) => {
-        // Sort by application fees in ascending order
-        if (a.applicationFee !== b.applicationFee) {
-          return a.applicationFee - b.applicationFee;
-        }
-        // If application fees are equal, sort by date (recent first)
-        return new Date(b.postedDate) - new Date(a.postedDate);
-      })
+  // Sort scholarships: Lowest application fees first, then most recent posts
+  const sortedScholarships = scholarships
+    ? [...scholarships].sort((a, b) =>
+        a.applicationFee !== b.applicationFee
+          ? a.applicationFee - b.applicationFee
+          : new Date(b.postedDate) - new Date(a.postedDate)
+      )
     : [];
 
-  // Display only the first 6 scholarships
+  // Display only the top 6 scholarships
   const topScholarships = sortedScholarships.slice(0, 6);
 
   return (
     <Container>
-      {scholarship && scholarship.length > 0 ? (
-        <div className="pt-12">
+      {scholarships?.length > 0 ? (
+        <section className="pt-12">
+          {/* Title */}
+          <h2 className="text-center text-3xl font-bold text-gray-800 mb-6">
+            Top Scholarships
+          </h2>
+
+          {/* Scholarship Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {topScholarships.map((scholar) => (
               <Card key={scholar._id} scholar={scholar} />
             ))}
           </div>
-          {/* "All Scholarship" button */}
+
+          {/* "View All Scholarships" Button */}
           {sortedScholarships.length > 6 && (
             <div className="mt-8 flex justify-center">
               <Link
                 to="/all-scholarship"
-                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                className="px-6 py-3 text-lg font-semibold bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
               >
                 View All Scholarships
               </Link>
             </div>
           )}
-        </div>
+        </section>
       ) : (
-        <p>No data available</p>
+        <p className="text-center text-gray-500 mt-10">No scholarships available at the moment.</p>
       )}
     </Container>
   );
