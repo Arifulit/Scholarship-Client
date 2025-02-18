@@ -64,8 +64,6 @@
 // };
 
 // export default Scholars;
-
-
 import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -104,7 +102,7 @@ const Scholars = () => {
   return (
     <Container>
       {scholarships?.length > 0 ? (
-        <section className="pt-12">
+        <section className="pt-6">
           {/* Title */}
           <h2 className="text-center text-3xl font-bold text-gray-800 mb-6">
             Top Scholarships
