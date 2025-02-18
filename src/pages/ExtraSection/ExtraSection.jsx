@@ -39,7 +39,7 @@ const faqs = [
 // Card Component
 const Card = ({ icon, title, description, feedback, name, scholarship }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 transform transition duration-300 hover:scale-105 max-w-xs sm:max-w-md md:max-w-lg">
+    <div className="shadow-lg rounded-lg p-6 transform transition duration-300 hover:scale-105 max-w-xs sm:max-w-md md:max-w-lg">
       {icon && <div className="text-4xl mb-4 text-black">{icon}</div>}
       {title && <h3 className="text-xl font-semibold mb-2 text-black">{title}</h3>}
       {description && <p className="text-black">{description}</p>}
@@ -59,7 +59,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="w-full py-16 bg-gray-100">
+    <section className="w-full py-16 ">
     <div className="w-full mx-auto px-6">
       <h2 className="text-4xl font-bold text-center mb-8 text-black">
         Frequently Asked Questions
@@ -68,7 +68,7 @@ const FAQSection = () => {
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-lg shadow-md cursor-pointer w-full"
+            className=" p-6 rounded-lg shadow-md cursor-pointer w-full"
             onClick={() => toggleFAQ(index)}
           >
             <div className="flex justify-between items-center w-full">
@@ -103,14 +103,9 @@ const ExtraSection = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="hero bg-gradient-to-r from-blue-500 to-teal-500 p-8 text-center text-white rounded-lg shadow-lg">
-        
-        <p className="text-xl mt-4">Discover a world of opportunities with scholarships tailored to your needs.</p>
-      </section>
-
+  
      {/* Why Choose Us Section */}
-<section className="py-16 bg-gray-50">
+<section className="py-16 ">
   <h2 className="text-3xl font-bold text-center mb-8 text-black">Why Choose Us?</h2>
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
     {whyChooseUs.map((item, index) => (
@@ -120,7 +115,7 @@ const ExtraSection = () => {
 </section>
 
 {/* Testimonials Section */}
-<section className="py-16 bg-gray-100">
+<section className="py-16">
   <h2 className="text-3xl font-bold text-center mb-8 text-black">What Our Users Say</h2>
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
     {testimonials.map((testimonial, index) => (
@@ -136,15 +131,15 @@ const ExtraSection = () => {
       <section className="scholarship-tips py-16">
         <h2 className="text-3xl font-bold text-center mb-8 text-black">Scholarship Application Tips</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div className="tip-card bg-white p-6 rounded-lg shadow-md">
+          <div className="tip-card p-6 rounded-lg shadow-md">
             <h3 className="text-2xl font-semibold mb-4 text-black">Tip 1: Be Thorough</h3>
             <p className="text-black">Ensure you have all your documents ready and fill out all sections of the form accurately.</p>
           </div>
-          <div className="tip-card bg-white p-6 rounded-lg shadow-md">
+          <div className="tip-card  p-6 rounded-lg shadow-md">
             <h3 className="text-2xl font-semibold mb-4 text-black">Tip 2: Apply Early</h3>
             <p className="text-black">Start the application process as soon as possible to avoid missing deadlines.</p>
           </div>
-          <div className="tip-card bg-white p-6 rounded-lg shadow-md">
+          <div className="tip-card  p-6 rounded-lg shadow-md">
             <h3 className="text-2xl font-semibold mb-4 text-black">Tip 3: Highlight Achievements</h3>
             <p className="text-black">Showcase your academic achievements and extra-curricular activities to stand out.</p>
           </div>

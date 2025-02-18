@@ -23,7 +23,7 @@ const Card = ({ scholar }) => {
   return (
     <Link
       to={`/scholar/${_id}`}
-      className="group block bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
+      className="group block  shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
     >
       {/* University Logo and Header */}
       <div className="p-4 flex items-center bg-blue-100">

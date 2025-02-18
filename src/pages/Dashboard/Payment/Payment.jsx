@@ -11,8 +11,8 @@ const Payment = () => {
   const data = useLoaderData();
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-lg border border-gray-200">
+    <div className="flex justify-center items-center min-h-screen  px-4">
+      <div className=" shadow-lg rounded-xl p-8 w-full max-w-lg border border-gray-200">
         {/* Header Section */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center py-6 rounded-t-xl">
           <h2 className="text-3xl font-bold">Make a Payment</h2>

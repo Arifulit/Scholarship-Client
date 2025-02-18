@@ -34,15 +34,15 @@ const Home = () => {
         <title> Scholarship </title>
       </Helmet>
       
-      <div className="w-full bg-gray-50 ">
+      <div className="w-full  ">
         <Advertisemest />
       </div>
       
-      <div className="w-full bg-white ">
+      <div className="w-full ">
         <Scholars />
       </div>
       
-      <div className="w-full bg-gray-100 py-16">
+      <div className="w-full  py-16">
         <ExtraSection />
       </div>
     </div>

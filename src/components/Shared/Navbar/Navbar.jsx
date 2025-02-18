@@ -1,186 +1,4 @@
-
-// import Container from '../Container';
-// // eslint-disable-next-line no-unused-vars
-// import { AiOutlineMenu, AiOutlineShoppingCart } from 'react-icons/ai';
-// import { useState } from 'react';
-// import { Link, NavLink } from 'react-router-dom';
-// import useAuth from '../../../hooks/useAuth';
-// import avatarImg from '../../../assets/images/placeholder.jpg';
-// import logo from '../../../assets/images/logo-flat.png';
-
-// const Navbar = () => {
-//   const { user, logOut } = useAuth();
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-//   const handleLogout = () => {
-//     logOut();
-//     setIsMenuOpen(false);
-//   };
-
-//   const activeLinkClass = "text-green-500 font-semibold";
-  
-//   return (
-//     <div className="fixed w-full bg-white z-10 shadow-lg">
-//       <div className="py-4 border-b-2">
-//         <Container>
-//           <div className="flex items-center justify-between">
-//             {/* Logo and Website Name */}
-//             <Link to="/" className="flex items-center gap-2">
-//               <img src={logo} alt="logo" width="50" height="50" />
-//             </Link>
-
-//             {/* Desktop Navigation Links */}
-//             <div className="hidden md:flex items-center gap-8">
-//               <NavLink
-//                 to="/"
-//                 className={({ isActive }) => 
-//                   isActive ? activeLinkClass : "text-gray-700 hover:text-gray-900"
-//                 }
-//               >
-//                 Home
-//               </NavLink>
-//               <NavLink
-//                 to="/all-scholarship"
-//                 className={({ isActive }) => 
-//                   isActive ? activeLinkClass : "text-gray-700 hover:text-gray-900"
-//                 }
-//               >
-//                 All Scholarship
-//               </NavLink>
-
-//               {!user && (
-//                 <Link
-//                   to="/signup"
-//                   className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all"
-//                 >
-//                   SignUp
-//                 </Link>
-//               )}
-//             </div>
-
-//             {/* Mobile Dropdown Menu */}
-//             <div className="md:hidden relative">
-//               <div
-//                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-//                 className="p-3 border-[1px] border-neutral-200 rounded-full cursor-pointer hover:shadow-md"
-//               >
-//                 <AiOutlineMenu size={24} />
-//               </div>
-//               {isMenuOpen && (
-//                 <div className="absolute top-12 right-0 bg-white shadow-md rounded-md w-[60vw] p-4">
-//                   <Link
-//                     to="/"
-//                     className="block px-4 py-3 hover:bg-gray-100"
-//                     onClick={() => setIsMenuOpen(false)}
-//                   >
-//                     Home
-//                   </Link>
-//                   <Link
-//                     to="/all-scholarship"
-//                     className="block px-4 py-3 hover:bg-gray-100"
-//                     onClick={() => setIsMenuOpen(false)}
-//                   >
-//                     All Scholarship
-//                   </Link>
-//                   {user ? (
-//                     <>
-//                       <Link
-//                         to="/dashboard"
-//                         className="block px-4 py-3 hover:bg-gray-100"
-//                         onClick={() => setIsMenuOpen(false)}
-//                       >
-//                         Dashboard
-//                       </Link>
-//                       <NavLink
-//                         to="/profile"
-//                         className="block px-4 py-3 hover:bg-gray-100"
-//                         onClick={() => setIsMenuOpen(false)}
-//                       >
-//                         Update Profile
-//                       </NavLink>
-//                       <div
-//                         onClick={handleLogout}
-//                         className="block px-4 py-3 hover:bg-gray-100 cursor-pointer"
-//                       >
-//                         Logout
-//                       </div>
-//                     </>
-//                   ) : (
-//                     <>
-//                       <Link
-//                         to="/login"
-//                         className="block px-4 py-3 hover:bg-gray-100"
-//                         onClick={() => setIsMenuOpen(false)}
-//                       >
-//                         Login
-//                       </Link>
-//                       <Link
-//                         to="/signup"
-//                         className="block px-4 py-3 hover:bg-gray-100"
-//                         onClick={() => setIsMenuOpen(false)}
-//                       >
-//                         Sign Up
-//                       </Link>
-//                     </>
-//                   )}
-//                 </div>
-//               )}
-//             </div>
-
-//             {/* Profile Picture Dropdown */}
-//             {user && (
-//               <div className="relative hidden md:block">
-//                 <div
-//                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-//                   className="cursor-pointer flex items-center gap-2"
-//                 >
-//                   <img
-//                     className="rounded-full"
-//                     referrerPolicy="no-referrer"
-//                     src={user.photoURL || avatarImg}
-//                     alt="profile"
-//                     width="40"
-//                     height="40"
-//                   />
-//                 </div>
-//                 {isMenuOpen && (
-//                   <div className="absolute right-0 top-12 bg-white shadow-md rounded-md w-[14vw] p-2">
-//                     <Link
-//                       to="/profile"
-//                       className="block px-4 py-3 hover:bg-gray-100"
-//                       onClick={() => setIsMenuOpen(false)}
-//                     >
-//                       Update Profile
-//                     </Link>
-//                     <Link
-//                       to="/dashboard"
-//                       className="block px-4 py-3 hover:bg-gray-100"
-//                       onClick={() => setIsMenuOpen(false)}
-//                     >
-//                       Dashboard
-//                     </Link>
-//                     <div
-//                       onClick={handleLogout}
-//                       className="block px-4 py-3 hover:bg-gray-100 cursor-pointer"
-//                     >
-//                       Logout
-//                     </div>
-//                   </div>
-//                 )}
-//               </div>
-//             )}
-//           </div>
-//         </Container>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
-
-
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import useAuth from "../../../hooks/useAuth";
@@ -191,14 +9,27 @@ import logo from "../../../assets/images/logo-flat.png";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
+  // Theme Toggle Handler
+  const handleToggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+  };
+
+  // Apply Theme Change
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  // Logout Handler
   const handleLogout = () => {
     logOut();
     setIsMenuOpen(false);
-    setIsProfileMenuOpen(false);
   };
 
+  // Active link class
   const activeLinkClass = "text-green-500 font-semibold";
 
   return (
@@ -264,6 +95,32 @@ const Navbar = () => {
                 >
                   Update Profile
                 </NavLink>
+
+                {/* Theme Toggle */}
+                <button
+                  onClick={handleToggleTheme}
+                  className="p-2 rounded-full focus:outline-none"
+                >
+                  {theme === "dark" ? (
+                    <svg
+                      className="h-6 w-6 fill-current text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M21.64 13a1 1 0 00-1.05-.14 8.05 8.05 0 01-3.37.73A8.15 8.15 0 019.08 5.49a8.59 8.59 0 01.25-2A1 1 0 008 2.36 10.14 10.14 0 1022 14.05a1 1 0 00-.36-1.05z" />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="h-6 w-6 fill-current text-yellow-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 5a1 1 0 001-1V3a1 1 0 00-2 0V4a1 1 0 001 1zM5.64 7.05a1 1 0 001.41 0l.71-.71a1 1 0 10-1.41-1.41l-.71.71A1 1 0 005.64 7.05zM4 13H3a1 1 0 100 2h1a1 1 0 100-2zM12 19a1 1 0 00-1 1v1a1 1 0 002 0V20A1 1 0 0012 19z" />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Logout Button */}
                 <button
                   onClick={handleLogout}
                   className="text-white hover:text-gray-300 cursor-pointer"
@@ -344,50 +201,6 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
-          {/* Profile Picture Dropdown */}
-          {user && (
-            <div className="relative hidden md:block">
-              <button
-                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                className="cursor-pointer flex items-center gap-2"
-              >
-                <img
-                  className="rounded-full"
-                  referrerPolicy="no-referrer"
-                  src={user.photoURL || avatarImg}
-                  alt="profile"
-                  width="40"
-                  height="40"
-                />
-              </button>
-
-              {isProfileMenuOpen && (
-                <div className="absolute right-0 top-12 bg-white text-black shadow-md rounded-md w-[14vw] p-2">
-                  <Link
-                    to="/dashboard/profile"
-                    className="block px-4 py-3 hover:bg-gray-100"
-                    onClick={() => setIsProfileMenuOpen(false)}
-                  >
-                    Update Profile
-                  </Link>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-3 hover:bg-gray-100"
-                    onClick={() => setIsProfileMenuOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-3 hover:bg-gray-100"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </Container>
     </nav>

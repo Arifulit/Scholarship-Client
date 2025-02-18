@@ -85,8 +85,8 @@ const ScholarDetails = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100 px-6">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 max-w-4xl w-full">
+    <div className="flex justify-center items-center h-screen  px-6">
+      <div className=" shadow-lg rounded-lg overflow-hidden border border-gray-200 max-w-4xl w-full">
         {/* University Header */}
         <div className="relative">
           <div className="h-56 bg-gradient-to-r from-blue-600 to-blue-800"></div>
