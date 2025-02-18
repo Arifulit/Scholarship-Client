@@ -1,5 +1,7 @@
 
 
+
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -10,11 +12,7 @@ const ScholarDetails = () => {
   const navigate = useNavigate();
 
   // Fetching scholarship data
-  const {
-    data: scholar,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: scholar, isLoading, isError } = useQuery({
     queryKey: ["scholar", id],
     queryFn: async () => {
       const response = await axios.get(
@@ -26,9 +24,21 @@ const ScholarDetails = () => {
   });
 
   // Loading and Error Handling
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-700 text-lg">Loading...</p>
+      </div>
+    );
+
   if (isError)
-    return <p>Failed to fetch scholarship details. Please try again later.</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500 text-lg">
+          Failed to fetch scholarship details. Please try again later.
+        </p>
+      </div>
+    );
 
   // Handle Checkout Process
   const handleCheckout = async (scholar) => {
@@ -41,19 +51,17 @@ const ScholarDetails = () => {
     };
 
     try {
-      // Sending POST request to checkout endpoint
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/checkout`,
         cart,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure correct content-type header
+            "Content-Type": "application/json",
           },
         }
       );
 
       if (response.data.insertedId) {
-        // Show success alert and navigate to payment page
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -61,7 +69,6 @@ const ScholarDetails = () => {
         });
         navigate(`/payment/${cart.id}`);
       } else {
-        // Show error if checkout failed
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -69,9 +76,6 @@ const ScholarDetails = () => {
         });
       }
     } catch (error) {
-      console.error("Error during checkout:", error);
-
-      // Show error alert
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -81,56 +85,71 @@ const ScholarDetails = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
-        {/* University Logo and Name */}
-        <div className="p-6 flex items-center bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-          <img
-            src={scholar.universityImage}
-            alt={`${scholar.universityName} Logo`}
-            className="w-20 h-20 rounded-full object-cover border border-white"
-          />
-          <div className="ml-6">
-            <h2 className="text-2xl font-bold">{scholar.universityName}</h2>
-            <p className="text-sm opacity-90">
+    <div className="flex justify-center items-center h-screen bg-gray-100 px-6">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 max-w-4xl w-full">
+        {/* University Header */}
+        <div className="relative">
+          <div className="h-56 bg-gradient-to-r from-blue-600 to-blue-800"></div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <img
+              src={scholar.universityLogo}
+              alt={`${scholar.universityName} Logo`}
+              className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md"
+            />
+            <h2 className="mt-6 text-2xl font-bold text-white">
+              {scholar.universityName}
+            </h2>
+            <p className="text-lg text-white opacity-90">
               {scholar.universityCity}, {scholar.universityCountry}
             </p>
           </div>
         </div>
 
         {/* Scholarship Details */}
-        <div className="p-6">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">
+        <div className="p-8 text-gray-800">
+          <h3 className="text-2xl font-semibold text-center mb-6">
             Scholarship Details
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <p className="text-sm text-gray-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700">
+            <p>
               <span className="font-medium">Scholarship Name:</span>{" "}
               {scholar.scholarshipName}
             </p>
-            <p className="text-sm text-gray-700">
+            <p>
               <span className="font-medium">Category:</span>{" "}
               {scholar.scholarshipCategory}
             </p>
-            <p className="text-sm text-gray-700">
+            <p>
               <span className="font-medium">Subjects:</span>{" "}
               {scholar.subjectCategory}
             </p>
-            <p className="text-sm text-gray-700">
-              <span className="font-medium">Deadline:</span>{" "}
-              {scholar.scholarshipPostDate}
+            <p>
+              <span className="font-medium">Degree:</span>{" "}
+              {scholar.degree}
             </p>
-            <p className="text-sm text-gray-700">
+            <p>
+              <span className="font-medium">Application Deadline:</span>{" "}
+              {scholar.applicationDeadline}
+            </p>
+            <p>
               <span className="font-medium">Application Fees:</span> $
               {scholar.applicationFees}
+            </p>
+            <p>
+              <span className="font-medium">Tuition Fees:</span> $
+              {scholar.tuitionFees}
+            </p>
+            <p>
+              <span className="font-medium">University Rank:</span>{" "}
+              {scholar.universityRank}
             </p>
           </div>
 
           {/* Apply Button */}
-          <div className="mt-6">
+          <div className="mt-8 flex justify-center">
             <button
               onClick={() => handleCheckout(scholar)}
-              className="bg-gradient-to-r from-green-500 to-green-600 text-white font-bold py-2 px-4 rounded hover:from-green-600 hover:to-green-700"
+              className="bg-gradient-to-r from-green-500 to-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:scale-105 transition-transform"
             >
               Apply for Scholarship
             </button>

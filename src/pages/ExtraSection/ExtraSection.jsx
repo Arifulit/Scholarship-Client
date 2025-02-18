@@ -109,25 +109,26 @@ const ExtraSection = () => {
         <p className="text-xl mt-4">Discover a world of opportunities with scholarships tailored to your needs.</p>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-16 bg-gray-50">
-        <h2 className="text-3xl font-bold text-center mb-8 text-black">Why Choose Us?</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
-          {whyChooseUs.map((item, index) => (
-            <Card key={index} icon={item.icon} title={item.title} description={item.description} />
-          ))}
-        </div>
-      </section>
+     {/* Why Choose Us Section */}
+<section className="py-16 bg-gray-50">
+  <h2 className="text-3xl font-bold text-center mb-8 text-black">Why Choose Us?</h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
+    {whyChooseUs.map((item, index) => (
+      <Card key={index} icon={item.icon} title={item.title} description={item.description} className="max-w-sm w-full" />
+    ))}
+  </div>
+</section>
 
-      {/* Testimonials Section */}
-      <section className="py-16 bg-gray-100">
-        <h2 className="text-3xl font-bold text-center mb-8 text-black">What Our Users Say</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} feedback={testimonial.feedback} name={testimonial.name} scholarship={testimonial.scholarship} />
-          ))}
-        </div>
-      </section>
+{/* Testimonials Section */}
+<section className="py-16 bg-gray-100">
+  <h2 className="text-3xl font-bold text-center mb-8 text-black">What Our Users Say</h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
+    {testimonials.map((testimonial, index) => (
+      <Card key={index} feedback={testimonial.feedback} name={testimonial.name} scholarship={testimonial.scholarship} className="max-w-sm w-full" />
+    ))}
+  </div>
+</section>
+
 
     
 

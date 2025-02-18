@@ -10,7 +10,7 @@ const Card = ({ scholar }) => {
     universityLogo,
     universityCountry,
     universityCity,
-    universityWorldRank,
+    universityRank,
     scholarshipCategory,
     applicationDeadline,
     subjectCategory,
@@ -19,7 +19,7 @@ const Card = ({ scholar }) => {
     _id,
   } = scholar || {};
 
- 
+
   return (
     <Link
       to={`/scholar/${_id}`}
@@ -60,7 +60,8 @@ const Card = ({ scholar }) => {
           <span className="font-medium">Application Fees:</span> ${applicationFees}
         </p>
         <p className="text-sm text-gray-600 mb-4">
-          <span className="font-medium">World Rank:</span> {universityWorldRank}
+          <span className="font-medium">World Rank:</span> {universityRank
+          }
         </p>
 
         {/* Rating */}
@@ -87,7 +88,7 @@ Card.propTypes = {
     universityLogo: PropTypes.string.isRequired,
     universityCountry: PropTypes.string.isRequired,
     universityCity: PropTypes.string.isRequired,
-    universityWorldRank: PropTypes.number.isRequired,
+    universityRank: PropTypes.number.isRequired,
     scholarshipCategory: PropTypes.string.isRequired,
     subjectCategory: PropTypes.string.isRequired,
     deadline: PropTypes.string.isRequired,
