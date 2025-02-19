@@ -112,7 +112,6 @@
 // export default Sidebar
 
 
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GrLogout } from "react-icons/gr";
@@ -133,7 +132,10 @@ const Sidebar = () => {
   const [role, isLoading] = useRole();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-  // Toggle theme
+  // Toggle sidebar menu
+  const handleToggleSidebar = () => setIsActive(!isActive);
+
+  // Toggle theme mode
   const handleToggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -145,36 +147,24 @@ const Sidebar = () => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  // Sidebar Responsive Handler
-  const handleToggle = () => {
-    setIsActive(!isActive);
-  };
-
   return (
     <>
-      {/* Small Screen Navbar */}
-      <div className="flex justify-between md:hidden bg-gray-100 dark:bg-gray-900 p-4">
-        <div>
-          <Link to="/">
-            <img src={logo} alt="logo" width="100" height="100" />
-          </Link>
-        </div>
-
+      {/* Mobile Header with Theme & Sidebar Toggle */}
+      <div className="flex justify-between md:hidden bg-blue-200  p-4">
+        <Link to="/">
+          <img src={logo} alt="logo" width="100" height="100" />
+        </Link>
         <div className="flex items-center gap-4">
-          {/* Theme Toggle Button */}
-          <button
-            onClick={handleToggleTheme}
-            className="p-2 rounded-full focus:outline-none"
-          >
+          {/* Theme Toggle */}
+          <button onClick={handleToggleTheme} className="p-2 rounded-full focus:outline-none">
             {theme === "dark" ? (
               <MdOutlineLightMode className="h-6 w-6 text-yellow-400" />
             ) : (
               <MdDarkMode className="h-6 w-6 text-gray-200" />
             )}
           </button>
-
-          {/* Mobile Menu Button */}
-          <button onClick={handleToggle} className="p-3">
+          {/* Sidebar Toggle */}
+          <button onClick={handleToggleSidebar} className="p-3">
             {isActive ? <AiOutlineClose className="h-5 w-5" /> : <AiOutlineBars className="h-5 w-5" />}
           </button>
         </div>
@@ -182,43 +172,38 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed flex flex-col justify-between bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white overflow-x-hidden w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
+        className={`z-10 md:fixed flex flex-col justify-between bg-gray-200  dark:text-white overflow-x-hidden w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform transition duration-200 ease-in-out ${
           isActive ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition duration-200 ease-in-out`}
+        } md:translate-x-0`}
       >
-        <div>
-          {/* Logo Section */}
-          <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-lime-100 dark:bg-gray-700 mx-auto">
-            <Link to="/">
-              <img src={logo} alt="logo" width="100" height="100" />
-            </Link>
-          </div>
+        {/* Logo Section */}
+        <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-lime-100 dark:bg-gray-700 mx-auto">
+          <Link to="/">
+            <img src={logo} alt="logo" width="100" height="100" />
+          </Link>
+        </div>
 
-          {/* Nav Items */}
-          <div className="flex flex-col justify-between flex-1 mt-6">
-            <nav>
-              {/* Role-Based Menu Items */}
+        {/* Role-Based Navigation */}
+        <nav className="flex flex-col mt-6">
+          {!isLoading && (
+            <>
               {role === "customer" && <CustomerMenu />}
               {role === "moderator" && <ModeratorMenu />}
               {role === "admin" && <AdminMenu />}
-            </nav>
-          </div>
-        </div>
+            </>
+          )}
+        </nav>
 
-        {/* Footer Section */}
+        {/* Sidebar Footer */}
         <div>
           <hr className="border-gray-400 dark:border-gray-600" />
-
-          {/* Profile Button */}
           <Link
             to="/dashboard/profile"
-            className="flex items-center px-4 py-2 mt-5 transition duration-300 transform hover:bg-gray-300 dark:hover:bg-gray-700 rounded-md"
+            className="flex items-center px-4 py-2 mt-5 transition duration-300 transform hover:bg-gray-300  rounded-md"
           >
             <FcSettings className="w-5 h-5" />
             <span className="mx-4 font-medium">My Profile</span>
           </Link>
-
-          {/* Logout Button */}
           <button
             onClick={logOut}
             className="flex w-full items-center px-4 py-2 mt-5 transition duration-300 transform hover:bg-red-500 dark:hover:bg-red-700 rounded-md"
