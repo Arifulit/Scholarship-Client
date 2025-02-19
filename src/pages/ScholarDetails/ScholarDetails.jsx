@@ -96,21 +96,21 @@ const ScholarDetails = () => {
               alt={`${scholar.universityName} Logo`}
               className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md"
             />
-            <h2 className="mt-6 text-2xl font-bold text-white">
+            <h2 className="mt-6 text-2xl font-bold ">
               {scholar.universityName}
             </h2>
-            <p className="text-lg text-white opacity-90">
+            <p className="text-lg  opacity-90">
               {scholar.universityCity}, {scholar.universityCountry}
             </p>
           </div>
         </div>
 
         {/* Scholarship Details */}
-        <div className="p-8 text-gray-800">
+        <div className="p-8 ">
           <h3 className="text-2xl font-semibold text-center mb-6">
             Scholarship Details
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ">
             <p>
               <span className="font-medium">Scholarship Name:</span>{" "}
               {scholar.scholarshipName}

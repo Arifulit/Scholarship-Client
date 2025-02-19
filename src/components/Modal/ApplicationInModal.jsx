@@ -76,7 +76,7 @@ const ApplicationInModal = () => {
           title: "Application Submitted",
           text: "Your scholarship application has been submitted successfully.",
         });
-        navigate("/");
+        navigate("/dashboard/my-application");
       }
     } catch (error) {
       Swal.fire({
@@ -88,25 +88,25 @@ const ApplicationInModal = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6  shadow-lg rounded-lg border border-gray-200">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Apply for Scholarship</h1>
+    <div className="max-w-3xl mx-auto p-6 mt-2 shadow-lg rounded-lg border border-gray-200">
+      <h1 className="text-2xl font-bold  mb-6">Apply for Scholarship</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+          <label className="block text-sm font-medium ">Phone Number</label>
           <input
             type="text"
             name="phone"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Photo</label>
+          <label className="block text-sm font-medium ">Photo</label>
           <input
             onChange={handleFileChange}
             type="file"
             name="photo"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
             required
           />
         </div>
@@ -114,7 +114,7 @@ const ApplicationInModal = () => {
           <label className="block text-sm font-medium text-gray-700">Gender</label>
           <select
             name="gender"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
             required
           >
             <option value="">Select Gender</option>
@@ -124,10 +124,10 @@ const ApplicationInModal = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Applying Degree</label>
+          <label className="block text-sm font-medium ">Applying Degree</label>
           <select
             name="applyingDegree"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
             required
           >
             <option value="">Select Degree</option>
@@ -137,28 +137,28 @@ const ApplicationInModal = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">SSC Result</label>
+          <label className="block text-sm font-medium ">SSC Result</label>
           <input
             type="text"
             name="sscResult"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">HSC Result</label>
+          <label className="block text-sm font-medium ">HSC Result</label>
           <input
             type="text"
             name="hscResult"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Study Gap (if any)</label>
+          <label className="block text-sm font-medium ">Study Gap (if any)</label>
           <select
             name="studyGap"
-            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  text-gray-800"
+            className="mt-1 w-full p-3 border border-gray-300 rounded-lg  "
           >
             <option value="">No Gap</option>
             <option value="1 Year">1 Year</option>
@@ -195,7 +195,7 @@ const ApplicationInModal = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+          className="w-full bg-blue-600  p-3 rounded-lg hover:bg-blue-700"
         >
           Submit / Apply
         </button>
