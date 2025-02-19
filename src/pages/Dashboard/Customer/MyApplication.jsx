@@ -1,3 +1,5 @@
+
+
 import { Helmet } from 'react-helmet-async';
 import CustomerOrderDataRow from '../../../components/Dashboard/TableRows/CustomerOrderDataRow';
 import useAuth from '../../../hooks/useAuth';
@@ -28,30 +30,25 @@ const MyApplication = () => {
         <div className="py-8">
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-              <table className="min-w-full leading-normal">
+              <table className="min-w-full leading-normal text-sm">
                 <thead>
-                  <tr>
-                    <th className="px-5 py-3  border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      User Name
-                    </th>
-                    <th className="px-5 py-3  border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      University Name
-                    </th>
-                    <th className="px-5 py-3 border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      Scholarship Category
-                    </th>
-                    <th className="px-5 py-3 border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      Subject Category
-                    </th>
-                    <th className="px-5 py-3  border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      Applying Degree
-                    </th>
-                    <th className="px-5 py-3  border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      Study Gap
-                    </th>
-                    <th className="px-5 py-3  border-b border-gray-200  text-left text-sm uppercase font-bold">
-                      Actions
-                    </th>
+                  <tr >
+                    {[
+                      'User Name',
+                      'University Name',
+                      'Scholarship Category',
+                      'Subject Category',
+                      'Applying Degree',
+                      'Study Gap',
+                      'Actions',
+                    ].map((heading, index) => (
+                      <th
+                        key={index}
+                        className="px-3 py-3 border-b border-gray-200 text-left uppercase font-bold"
+                      >
+                        {heading}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
