@@ -52,7 +52,7 @@ const Scholars = () => {
 
           {/* "View All Scholarships" Button */}
           {sortedScholarships.length > 6 && (
-            <div className="mt-8 flex justify-center">
+            <div className="mt-4 flex justify-center">
               <Link
                 to="/all-scholarship"
                 className="px-6 py-3 text-lg font-semibold bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300"

@@ -61,4 +61,4 @@ Access the live project: [Scholarship Management System](https://scholarships-d1
 ### Installation:
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo-link.git
+   git clone https://github.com/Arifulit/Scholarship-Client
