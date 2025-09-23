@@ -3,16 +3,21 @@
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { FiEye, FiEyeOff, FiMail, FiLock, FiLogIn, FiMoon, FiSun } from 'react-icons/fi';
+import { useState } from 'react';
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { saveUser } from "../../api/utils";
+import useTheme from "../../hooks/useTheme";
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
+  const [showPassword, setShowPassword] = useState(false);
 
   if (user) return <Navigate to={from} replace />;
   if (loading) return <LoadingSpinner />;
@@ -48,71 +53,134 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
-        <div className="mb-8 text-center">
-          <h1 className="my-3 text-4xl font-bold">Log In</h1>
-          <p className="text-sm text-gray-400">Sign in to access your account</p>
-        </div>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block mb-2 text-sm">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                placeholder="Enter Your Email Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block mb-2 text-sm">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                autoComplete="current-password"
-                required
-                placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
-              />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-lime-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 transition-colors duration-300">
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="fixed top-6 right-6 z-50 p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+      >
+        {isDarkMode ? (
+          <FiSun className="text-yellow-500 text-xl" />
+        ) : (
+          <FiMoon className="text-gray-600 text-xl" />
+        )}
+      </button>
+
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-lime-500 to-emerald-500 rounded-full mb-4 shadow-lg">
+            <FiLogIn className="text-white text-2xl" />
           </div>
-          
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
+          <p className="text-gray-600 dark:text-gray-300">Sign in to access your scholarship platform</p>
+        </div>
+
+        {/* Form Container */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-100 dark:border-gray-700 backdrop-blur-sm">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Email Address
+              </label>
+              <div className="relative">
+                <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  required
+                  placeholder="Enter your email address"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Password
+              </label>
+              <div className="relative">
+                <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  id="password"
+                  autoComplete="current-password"
+                  required
+                  placeholder="Enter your password"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all duration-200 bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </div>
+            </div>
+
+            {/* Forgot Password */}
+            <div className="flex justify-end">
+              <button 
+                type="button"
+                className="text-sm text-lime-600 dark:text-lime-400 hover:text-lime-500 dark:hover:text-lime-300 transition-colors duration-200"
+              >
+                Forgot your password?
+              </button>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-lime-500 to-emerald-500 text-white py-3 px-4 rounded-lg font-medium hover:from-lime-600 hover:to-emerald-600 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transform hover:scale-105"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <TbFidgetSpinner className="animate-spin mr-2" />
+                  Signing In...
+                </div>
+              ) : (
+                'Sign In'
+              )}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="flex items-center my-6">
+            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-600"></div>
+            <span className="px-4 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800">or</span>
+            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-600"></div>
+          </div>
+
+          {/* Google Sign In */}
           <button
-            type="submit"
-            className="bg-lime-500 w-full rounded-md py-3 text-white"
+            onClick={handleGoogleSignIn}
+            className="w-full flex items-center justify-center space-x-3 py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 font-medium text-gray-700 dark:text-gray-300 transform hover:scale-105"
           >
-            {loading ? <TbFidgetSpinner className="animate-spin m-auto" /> : "Continue"}
+            <FcGoogle size={24} />
+            <span>Continue with Google</span>
           </button>
-        </form>
-        
-        <div className="space-y-1">
-          <button className="text-xs hover:underline hover:text-lime-500 text-gray-400">Forgot password?</button>
+
+          {/* Sign Up Link */}
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
+            Don&apos;t have an account yet?{' '}
+            <Link
+              to="/signup"
+              className="font-medium text-lime-600 dark:text-lime-400 hover:text-lime-500 dark:hover:text-lime-300 transition-colors duration-200"
+            >
+              Create account
+            </Link>
+          </p>
         </div>
-        
-        <div className="flex items-center pt-4 space-x-1">
-          <div className="flex-1 h-px bg-gray-300"></div>
-          <p className="px-3 text-sm text-gray-500">Login with social accounts</p>
-          <div className="flex-1 h-px bg-gray-300"></div>
-        </div>
-        
-        <div
-          onClick={handleGoogleSignIn}
-          className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 rounded cursor-pointer hover:bg-gray-200 transition"
-        >
-          <FcGoogle size={32} />
-          <p>Continue with Google</p>
-        </div>
-        
-        <p className="px-6 text-sm text-center text-gray-400">
-          Don&apos;t have an account yet?{' '}
-          <Link to="/signup" className="hover:underline hover:text-lime-500 text-gray-600">
-            Sign up
-          </Link>
+
+        {/* Footer */}
+        <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-8">
+          Protected by industry-standard security measures
         </p>
       </div>
     </div>
