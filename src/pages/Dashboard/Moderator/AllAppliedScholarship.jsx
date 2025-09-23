@@ -8,6 +8,11 @@ import { HiAcademicCap } from 'react-icons/hi';
 import { BsGrid3X3Gap, BsList, BsThreeDotsVertical } from 'react-icons/bs';
 import { toast } from 'react-hot-toast';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import ApiTest from '../../../components/Debug/ApiTest';
+import QuickApiTest from '../../../components/Debug/QuickApiTest';
+import NetworkTest from '../../../components/Debug/NetworkTest';
+import BackendTest from '../../../components/Debug/BackendTest';
+import { mockApplications, mockApiService } from '../../../services/mockData';
 
 const AllAppliedScholarship = () => {
   const axiosSecure = useAxiosSecure();
@@ -22,12 +27,29 @@ const AllAppliedScholarship = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showBulkActions, setShowBulkActions] = useState(false);
   
-  const { data: orders = [], isLoading, refetch } = useQuery({
+  const { data: orders = [], isLoading, error, refetch } = useQuery({
     queryKey: ['orders'],
     queryFn: async () => {
-      const { data } = await axiosSecure('/scholar/moderator');
-      return data;
+      console.log('🔍 Attempting to fetch data from backend...');
+      try {
+        // Try to fetch from backend first
+        console.log('📡 Trying backend:', '/scholar/moderator');
+        const { data } = await axiosSecure('/scholar/moderator');
+        console.log('✅ Backend data received:', data);
+        return data;
+      } catch (backendError) {
+        console.log('❌ Backend failed, using mock data:', backendError);
+        // Fallback to mock data if backend fails
+        const mockData = await mockApiService.getApplications();
+        console.log('🎭 Using mock data:', mockData.data);
+        toast.success('Using demo data (Backend connection failed)');
+        return mockData.data;
+      }
     },
+    onError: (error) => {
+      console.error('❌ Query Error:', error);
+      toast.error('Failed to fetch scholarship data');
+    }
   });
 
   // Filter and sort orders
@@ -924,6 +946,12 @@ const AllAppliedScholarship = () => {
           </div>
         )}
       </div>
+      
+      {/* Debug Panels - Remove these in production */}
+      <ApiTest />
+      <QuickApiTest />
+      <NetworkTest />
+      <BackendTest />
     </div>
   );
 };
