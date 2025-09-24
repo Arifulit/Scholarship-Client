@@ -70,8 +70,8 @@ const Navbar = () => {
               }`
             : `px-4 py-2 rounded-lg font-medium ${
                 isActive
-                  ? "text-lime-400 bg-white/10"
-                  : "text-white/90 hover:text-white hover:bg-white/10"
+                  ? "text-lime-200 bg-white/20 shadow-lg"
+                  : "text-white/95 hover:text-white hover:bg-white/15 hover:shadow-lg"
               }`
         }`
       }
@@ -85,7 +85,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200"
+          ? "bg-gradient-to-r from-lime-600/95 to-emerald-700/95 backdrop-blur-md shadow-2xl border-b border-emerald-500/20"
           : "bg-gradient-to-r from-lime-500 to-emerald-600"
       }`}
     >
@@ -106,14 +106,14 @@ const Navbar = () => {
             <div className="hidden sm:block">
               <h1
                 className={`text-xl font-bold transition-colors duration-300 ${
-                  isScrolled ? "text-gray-900" : "text-white"
+                  isScrolled ? "text-white drop-shadow-lg" : "text-white"
                 }`}
               >
                 ScholarHub
               </h1>
               <p
                 className={`text-xs transition-colors duration-300 ${
-                  isScrolled ? "text-gray-600" : "text-lime-100"
+                  isScrolled ? "text-lime-100 drop-shadow-md" : "text-lime-100"
                 }`}
               >
                 Your Future Awaits
@@ -153,7 +153,7 @@ const Navbar = () => {
                     onClick={toggleSearch}
                     className={`p-2.5 rounded-lg transition-all duration-300 ${
                       isScrolled
-                        ? "text-gray-600 hover:bg-gray-100"
+                        ? "text-white/90 hover:bg-white/20 shadow-lg"
                         : "text-white/90 hover:bg-white/10"
                     }`}
                   >
@@ -179,12 +179,12 @@ const Navbar = () => {
                 <button
                   className={`relative p-2.5 rounded-lg transition-all duration-300 ${
                     isScrolled
-                      ? "text-gray-600 hover:bg-gray-100"
+                      ? "text-white/90 hover:bg-white/20 shadow-lg"
                       : "text-white/90 hover:bg-white/10"
                   }`}
                 >
                   <FiBell className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full text-xs"></span>
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full text-xs shadow-lg"></span>
                 </button>
 
                 <NavLinkItem to="/dashboard">
@@ -198,7 +198,11 @@ const Navbar = () => {
                 <div className="relative">
                   <button 
                     onClick={toggleUserDropdown}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 group"
+                    className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 group ${
+                      isScrolled 
+                        ? "bg-white/15 hover:bg-white/25 shadow-lg" 
+                        : "bg-white/10 hover:bg-white/20"
+                    }`}
                   >
                     {user?.photoURL ? (
                       <img
@@ -297,7 +301,7 @@ const Navbar = () => {
               onClick={toggleTheme}
               className={`p-2 rounded-lg transition-all duration-300 ${
                 isScrolled
-                  ? "text-gray-600 hover:bg-gray-100"
+                  ? "text-white/90 hover:bg-white/20 shadow-lg"
                   : "text-white/90 hover:bg-white/10"
               }`}
             >
@@ -313,7 +317,7 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-2 rounded-lg transition-all duration-300 ${
                 isScrolled
-                  ? "text-gray-600 hover:bg-gray-100"
+                  ? "text-white hover:bg-white/20 shadow-lg"
                   : "text-white hover:bg-white/10"
               }`}
             >
@@ -328,7 +332,7 @@ const Navbar = () => {
 
         {/* Enhanced Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-2xl border-t border-gray-200 animate-in slide-in-from-top-2 duration-300">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/96 backdrop-blur-md shadow-2xl border-t border-emerald-200 animate-in slide-in-from-top-2 duration-300">
             <div className="p-6 space-y-3">
               {/* Mobile Search */}
               <div className="relative mb-4">

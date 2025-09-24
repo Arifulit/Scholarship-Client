@@ -21,8 +21,6 @@ const Scholars = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
-  console.log("Fetched Scholarships:", scholarships);
-
   // Sort scholarships: Lowest application fees first, then most recent posts
   const sortedScholarships = scholarships
     ? [...scholarships].sort((a, b) =>
@@ -81,16 +79,22 @@ const Scholars = () => {
               </div>
             </div>
 
-            {/* Scholarship Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {topScholarships.map((scholar) => (
-                <div
-                  key={scholar._id}
-                  className="transform hover:scale-105 transition-all duration-300"
-                >
-                  <Card scholar={scholar} />
-                </div>
-              ))}
+            {/* Ultra Professional Scholarship Grid with Perfect Window Spacing */}
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 mb-16">
+                {topScholarships.map((scholar, index) => (
+                  <div
+                    key={scholar._id}
+                    className="transform transition-all duration-700 hover:z-10"
+                    style={{
+                      animationDelay: `${index * 150}ms`,
+                      animation: 'fadeInUp 0.8s ease-out forwards'
+                    }}
+                  >
+                    <Card scholar={scholar} />
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* "View All Scholarships" Button */}

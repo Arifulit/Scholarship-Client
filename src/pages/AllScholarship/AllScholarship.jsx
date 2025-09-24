@@ -44,9 +44,7 @@ const AllScholarship = () => {
     queryKey: ["scholarship"],
     queryFn: async () => {
       const apiUrl = `${import.meta.env.VITE_API_URL}/scholarship`;
-      console.log('API URL:', apiUrl); // Debug log
       const { data } = await axios(apiUrl);
-      console.log('Fetched scholarships:', data); // Debug log
       return data;
     },
   });
@@ -463,21 +461,21 @@ const AllScholarship = () => {
             </div>
           ) : (
             <>
-              {/* Enhanced Grid Layout */}
-              <div className={`grid gap-8 ${
+              {/* Ultra Professional Grid Layout with Perfect Window Spacing */}
+              <div className={`max-w-7xl mx-auto ${
                 viewMode === "grid" 
-                  ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3" 
-                  : "grid-cols-1 max-w-5xl mx-auto"
+                  ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-0" 
+                  : "flex flex-col gap-0"
               }`}>
                 {paginatedScholarships.map((scholarship, index) => (
                   <div
                     key={scholarship._id}
-                    className={`group transform transition-all duration-500 hover:scale-105 ${
-                      viewMode === "list" ? "hover:scale-102" : ""
+                    className={`transform transition-all duration-700 hover:z-10 ${
+                      viewMode === "list" ? "" : ""
                     }`}
                     style={{
-                      animationDelay: `${index * 100}ms`,
-                      animation: 'fadeInUp 0.6s ease-out forwards'
+                      animationDelay: `${index * 120}ms`,
+                      animation: 'fadeInUp 0.8s ease-out forwards'
                     }}
                   >
                     <Card scholar={scholarship} viewMode={viewMode} />
