@@ -5,6 +5,8 @@ import Advertisemest from '../../components/Home/Advertisemest'
 import Scholars from '../../components/Home/Scholars'
 import ExtraSection from '../ExtraSection/ExtraSection'
 import ProductionDebug from '../../components/Debug/ProductionDebug'
+import BackendDataChecker from '../../components/Debug/BackendDataChecker'
+import BackendSeeder from '../../components/Debug/BackendSeeder'
 // import DeploymentDebug from '../../components/Debug/DeploymentDebug'
 // import ApiEndpointTester from '../../components/Debug/ApiEndpointTester'
 
@@ -27,8 +29,10 @@ const Home = () => {
         <ExtraSection />
       </div>
       
-      {/* Production Debug Panel */}
+      {/* Debug Panels */}
       <ProductionDebug />
+      <BackendDataChecker />
+      <BackendSeeder />
       
       {/* Debug Panels - Disabled */}
       {/* {import.meta.env.DEV && (

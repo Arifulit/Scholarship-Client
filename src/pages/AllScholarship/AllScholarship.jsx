@@ -52,9 +52,10 @@ const AllScholarship = () => {
         console.log('✅ AllScholarship API Response:', response.data);
         
         if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+          console.log('✅ AllScholarship using real backend data');
           return response.data;
         } else {
-          console.log('⚠️ AllScholarship API returned empty, using mock data');
+          console.log('⚠️ AllScholarship backend returned empty, using mock data');
           return mockScholarships;
         }
       } catch (error) {

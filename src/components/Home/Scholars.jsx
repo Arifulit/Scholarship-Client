@@ -21,9 +21,10 @@ const Scholars = () => {
         console.log('✅ API Response:', response.data);
         
         if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+          console.log('✅ Using real backend data');
           return response.data;
         } else {
-          console.log('⚠️ API returned empty array, using mock data');
+          console.log('⚠️ Backend returned empty array, using mock data');
           return mockScholarships;
         }
       } catch (apiError) {
