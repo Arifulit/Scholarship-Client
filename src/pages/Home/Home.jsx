@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Advertisemest from '../../components/Home/Advertisemest'
 import Scholars from '../../components/Home/Scholars'
 import ExtraSection from '../ExtraSection/ExtraSection'
+import AuthDebug from '../../components/AuthDebug'
 
 const Home = () => {
   return (
@@ -23,6 +24,9 @@ const Home = () => {
       <div className="w-full  py-16">
         <ExtraSection />
       </div>
+      
+      {/* Auth Debug - Only shows in dev or with ?debug=auth */}
+      <AuthDebug />
     </div>
   )
 }
