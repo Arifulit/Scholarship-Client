@@ -11,9 +11,6 @@ import {
 } from "../../utils/scholarshipColors";
 
 const Card = ({ scholar, viewMode = "grid" }) => {
-  // Debug log
-  console.log('Card received scholar data:', scholar);
-  
   const {
     scholarshipName = "Scholarship Name",
     universityName = "University Name", 
@@ -57,226 +54,238 @@ const Card = ({ scholar, viewMode = "grid" }) => {
 
   if (viewMode === "list") {
     return (
-      <Link
-        to={`/scholar/${_id}`}
-        className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden"
-      >
-        <div className="flex flex-col md:flex-row">
-          {/* University Logo Section */}
-          <div className="md:w-48 bg-gradient-to-br from-lime-500 to-emerald-600 p-6 flex items-center justify-center">
-            <div className="text-center">
-              <img
-                src={universityLogo || "/placeholder.jpg"}
-                alt={`${universityName} Logo`}
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-4 border-white shadow-lg mx-auto mb-3 group-hover:scale-110 transition-transform duration-300"
-                onError={(e) => {
-                  e.target.src = "/placeholder.jpg";
-                }}
-              />
-              <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${rankingColors.badge}`}>
-                #{universityRank}
-              </div>
-            </div>
-          </div>
-
-          {/* Content Section */}
-          <div className="flex-1 p-6">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between">
-              <div className="flex-1">
-                {/* Title and University */}
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors duration-300 mb-2">
-                  {scholarshipName}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <HiLocationMarker className="w-4 h-4" />
-                  {universityName} • {universityCity}, {universityCountry}
-                </p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${scholarshipColors.bg} ${scholarshipColors.text}`}>
-                    <FiAward className="w-3 h-3" />
-                    {scholarshipCategory}
-                  </span>
-                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${subjectColors.bg} ${subjectColors.text}`}>
-                    <FiBookOpen className="w-3 h-3" />
-                    {subjectCategory}
-                  </span>
-                </div>
-              </div>
-
-              {/* Stats Section */}
-              <div className="flex items-center gap-6 mt-4 lg:mt-0">
-                {/* Fee */}
-                <div className="text-center">
-                  <div className={`p-2 rounded-lg mb-1 ${feeColors.bg}`}>
-                    <HiCurrencyDollar className={`w-5 h-5 mx-auto ${feeColors.icon}`} />
+      <div className="mx-4 lg:mx-6">
+        <Link
+          to={`/scholar/${_id}`}
+          className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500 overflow-hidden transform hover:-translate-y-1 hover:scale-[1.01]"
+        >
+          <div className="flex flex-col md:flex-row">
+            {/* Enhanced University Logo Section */}
+            <div className="md:w-56 bg-gradient-to-br from-emerald-600 via-green-600 to-teal-700 p-8 flex items-center justify-center">
+              <div className="text-center">
+                <div className="relative mb-4">
+                  <img
+                    src={universityLogo || "/placeholder.jpg"}
+                    alt={`${universityName} Logo`}
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-2xl object-cover border-4 border-white shadow-2xl mx-auto"
+                    onError={(e) => {
+                      e.target.src = "/placeholder.jpg";
+                    }}
+                  />
+                  <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-2 shadow-lg">
+                    <HiTrendingUp className="w-3 h-3 text-white" />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Fee</p>
-                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                    {applicationFees === 0 ? 'Free' : `$${applicationFees}`}
-                  </p>
                 </div>
-
-                {/* Deadline */}
-                <div className="text-center">
-                  <div className={`p-2 rounded-lg mb-1 ${deadlineColors.bg}`}>
-                    <HiClock className={`w-5 h-5 mx-auto ${deadlineColors.icon}`} />
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Deadline</p>
-                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                    {daysRemaining > 0 ? `${daysRemaining}d left` : 'Expired'}
-                  </p>
-                </div>
-
-                {/* Rating */}
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-1 mb-1">
-                    <HiStar className="w-4 h-4 text-yellow-400" />
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{rating}</span>
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Rating</p>
-                </div>
-
-                {/* Action */}
-                <div className="text-lime-600 dark:text-lime-400 group-hover:text-lime-700 dark:group-hover:text-lime-300 transition-colors duration-300">
-                  <FiExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                <div className={`inline-block px-4 py-2 rounded-xl text-sm font-bold shadow-lg backdrop-blur-sm border border-white/20 ${rankingColors.badge}`}>
+                  #{universityRank}
                 </div>
               </div>
             </div>
+
+            {/* Enhanced Content Section */}
+            <div className="flex-1 p-8">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between">
+                <div className="flex-1 pr-6">
+                  {/* Enhanced Title and University */}
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300 mb-3 leading-tight">
+                    {scholarshipName}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center gap-2 text-lg">
+                    <HiLocationMarker className="w-5 h-5 text-emerald-500" />
+                    {universityName} • {universityCity}, {universityCountry}
+                  </p>
+
+                  {/* Enhanced Tags */}
+                  <div className="flex flex-wrap gap-3 mb-6">
+                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold ${scholarshipColors.bg} ${scholarshipColors.text} border-2 ${scholarshipColors.border} shadow-sm`}>
+                      <FiAward className="w-4 h-4" />
+                      {scholarshipCategory}
+                    </span>
+                    <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold ${subjectColors.bg} ${subjectColors.text} border-2 ${subjectColors.border} shadow-sm`}>
+                      <FiBookOpen className="w-4 h-4" />
+                      {subjectCategory}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Enhanced Stats Section */}
+                <div className="flex items-center gap-8 mt-6 lg:mt-0">
+                  {/* Enhanced Fee */}
+                  <div className="text-center">
+                    <div className={`p-4 rounded-2xl mb-3 shadow-lg ${feeColors.bg}`}>
+                      <HiCurrencyDollar className={`w-6 h-6 mx-auto ${feeColors.icon}`} />
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wide">Fee</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
+                      {applicationFees === 0 ? 'Free' : `$${applicationFees}`}
+                    </p>
+                  </div>
+
+                  {/* Enhanced Deadline */}
+                  <div className="text-center">
+                    <div className={`p-4 rounded-2xl mb-3 shadow-lg ${deadlineColors.bg}`}>
+                      <HiClock className={`w-6 h-6 mx-auto ${deadlineColors.icon}`} />
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wide">Deadline</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
+                      {daysRemaining > 0 ? `${daysRemaining}d left` : 'Expired'}
+                    </p>
+                  </div>
+
+                  {/* Enhanced Rating */}
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-1 mb-3">
+                      <HiStar className="w-6 h-6 text-yellow-400 drop-shadow-sm" />
+                      <span className="text-lg font-bold text-gray-900 dark:text-white">{rating}</span>
+                    </div>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wide">Rating</p>
+                  </div>
+
+                  {/* Enhanced Action Button */}
+                  <div className="flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white px-6 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-emerald-500">
+                    <span className="font-bold text-sm">Apply Now</span>
+                    <FiExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     );
   }
 
   return (
-    <Link
-      to={`/scholar/${_id}`}
-      className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700 overflow-hidden animate-fade-in-up"
-    >
-      {/* University Header */}
-      <div className="relative bg-gradient-to-r from-lime-500 to-emerald-600 p-6">
-        {/* Deadline Urgency Badge */}
-        {daysRemaining <= 7 && daysRemaining > 0 && (
-          <div className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
-            {daysRemaining}d left
-          </div>
-        )}
-        
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <img
-                src={universityLogo || "/placeholder.jpg"}
-                alt={`${universityName} Logo`}
-                className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg group-hover:scale-110 transition-transform duration-300"
-                onError={(e) => {
-                  e.target.src = "/placeholder.jpg";
-                }}
-              />
-              <div className="absolute -bottom-2 -right-2 bg-white rounded-full p-1">
-                <HiTrendingUp className="w-4 h-4 text-lime-500" />
+    <div className="mx-4 lg:mx-6">
+      <Link
+        to={`/scholar/${_id}`}
+        className="group block bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500 overflow-hidden transform hover:-translate-y-2 hover:scale-[1.02]"
+      >
+        {/* Professional University Header with Enhanced Spacing */}
+        <div className="relative bg-gradient-to-br from-emerald-600 via-green-600 to-teal-700 px-6 py-8">
+          {/* Enhanced Deadline Badge */}
+          {daysRemaining <= 7 && daysRemaining > 0 && (
+            <div className="absolute top-4 right-4 bg-red-500/90 backdrop-blur-sm text-white px-3 py-2 rounded-xl text-xs font-bold shadow-lg border border-red-400">
+              <HiClock className="inline w-3 h-3 mr-1" />
+              {daysRemaining}d left
+            </div>
+          )}
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-5">
+              <div className="relative">
+                <div className="w-18 h-18 rounded-2xl bg-white/95 p-3 shadow-2xl ring-4 ring-white/20">
+                  <img
+                    src={universityLogo || "/placeholder.jpg"}
+                    alt={`${universityName} Logo`}
+                    className="w-full h-full rounded-xl object-cover"
+                    onError={(e) => {
+                      e.target.src = "/placeholder.jpg";
+                    }}
+                  />
+                </div>
+                <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-2 shadow-lg">
+                  <HiTrendingUp className="w-3 h-3 text-white" />
+                </div>
+              </div>
+              <div className="text-white flex-1">
+                <h3 className="text-lg font-bold line-clamp-1 mb-2 text-white/95">{universityName}</h3>
+                <div className="flex items-center gap-2 text-emerald-50/90">
+                  <HiLocationMarker className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-medium text-sm truncate">{universityCity}, {universityCountry}</span>
+                </div>
               </div>
             </div>
-            <div className="text-white">
-              <h3 className="text-lg font-bold line-clamp-1">{universityName}</h3>
-              <div className="flex items-center gap-1 text-lime-100">
-                <HiLocationMarker className="w-4 h-4" />
-                <span className="text-sm">{universityCity}, {universityCountry}</span>
+            
+            {/* Enhanced University Rank Badge */}
+            <div className={`px-4 py-3 rounded-xl text-sm font-bold shadow-lg backdrop-blur-sm border border-white/20 ${rankingColors.badge}`}>
+              #{universityRank}
+            </div>
+          </div>
+        </div>
+
+        {/* Professional Card Content with Enhanced Spacing */}
+        <div className="px-6 py-8 space-y-6">
+          {/* Enhanced Scholarship Name Section */}
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300 mb-4 leading-tight">
+              {scholarshipName}
+            </h2>
+            
+            {/* Enhanced Category Tags */}
+            <div className="flex flex-wrap gap-3">
+              <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold ${scholarshipColors.bg} ${scholarshipColors.text} border-2 ${scholarshipColors.border} shadow-sm`}>
+                <FiAward className="w-3 h-3" />
+                {scholarshipCategory}
+              </span>
+              <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold ${subjectColors.bg} ${subjectColors.text} border-2 ${subjectColors.border} shadow-sm`}>
+                <FiBookOpen className="w-3 h-3" />
+                {subjectCategory}
+              </span>
+            </div>
+          </div>
+
+          {/* Enhanced Information Grid */}
+          <div className="grid grid-cols-1 gap-4">
+            {/* Application Deadline */}
+            <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl border-2 border-gray-200 dark:border-gray-600 hover:border-emerald-300 dark:hover:border-emerald-500 transition-colors duration-300">
+              <div className={`p-3 rounded-xl shadow-md ${deadlineColors.bg}`}>
+                <HiCalendar className={`w-5 h-5 ${deadlineColors.icon}`} />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wide">Deadline</p>
+                <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">{formatDate(applicationDeadline)}</p>
+                <p className={`text-xs font-semibold mt-1 ${deadlineColors.text}`}>{deadlineColors.status}</p>
+              </div>
+            </div>
+
+            {/* Application Fees */}
+            <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl border-2 border-gray-200 dark:border-gray-600 hover:border-emerald-300 dark:hover:border-emerald-500 transition-colors duration-300">
+              <div className={`p-3 rounded-xl shadow-md ${feeColors.bg}`}>
+                <HiCurrencyDollar className={`w-5 h-5 ${feeColors.icon}`} />
+              </div>
+              <div className="flex-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wide">Application Fee</p>
+                <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+                  {applicationFees === 0 ? 'Free Application' : `$${applicationFees}`}
+                </p>
+                {applicationFees === 0 && (
+                  <p className="text-xs font-semibold text-green-600 dark:text-green-400 mt-1">No fees required</p>
+                )}
               </div>
             </div>
           </div>
-          
-          {/* University Rank Badge */}
-          <div className={`px-3 py-1 rounded-full text-sm font-semibold ${rankingColors.badge}`}>
-            #{universityRank}
-          </div>
-        </div>
-      </div>
 
-      {/* Card Content */}
-      <div className="p-6 space-y-4">
-        {/* Scholarship Name */}
-        <div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors duration-300 mb-3">
-            {scholarshipName}
-          </h2>
-          
-          {/* Category Tags */}
-          <div className="flex flex-wrap gap-2">
-            <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${scholarshipColors.bg} ${scholarshipColors.text} border ${scholarshipColors.border}`}>
-              <FiAward className="w-3 h-3" />
-              {scholarshipCategory}
-            </span>
-            <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${subjectColors.bg} ${subjectColors.text} border ${subjectColors.border}`}>
-              <FiBookOpen className="w-3 h-3" />
-              {subjectCategory}
-            </span>
-          </div>
-        </div>
-
-        {/* Key Information Grid */}
-        <div className="grid grid-cols-2 gap-4">
-          {/* Application Deadline */}
-          <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg ${deadlineColors.bg}`}>
-              <HiCalendar className={`w-4 h-4 ${deadlineColors.icon}`} />
+          {/* Enhanced Rating and Action Section */}
+          <div className="flex items-center justify-between pt-6 border-t-2 border-gray-200 dark:border-gray-700">
+            {/* Enhanced Rating Display */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, index) => (
+                  <HiStar
+                    key={index}
+                    className={`w-5 h-5 transition-colors duration-200 ${
+                      index < Math.floor(rating)
+                        ? "text-yellow-400 drop-shadow-sm"
+                        : "text-gray-300 dark:text-gray-600"
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="text-sm font-bold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg">
+                {rating}/5
+              </span>
             </div>
-            <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Deadline</p>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white">{formatDate(applicationDeadline)}</p>
-              <p className={`text-xs font-medium ${deadlineColors.text}`}>{deadlineColors.status}</p>
-            </div>
-          </div>
-
-          {/* Application Fees */}
-          <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg ${feeColors.bg}`}>
-              <HiCurrencyDollar className={`w-4 h-4 ${feeColors.icon}`} />
-            </div>
-            <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Application Fee</p>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                {applicationFees === 0 ? 'Free Application' : `$${applicationFees}`}
-              </p>
-              {applicationFees === 0 && (
-                <p className="text-xs font-medium text-green-600 dark:text-green-400">No fees required</p>
-              )}
+            
+            {/* Enhanced Action Button */}
+            <div className="flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-emerald-500">
+              <span className="font-bold text-sm">Apply Now</span>
+              <FiExternalLink className="w-4 h-4" />
             </div>
           </div>
         </div>
-
-        {/* Rating and Action */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, index) => (
-                <HiStar
-                  key={index}
-                  className={`w-4 h-4 ${
-                    index < Math.floor(rating)
-                      ? "text-yellow-400"
-                      : "text-gray-300 dark:text-gray-600"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{rating}/5</span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">(Reviews)</span>
-          </div>
-          
-          {/* Action Button */}
-          <div className="flex items-center gap-2 text-lime-600 dark:text-lime-400 group-hover:text-lime-700 dark:group-hover:text-lime-300 transition-colors duration-300">
-            <span className="text-sm font-medium">Apply Now</span>
-            <FiExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-          </div>
-        </div>
-      </div>
-
-      {/* Hover Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-lime-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-    </Link>
+      </Link>
+    </div>
   );
 };
 
