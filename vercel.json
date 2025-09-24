@@ -1,0 +1,25 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "env": {
+    "VITE_API_URL": "https://assignment-scholarship-server.vercel.app",
+    "VITE_IMGBB_API_KEY": "1602c926f45df30ed127642e47f4a117",
+    "VITE_STRIPE_PUBLIC_KEY": "pk_test_51QlDnMK0TTEY7687oAzmK11Af8IH68LINXGz1R2MvBAKiIl8D9k0F3VwSd4WsiJIxR1Y9e0NODpzsJbdTe71ey8t00X6cK8KjE",
+    "VITE_apiKey": "AIzaSyDMMY68oKWOhe2Q_P22CSLaADevrklPwJw",
+    "VITE_authDomain": "scholarships-d1fc8.firebaseapp.com",
+    "VITE_projectId": "scholarships-d1fc8",
+    "VITE_storageBucket": "scholarships-d1fc8.firebasestorage.app",
+    "VITE_messagingSenderId": "910170598163",
+    "VITE_appId": "1:910170598163:web:c8d2c0410ce515493c48e6"
+  },
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
+    }
+  ]
+}
