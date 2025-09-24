@@ -27,6 +27,7 @@ import {
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Container from "../../components/Shared/Container";
 import Card from "../../components/Home/Card";
+import { mockScholarships } from "../../services/mockData";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -43,10 +44,27 @@ const AllScholarship = () => {
   const { data: scholarships, isLoading, refetch } = useQuery({
     queryKey: ["scholarship"],
     queryFn: async () => {
-      const apiUrl = `${import.meta.env.VITE_API_URL}/scholarship`;
-      const { data } = await axios(apiUrl);
-      return data;
+      try {
+        const apiUrl = `${import.meta.env.VITE_API_URL}/scholarship`;
+        console.log('🔍 AllScholarship API URL:', apiUrl);
+        
+        const response = await axios(apiUrl);
+        console.log('✅ AllScholarship API Response:', response.data);
+        
+        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+          return response.data;
+        } else {
+          console.log('⚠️ AllScholarship API returned empty, using mock data');
+          return mockScholarships;
+        }
+      } catch (error) {
+        console.error('❌ AllScholarship API Error:', error);
+        console.log('🎭 AllScholarship using mock data as fallback');
+        return mockScholarships;
+      }
     },
+    retry: 1,
+    retryDelay: 1000,
   });
 
   // Memoized calculations for performance

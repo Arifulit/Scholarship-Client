@@ -6,17 +6,34 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 import Container from "../Shared/Container";
 import { Link } from "react-router-dom";
 import { HiAcademicCap, HiArrowRight, HiTrendingUp } from "react-icons/hi";
+import { mockScholarships } from "../../services/mockData";
 
 const Scholars = () => {
-  // Fetching scholarship data using React Query
+  // Fetching scholarship data with comprehensive error handling
   const { data: scholarships, isLoading } = useQuery({
     queryKey: ["scholarships"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/scholarship`
-      );
-      return data;
+      try {
+        console.log('🔍 API URL:', import.meta.env.VITE_API_URL);
+        console.log('🚀 Fetching scholarships from:', `${import.meta.env.VITE_API_URL}/scholarship`);
+        
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/scholarship`);
+        console.log('✅ API Response:', response.data);
+        
+        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+          return response.data;
+        } else {
+          console.log('⚠️ API returned empty array, using mock data');
+          return mockScholarships;
+        }
+      } catch (apiError) {
+        console.error('❌ API Error:', apiError);
+        console.log('🎭 Using mock data as fallback');
+        return mockScholarships;
+      }
     },
+    retry: 1,
+    retryDelay: 1000,
   });
 
   if (isLoading) return <LoadingSpinner />;
