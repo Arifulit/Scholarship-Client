@@ -12,7 +12,6 @@ import ApiTest from '../../../components/Debug/ApiTest';
 import QuickApiTest from '../../../components/Debug/QuickApiTest';
 import NetworkTest from '../../../components/Debug/NetworkTest';
 import BackendTest from '../../../components/Debug/BackendTest';
-import { mockApplications, mockApiService } from '../../../services/mockData';
 
 const AllAppliedScholarship = () => {
   const axiosSecure = useAxiosSecure();
@@ -38,12 +37,9 @@ const AllAppliedScholarship = () => {
         console.log('✅ Backend data received:', data);
         return data;
       } catch (backendError) {
-        console.log('❌ Backend failed, using mock data:', backendError);
-        // Fallback to mock data if backend fails
-        const mockData = await mockApiService.getApplications();
-        console.log('🎭 Using mock data:', mockData.data);
-        toast.success('Using demo data (Backend connection failed)');
-        return mockData.data;
+        console.error('❌ Backend failed:', backendError);
+        toast.error('Failed to fetch data from server');
+        throw backendError;
       }
     },
     onError: (error) => {

@@ -6,38 +6,39 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 import Container from "../Shared/Container";
 import { Link } from "react-router-dom";
 import { HiAcademicCap, HiArrowRight, HiTrendingUp } from "react-icons/hi";
-import { mockScholarships } from "../../services/mockData";
 
 const Scholars = () => {
   // Fetching scholarship data with comprehensive error handling
-  const { data: scholarships, isLoading } = useQuery({
+  const { data: scholarships, isLoading, error } = useQuery({
     queryKey: ["scholarships"],
     queryFn: async () => {
-      try {
-        console.log('🔍 API URL:', import.meta.env.VITE_API_URL);
-        console.log('🚀 Fetching scholarships from:', `${import.meta.env.VITE_API_URL}/scholarship`);
-        
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/scholarship`);
-        console.log('✅ API Response:', response.data);
-        
-        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
-          console.log('✅ Using real backend data');
-          return response.data;
-        } else {
-          console.log('⚠️ Backend returned empty array, using mock data');
-          return mockScholarships;
-        }
-      } catch (apiError) {
-        console.error('❌ API Error:', apiError);
-        console.log('🎭 Using mock data as fallback');
-        return mockScholarships;
-      }
+      console.log('🔍 API URL:', import.meta.env.VITE_API_URL);
+      console.log('🚀 Fetching scholarships from:', `${import.meta.env.VITE_API_URL}/scholarship`);
+      
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/scholarship`);
+      console.log('✅ API Response:', response.data);
+      
+      return response.data || [];
     },
-    retry: 1,
+    retry: 2,
     retryDelay: 1000,
   });
 
   if (isLoading) return <LoadingSpinner />;
+
+  // Error state
+  if (error) {
+    return (
+      <div className="bg-gray-50 dark:bg-gray-900 py-20">
+        <Container>
+          <div className="text-center">
+            <div className="text-red-500 text-xl mb-4">⚠️ Unable to load scholarships</div>
+            <p className="text-gray-600 dark:text-gray-400">Please check your internet connection and try again.</p>
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   // Sort scholarships: Lowest application fees first, then most recent posts
   const sortedScholarships = scholarships

@@ -27,7 +27,6 @@ import {
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Container from "../../components/Shared/Container";
 import Card from "../../components/Home/Card";
-import { mockScholarships } from "../../services/mockData";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -41,30 +40,18 @@ const AllScholarship = () => {
   const [priceRange, setPriceRange] = useState("all");
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
-  const { data: scholarships, isLoading, refetch } = useQuery({
+  const { data: scholarships, isLoading, error, refetch } = useQuery({
     queryKey: ["scholarship"],
     queryFn: async () => {
-      try {
-        const apiUrl = `${import.meta.env.VITE_API_URL}/scholarship`;
-        console.log('🔍 AllScholarship API URL:', apiUrl);
-        
-        const response = await axios(apiUrl);
-        console.log('✅ AllScholarship API Response:', response.data);
-        
-        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
-          console.log('✅ AllScholarship using real backend data');
-          return response.data;
-        } else {
-          console.log('⚠️ AllScholarship backend returned empty, using mock data');
-          return mockScholarships;
-        }
-      } catch (error) {
-        console.error('❌ AllScholarship API Error:', error);
-        console.log('🎭 AllScholarship using mock data as fallback');
-        return mockScholarships;
-      }
+      const apiUrl = `${import.meta.env.VITE_API_URL}/scholarship`;
+      console.log('🔍 AllScholarship API URL:', apiUrl);
+      
+      const response = await axios(apiUrl);
+      console.log('✅ AllScholarship API Response:', response.data);
+      
+      return response.data || [];
     },
-    retry: 1,
+    retry: 2,
     retryDelay: 1000,
   });
 
@@ -124,6 +111,29 @@ const AllScholarship = () => {
   const hasActiveFilters = searchQuery || selectedCategory || selectedSubject || priceRange !== "all";
 
   if (isLoading) return <LoadingSpinner />;
+  
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20">
+        <Container>
+          <div className="text-center py-20">
+            <div className="text-red-500 text-2xl mb-4">⚠️ Failed to Load Scholarships</div>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              There was an error connecting to the server. Please check your internet connection and try again.
+            </p>
+            <button 
+              onClick={() => refetch()}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              <FiRefreshCw className="inline mr-2" />
+              Try Again
+            </button>
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-gray-900 dark:via-emerald-950 dark:to-green-950 transition-all duration-500">
