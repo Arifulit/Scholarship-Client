@@ -59,7 +59,7 @@ const ProductionDebug = () => {
         🐛 ENV
       </button>
 
-      {/* Debug Panel */}
+      
       {isVisible && (
         <div className="fixed top-4 right-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-xl border max-w-sm z-50">
           <div className="flex items-center justify-between mb-3">
