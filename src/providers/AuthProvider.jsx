@@ -11,7 +11,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
-import axios from "axios";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
@@ -57,22 +56,13 @@ const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         setUser(currentUser)
        
-        // Get JWT token
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/jwt`,
-          {
-            email: currentUser?.email,
-          },
-          { withCredentials: true }
-        )
+        // JWT token endpoint not available in current backend
+        // Firebase handles authentication tokens internally
+        console.log('User authenticated:', currentUser.email);
       } else {
         setUser(currentUser)
-        // await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-        //   withCredentials: true,
-        // })
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-          withCredentials: true,
-        }).catch(error => console.error("Logout API error:", error));
+        // Backend logout endpoint not available - Firebase handles logout locally
+        console.log('User logged out - Firebase handles this locally');
       }
       setLoading(false)
     })
