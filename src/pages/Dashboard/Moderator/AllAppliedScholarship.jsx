@@ -8,10 +8,6 @@ import { HiAcademicCap } from 'react-icons/hi';
 import { BsGrid3X3Gap, BsList, BsThreeDotsVertical } from 'react-icons/bs';
 import { toast } from 'react-hot-toast';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import ApiTest from '../../../components/Debug/ApiTest';
-import QuickApiTest from '../../../components/Debug/QuickApiTest';
-import NetworkTest from '../../../components/Debug/NetworkTest';
-import BackendTest from '../../../components/Debug/BackendTest';
 
 const AllAppliedScholarship = () => {
   const axiosSecure = useAxiosSecure();
@@ -942,12 +938,6 @@ const AllAppliedScholarship = () => {
           </div>
         )}
       </div>
-      
-      {/* Debug Panels - Remove these in production */}
-      <ApiTest />
-      <QuickApiTest />
-      <NetworkTest />
-      <BackendTest />
     </div>
   );
 };

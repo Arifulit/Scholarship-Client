@@ -4,11 +4,6 @@ import { Helmet } from 'react-helmet-async'
 import Advertisemest from '../../components/Home/Advertisemest'
 import Scholars from '../../components/Home/Scholars'
 import ExtraSection from '../ExtraSection/ExtraSection'
-import ProductionDebug from '../../components/Debug/ProductionDebug'
-import BackendDataChecker from '../../components/Debug/BackendDataChecker'
-import BackendSeeder from '../../components/Debug/BackendSeeder'
-// import DeploymentDebug from '../../components/Debug/DeploymentDebug'
-// import ApiEndpointTester from '../../components/Debug/ApiEndpointTester'
 
 const Home = () => {
   return (
@@ -28,19 +23,6 @@ const Home = () => {
       <div className="w-full  py-16">
         <ExtraSection />
       </div>
-      
-      {/* Debug Panels */}
-      <ProductionDebug />
-      <BackendDataChecker />
-      <BackendSeeder />
-      
-      {/* Debug Panels - Disabled */}
-      {/* {import.meta.env.DEV && (
-        <>
-          <DeploymentDebug />
-          <ApiEndpointTester />
-        </>
-      )} */}
     </div>
   )
 }
