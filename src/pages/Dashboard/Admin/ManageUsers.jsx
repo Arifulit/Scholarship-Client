@@ -19,20 +19,71 @@ const ManageUsers = () => {
     data: users = [],
     isLoading,
     refetch,
+    isError,
+    error
   } = useQuery({
     queryKey: ['users', user?.email],
+    enabled: !!user?.email, // Only run query when user email is available
     queryFn: async () => {
+      console.log('🔍 Fetching all users...')
       const { data } = await axiosSecure(`/all-users/${user?.email}`)
-      return data
+      console.log('✅ Users fetched:', data?.length || 0, 'users')
+      return data || []
     },
+    retry: 1, // Only retry once to avoid repeated logout attempts
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    onError: (error) => {
+      console.error('❌ Error fetching users:', error)
+      // Don't show error toast for 403 errors (unauthorized access)
+      if (error?.response?.status !== 403) {
+        toast.error('Failed to load users')
+      }
+    }
   })
+
+  // Show loading spinner
+  if (isLoading) {
+    console.log('⏳ Loading users...')
+    return <LoadingSpinner />
+  }
+
+  // Show error state if query failed
+  if (isError && error?.response?.status !== 403) {
+    console.log('❌ Error state:', error?.response?.status, error?.message)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">
+            Failed to Load Users
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            {error?.response?.data?.message || error?.message || 'An error occurred'}
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">
+            Status: {error?.response?.status || 'Unknown'}
+          </p>
+          <button 
+            onClick={() => refetch()}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  console.log('📊 Users loaded:', users?.length || 0)
 
   // Filter users based on search term and role filter
   const filteredUsers = users.filter(userData => {
     const matchesSearch = userData.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          userData.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          userData.displayName?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesRole = filterRole === "all" || userData.role === filterRole
+    
+    // Map old "customer" role to "student" for filtering
+    const userRole = userData.role === 'customer' ? 'student' : userData.role
+    const matchesRole = filterRole === "all" || userRole === filterRole
     return matchesSearch && matchesRole
   })
 
@@ -71,7 +122,7 @@ const ManageUsers = () => {
         ...filteredUsers.map(userData => [
           `"${getDisplayName(userData)}"`,
           `"${userData.email || 'No Email'}"`,
-          `"${userData.role || 'customer'}"`,
+          `"${userData.role || 'student'}"`,
           `"${userData.status || 'active'}"`,
           `"${userData.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'Unknown'}"`
         ].join(','))
@@ -176,7 +227,7 @@ const ManageUsers = () => {
                   <option value="all">All Roles</option>
                   <option value="admin">Admin</option>
                   <option value="moderator">Moderator</option>
-                  <option value="customer">Customer</option>
+                  <option value="student">Student</option>
                 </select>
               </div>
             </div>
@@ -193,10 +244,12 @@ const ManageUsers = () => {
               <div className="text-center py-12">
                 <FaUsers className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                  No users found
+                  {users.length === 0 ? 'No users in database' : 'No users found'}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Try adjusting your search or filter criteria
+                  {users.length === 0 
+                    ? 'Users will appear here once they sign up' 
+                    : 'Try adjusting your search or filter criteria'}
                 </p>
               </div>
             ) : (

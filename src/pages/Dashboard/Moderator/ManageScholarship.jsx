@@ -33,7 +33,8 @@ const ManageScholarship = () => {
         throw new Error(error.response?.data?.message || "Failed to fetch scholarships");
       }
     },
-    retry: 2,
+    retry: 1,
+    staleTime: 3 * 60 * 1000,
     refetchOnWindowFocus: false
   });
 

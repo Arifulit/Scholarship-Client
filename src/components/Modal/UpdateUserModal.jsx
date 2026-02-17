@@ -17,8 +17,8 @@ import { FaUserShield, FaCrown, FaUser, FaTimes, FaCheck } from 'react-icons/fa'
 
 const roles = [
   { 
-    value: 'customer', 
-    label: 'Customer', 
+    value: 'student', 
+    label: 'Student', 
     icon: FaUser, 
     color: 'text-green-600',
     bgColor: 'bg-green-50 dark:bg-green-900/20',
@@ -43,7 +43,9 @@ const roles = [
 ]
 
 const UpdateUserModal = ({ setIsOpen, isOpen, role, updateRole }) => {
-  const [selected, setSelected] = useState(role)
+  // Map old "customer" role to "student"
+  const mappedRole = role === 'customer' ? 'student' : role
+  const [selected, setSelected] = useState(mappedRole)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleUpdateRole = async () => {

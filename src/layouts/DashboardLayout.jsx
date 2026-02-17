@@ -69,10 +69,15 @@ const DashboardLayout = () => {
   
   const { user, logOut } = useAuth()
   const { isDarkMode, toggleTheme } = useTheme()
-  const [role] = useRole()
+  const [role, roleLoading] = useRole()
   const location = useLocation()
   const dropdownRef = useRef(null)
   const notificationRef = useRef(null)
+
+  // Debug logging
+  useEffect(() => {
+    console.log('🏠 DashboardLayout - User:', user?.email, 'Role:', role, 'Loading:', roleLoading)
+  }, [user, role, roleLoading])
 
   // Update time every minute
   useEffect(() => {
@@ -134,7 +139,7 @@ const DashboardLayout = () => {
     switch (role) {
       case 'admin': return `${timeGreeting}, Administrator`
       case 'moderator': return `${timeGreeting}, Moderator`
-      case 'customer': return `${timeGreeting}, Scholar`
+      case 'student': return `${timeGreeting}, Scholar`
       default: return `${timeGreeting}, Welcome back`
     }
   }
@@ -180,11 +185,19 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 transition-all duration-500'>
+    <div className='flex min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/80 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 transition-all duration-700'>
+      {/* Enhanced Background Elements */}
+      <div className='fixed inset-0 z-0 pointer-events-none'>
+        <div className='absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/20 via-indigo-400/15 to-purple-500/10 rounded-full blur-3xl animate-pulse'></div>
+        <div className='absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-emerald-400/20 via-teal-400/15 to-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000'></div>
+        <div className='absolute top-1/2 left-0 w-64 h-64 bg-gradient-to-br from-pink-400/15 via-rose-400/10 to-red-500/5 rounded-full blur-2xl animate-pulse delay-2000'></div>
+        <div className='absolute top-1/4 right-0 w-72 h-72 bg-gradient-to-bl from-yellow-400/15 via-orange-400/10 to-amber-500/5 rounded-full blur-2xl animate-pulse delay-3000'></div>
+      </div>
+
       {/* Enhanced Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 
-          className='fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden transition-all duration-300'
+          className='fixed inset-0 z-40 bg-gradient-to-br from-black/70 via-black/60 to-black/50 backdrop-blur-md md:hidden transition-all duration-500'
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -192,129 +205,142 @@ const DashboardLayout = () => {
       {/* Sidebar Component */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
-      {/* Main Content Area */}
-      <div className='flex-1 flex flex-col min-h-screen transition-all duration-300'>
-        {/* Enhanced Top Navigation Bar */}
-        <div className='sticky top-0 z-30 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-gray-200/20 dark:shadow-gray-900/20'>
-          <div className='flex items-center justify-between px-4 lg:px-8 py-4'>
-            {/* Enhanced Mobile menu button */}
+      {/* Main Content Area - Enhanced */}
+      <div className='flex-1 flex flex-col min-h-screen relative z-10 transition-all duration-500'>
+        {/* Professional Top Navigation Bar */}
+        <div className='sticky top-0 z-30 bg-gradient-to-r from-white/95 via-white/98 to-white/95 dark:from-gray-900/95 dark:via-gray-900/98 dark:to-gray-900/95 backdrop-blur-2xl border-b border-white/60 dark:border-gray-700/60 shadow-2xl shadow-blue-200/10 dark:shadow-gray-900/30'>
+          {/* Decorative top border */}
+          <div className='absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500'></div>
+          <div className='flex items-center justify-between px-4 lg:px-8 py-4 relative'>
+            {/* Professional Mobile menu button */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className='md:hidden group p-3 rounded-xl bg-gradient-to-r from-lime-500 to-emerald-500 text-white hover:from-lime-600 hover:to-emerald-600 transition-all duration-300 transform hover:scale-105 shadow-lg'
+              className='md:hidden group relative p-3 rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 text-white hover:from-blue-600 hover:via-indigo-600 hover:to-purple-700 transition-all duration-500 transform hover:scale-110 hover:rotate-3 shadow-2xl hover:shadow-blue-500/25'
             >
-              <FiMenu className='w-5 h-5 transition-transform group-hover:rotate-180' />
+              <div className='absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl'></div>
+              <FiMenu className='relative w-5 h-5 transition-transform duration-500 group-hover:rotate-180' />
+              <div className='absolute inset-0 rounded-2xl ring-2 ring-white/30 group-hover:ring-white/50 transition-all duration-300'></div>
             </button>
 
-            {/* Enhanced Search Bar */}
-            <div className='hidden md:flex flex-1 max-w-2xl mx-6'>
+            {/* Professional Search Bar */}
+            <div className='hidden md:flex flex-1 max-w-3xl mx-8'>
               <div className='relative w-full group'>
-                <FiSearch className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-lime-500 transition-colors' />
+                <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-purple-500/10 rounded-3xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500'></div>
+                <FiSearch className='absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-all duration-300 z-10' />
                 <input
                   type='text'
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onKeyPress={handleSearchSubmit}
                   placeholder='Search scholarships, users, applications, or anything...'
-                  className='w-full pl-12 pr-6 py-3 bg-gray-50/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-lime-500/20 focus:border-lime-500 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 backdrop-blur-sm shadow-inner hover:bg-gray-100/80 dark:hover:bg-gray-700/80'
+                  className='relative w-full pl-14 pr-20 py-4 bg-white/70 dark:bg-gray-800/70 border border-white/60 dark:border-gray-700/60 rounded-3xl focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-blue-400/30 focus:border-blue-500/50 dark:focus:border-blue-400/50 transition-all duration-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 backdrop-blur-xl shadow-xl hover:bg-white/80 dark:hover:bg-gray-800/80 hover:shadow-2xl font-medium'
                 />
-                <div className='absolute right-3 top-1/2 transform -translate-y-1/2'>
-                  <kbd className='px-2 py-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600'>⌘K</kbd>
+                <div className='absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2'>
+                  <kbd className='px-3 py-1.5 text-xs font-bold text-gray-500 dark:text-gray-400 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm'>⌘K</kbd>
                 </div>
+                <div className='absolute inset-0 rounded-3xl ring-1 ring-black/5 dark:ring-white/5'></div>
               </div>
             </div>
 
             {/* Enhanced Right side actions */}
             <div className='flex items-center gap-2'>
-              {/* Enhanced Theme Toggle */}
+              {/* Professional Theme Toggle */}
               <button 
                 onClick={toggleTheme}
-                className='p-3 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md backdrop-blur-sm group'
+                className='relative p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-br hover:from-yellow-400 hover:via-orange-500 hover:to-red-500 hover:text-white transition-all duration-500 transform hover:scale-110 hover:rotate-6 shadow-xl hover:shadow-2xl hover:shadow-orange-500/25 backdrop-blur-xl group border border-white/40 dark:border-gray-700/40'
                 title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
               >
+                <div className='absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl'></div>
                 {isDarkMode ? (
-                  <FiSun className='w-5 h-5 group-hover:rotate-180 transition-transform duration-500' />
+                  <FiSun className='relative w-5 h-5 group-hover:rotate-180 transition-transform duration-700' />
                 ) : (
-                  <FiMoon className='w-5 h-5 group-hover:-rotate-12 transition-transform duration-300' />
+                  <FiMoon className='relative w-5 h-5 group-hover:-rotate-45 transition-transform duration-500' />
                 )}
               </button>
 
-              {/* Enhanced Fullscreen Toggle */}
+              {/* Professional Fullscreen Toggle */}
               <button 
                 onClick={toggleFullscreen}
-                className='hidden lg:block p-3 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md backdrop-blur-sm'
+                className='hidden lg:block relative p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-br hover:from-blue-500 hover:via-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-500 transform hover:scale-110 hover:-rotate-3 shadow-xl hover:shadow-2xl hover:shadow-blue-500/25 backdrop-blur-xl border border-white/40 dark:border-gray-700/40 group'
                 title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
               >
-                <FiMaximize2 className='w-5 h-5' />
+                <div className='absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl'></div>
+                <FiMaximize2 className='relative w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
               </button>
 
-              {/* Enhanced Help/Support */}
-              <button className='hidden lg:block p-3 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md backdrop-blur-sm group'>
-                <FiHelpCircle className='w-5 h-5 group-hover:rotate-12 transition-transform duration-300' />
+              {/* Professional Help/Support */}
+              <button className='hidden lg:block relative p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-500 hover:to-rose-600 hover:text-white transition-all duration-500 transform hover:scale-110 hover:rotate-6 shadow-xl hover:shadow-2xl hover:shadow-purple-500/25 backdrop-blur-xl border border-white/40 dark:border-gray-700/40 group'>
+                <div className='absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl'></div>
+                <FiHelpCircle className='relative w-5 h-5 group-hover:rotate-45 transition-transform duration-500' />
               </button>
 
-              {/* Enhanced Notifications */}
+              {/* Professional Notifications */}
               <div className='relative' ref={notificationRef}>
                 <button 
                   onClick={() => setNotificationDropdownOpen(!notificationDropdownOpen)}
-                  className='relative p-3 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-md backdrop-blur-sm group'
+                  className='relative p-3 rounded-2xl bg-white/60 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-br hover:from-red-500 hover:via-pink-500 hover:to-rose-600 hover:text-white transition-all duration-500 transform hover:scale-110 hover:-rotate-6 shadow-xl hover:shadow-2xl hover:shadow-red-500/25 backdrop-blur-xl border border-white/40 dark:border-gray-700/40 group'
                 >
-                  <FiBell className={`w-5 h-5 transition-transform duration-300 ${notificationDropdownOpen ? 'rotate-12' : 'group-hover:animate-pulse'}`} />
+                  <div className='absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl'></div>
+                  <FiBell className={`relative w-5 h-5 transition-transform duration-500 ${notificationDropdownOpen ? 'rotate-45' : 'group-hover:animate-bounce'}`} />
                   {unreadCount > 0 && (
-                    <span className='absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-pulse shadow-lg'>
+                    <span className='absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-red-500 via-pink-500 to-rose-600 text-white text-xs rounded-full flex items-center justify-center font-bold animate-pulse shadow-2xl ring-2 ring-white dark:ring-gray-900 border border-white/50'>
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
                 </button>
 
-                {/* Enhanced Notification Dropdown */}
+                {/* Professional Notification Dropdown */}
                 {notificationDropdownOpen && (
-                  <div className='absolute right-0 mt-3 w-96 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 z-50 transform transition-all duration-300 opacity-100 scale-100'>
-                    <div className='p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-lime-50 to-emerald-50 dark:from-lime-900/20 dark:to-emerald-900/20 rounded-t-2xl'>
-                      <div className='flex items-center justify-between'>
-                        <h3 className='text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                          <HiSparkles className='w-5 h-5 text-lime-500' />
+                  <div className='absolute right-0 mt-4 w-[28rem] bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 dark:border-gray-700/60 z-50 transform transition-all duration-500 opacity-100 scale-100 ring-1 ring-black/5 dark:ring-white/10'>
+                    <div className='p-8 border-b border-white/50 dark:border-gray-700/50 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-purple-50/80 dark:from-blue-900/30 dark:via-indigo-900/20 dark:to-purple-900/30 rounded-t-3xl relative overflow-hidden'>
+                      <div className='absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-2xl'></div>
+                      <div className='relative flex items-center justify-between'>
+                        <h3 className='text-xl font-black text-gray-900 dark:text-white flex items-center gap-3'>
+                          <div className='p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg'>
+                            <HiSparkles className='w-5 h-5 text-white' />
+                          </div>
                           Notifications
                         </h3>
-                        <span className='px-3 py-1 bg-lime-500 text-white text-sm font-semibold rounded-full'>
+                        <span className='px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-bold rounded-2xl shadow-lg'>
                           {unreadCount} new
                         </span>
                       </div>
                     </div>
-                    <div className='max-h-80 overflow-y-auto'>
+                    <div className='max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent'>
                       {notifications.map((notification) => (
                         <div 
                           key={notification.id} 
-                          className={`p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50/80 dark:hover:bg-gray-800/80 transition-all duration-200 cursor-pointer ${
-                            !notification.read ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''
+                          className={`group p-6 border-b border-white/30 dark:border-gray-800/30 last:border-0 hover:bg-gradient-to-r hover:from-blue-50/80 hover:to-indigo-50/80 dark:hover:from-blue-900/20 dark:hover:to-indigo-900/20 transition-all duration-300 cursor-pointer ${
+                            !notification.read ? 'bg-gradient-to-r from-blue-50/60 to-indigo-50/60 dark:from-blue-900/15 dark:to-indigo-900/15' : ''
                           }`}
                         >
-                          <div className='flex items-start gap-3'>
-                            <div className={`w-3 h-3 rounded-full mt-2 flex-shrink-0 ${getNotificationStyle(notification.type)}`}></div>
+                          <div className='flex items-start gap-4'>
+                            <div className={`w-4 h-4 rounded-full mt-2 flex-shrink-0 shadow-lg ring-2 ring-white dark:ring-gray-900 ${getNotificationStyle(notification.type)}`}></div>
                             <div className='flex-1 min-w-0'>
-                              <p className={`text-sm font-semibold text-gray-900 dark:text-white mb-1 ${!notification.read ? 'font-bold' : ''}`}>
+                              <p className={`text-sm font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors ${!notification.read ? 'font-black' : ''}`}>
                                 {notification.title}
                               </p>
-                              <p className='text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2'>
+                              <p className='text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 leading-relaxed'>
                                 {notification.message}
                               </p>
-                              <p className='text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1'>
+                              <p className='text-xs text-gray-500 dark:text-gray-500 flex items-center gap-2 font-medium'>
                                 <FiClock className='w-3 h-3' />
                                 {notification.time}
                               </p>
                             </div>
                             {!notification.read && (
-                              <div className='w-2 h-2 bg-lime-500 rounded-full animate-pulse'></div>
+                              <div className='w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-pulse shadow-lg ring-2 ring-blue-200 dark:ring-blue-800'></div>
                             )}
                           </div>
                         </div>
                       ))}
                     </div>
-                    <div className='p-4 bg-gray-50/80 dark:bg-gray-800/80 rounded-b-2xl border-t border-gray-200/50 dark:border-gray-700/50'>
-                      <div className='flex items-center justify-between gap-3'>
-                        <button className='flex-1 text-sm text-lime-600 dark:text-lime-400 hover:text-lime-700 dark:hover:text-lime-300 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-lime-50 dark:hover:bg-lime-900/20'>
+                    <div className='p-6 bg-gradient-to-br from-gray-50/90 via-white/70 to-gray-50/90 dark:from-gray-800/90 dark:via-gray-800/70 dark:to-gray-800/90 rounded-b-3xl border-t border-white/50 dark:border-gray-700/50'>
+                      <div className='flex items-center justify-center gap-4'>
+                        <button className='flex-1 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-300 py-3 px-6 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700 shadow-sm hover:shadow-md'>
                           Mark all as read
                         </button>
-                        <button className='flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-medium py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700'>
+                        <button className='flex-1 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-300 py-3 px-6 rounded-2xl hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 shadow-sm hover:shadow-md'>
                           View all notifications
                         </button>
                       </div>
@@ -323,67 +349,68 @@ const DashboardLayout = () => {
                 )}
               </div>
 
-              {/* Enhanced User Profile Dropdown */}
+              {/* Professional User Profile Dropdown */}
               <div className='relative' ref={dropdownRef}>
                 <button 
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className='flex items-center gap-3 p-2 rounded-xl bg-gradient-to-r from-lime-500/10 to-emerald-500/10 hover:from-lime-500/20 hover:to-emerald-500/20 border border-lime-200 dark:border-lime-800 transition-all duration-300 transform hover:scale-105 shadow-md backdrop-blur-sm group'
+                  className='flex items-center gap-4 p-3 rounded-3xl bg-gradient-to-br from-white/80 via-white/60 to-white/80 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/80 hover:from-blue-50 hover:via-indigo-50 hover:to-purple-50 dark:hover:from-blue-900/30 dark:hover:via-indigo-900/20 dark:hover:to-purple-900/30 border border-white/60 dark:border-gray-700/60 hover:border-blue-300/50 dark:hover:border-blue-600/50 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-2xl backdrop-blur-xl group ring-1 ring-black/5 dark:ring-white/10'
                 >
                   <div className='relative'>
                     <img
-                      src={user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'User')}&background=10b981&color=fff&size=40`}
+                      src={user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'User')}&background=3b82f6&color=fff&size=44`}
                       alt='Profile'
-                      className='w-10 h-10 rounded-full object-cover ring-2 ring-lime-300 dark:ring-lime-700 group-hover:ring-lime-400 dark:group-hover:ring-lime-600 transition-all duration-300'
+                      className='w-11 h-11 rounded-full object-cover ring-3 ring-blue-300/50 dark:ring-blue-600/50 group-hover:ring-blue-400 dark:group-hover:ring-blue-500 transition-all duration-500 shadow-lg'
                       onError={(e) => {
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'User')}&background=10b981&color=fff&size=40`;
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'User')}&background=3b82f6&color=fff&size=44`;
                       }}
                     />
-                    <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse'></div>
+                    <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse shadow-lg ring-2 ring-green-200 dark:ring-green-800'></div>
                   </div>
-                  <div className='hidden md:flex items-center gap-2'>
+                  <div className='hidden md:flex items-center gap-3'>
                     <div className='text-left'>
-                      <p className='text-sm font-bold text-gray-900 dark:text-white truncate max-w-32 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors'>
+                      <p className='text-sm font-black text-gray-900 dark:text-white truncate max-w-36 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300'>
                         {user?.displayName || 'User'}
                       </p>
-                      <p className='text-xs text-gray-500 dark:text-gray-400 capitalize font-medium'>
+                      <p className='text-xs text-gray-500 dark:text-gray-400 capitalize font-bold tracking-wider'>
                         {role || 'member'}
                       </p>
                     </div>
-                    <FiChevronDown className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${profileDropdownOpen ? 'rotate-180' : ''}`} />
+                    <FiChevronDown className={`w-5 h-5 text-gray-400 dark:text-gray-500 transition-transform duration-500 ${profileDropdownOpen ? 'rotate-180 text-blue-500 dark:text-blue-400' : ''}`} />
                   </div>
                 </button>
 
-                {/* Enhanced Profile Dropdown */}
+                {/* Professional Profile Dropdown */}
                 {profileDropdownOpen && (
-                  <div className='absolute right-0 mt-3 w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 z-50 transform transition-all duration-300 opacity-100 scale-100'>
-                    {/* User Info Header */}
-                    <div className='p-6 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-lime-50 to-emerald-50 dark:from-lime-900/20 dark:to-emerald-900/20 rounded-t-2xl'>
-                      <div className='flex items-center gap-4'>
+                  <div className='absolute right-0 mt-4 w-96 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 dark:border-gray-700/60 z-50 transform transition-all duration-500 opacity-100 scale-100 ring-1 ring-black/5 dark:ring-white/10'>
+                    {/* Professional User Info Header */}
+                    <div className='p-8 border-b border-white/50 dark:border-gray-700/50 bg-gradient-to-br from-blue-50/80 via-indigo-50/60 to-purple-50/80 dark:from-blue-900/30 dark:via-indigo-900/20 dark:to-purple-900/30 rounded-t-3xl relative overflow-hidden'>
+                      <div className='absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-2xl'></div>
+                      <div className='relative flex items-center gap-5'>
                         <div className='relative'>
                           <img
-                            src={user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'User')}&background=10b981&color=fff&size=60`}
+                            src={user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'User')}&background=3b82f6&color=fff&size=80`}
                             alt='Profile'
-                            className='w-16 h-16 rounded-full object-cover ring-4 ring-lime-200 dark:ring-lime-800 shadow-lg'
+                            className='w-20 h-20 rounded-2xl object-cover ring-4 ring-blue-200/80 dark:ring-blue-700/80 shadow-2xl'
                           />
-                          <div className='absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-3 border-white dark:border-gray-900 rounded-full'></div>
+                          <div className='absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 border-4 border-white dark:border-gray-900 rounded-full shadow-lg'></div>
                         </div>
                         <div className='flex-1 min-w-0'>
-                          <p className='font-bold text-gray-900 dark:text-white text-lg truncate'>
+                          <p className='font-black text-gray-900 dark:text-white text-xl truncate mb-1'>
                             {user?.displayName || 'User Name'}
                           </p>
-                          <p className='text-sm text-gray-600 dark:text-gray-400 truncate mb-2'>
+                          <p className='text-sm text-gray-600 dark:text-gray-400 truncate mb-4 font-medium'>
                             {user?.email || 'user@example.com'}
                           </p>
-                          <div className='flex items-center gap-2'>
-                            <span className={`inline-flex items-center gap-1 px-3 py-1 text-xs font-bold rounded-full ${
-                              role === 'admin' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200' :
-                              role === 'moderator' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200' :
-                              'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200'
+                          <div className='flex items-center gap-3'>
+                            <span className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-black rounded-2xl shadow-lg ${
+                              role === 'admin' ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white' :
+                              role === 'moderator' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white' :
+                              'bg-gradient-to-r from-green-500 to-emerald-600 text-white'
                             }`}>
-                              <FiShield className='w-3 h-3' />
+                              <FiShield className='w-4 h-4' />
                               {role || 'member'}
                             </span>
-                            <span className='text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1'>
+                            <span className='text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2 font-bold px-3 py-2 bg-green-100/80 dark:bg-green-900/30 rounded-xl'>
                               <div className='w-2 h-2 bg-green-500 rounded-full animate-pulse'></div>
                               Online
                             </span>
@@ -392,59 +419,67 @@ const DashboardLayout = () => {
                       </div>
                     </div>
                     
-                    {/* Quick Stats */}
-                    <div className='p-4 bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-200/50 dark:border-gray-700/50'>
-                      <div className='grid grid-cols-3 gap-4 text-center'>
-                        <div className='p-2'>
-                          <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>Applications</p>
-                          <p className='text-lg font-bold text-gray-900 dark:text-white'>5</p>
+                    {/* Professional Quick Stats */}
+                    <div className='p-6 bg-gradient-to-br from-gray-50/80 via-white/60 to-gray-50/80 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/80 border-b border-white/50 dark:border-gray-700/50'>
+                      <div className='grid grid-cols-3 gap-4'>
+                        <div className='text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/40 rounded-2xl border border-blue-200/50 dark:border-blue-800/50'>
+                          <p className='text-xs text-blue-600 dark:text-blue-400 font-black uppercase tracking-wider mb-1'>Applications</p>
+                          <p className='text-2xl font-black text-blue-700 dark:text-blue-300'>5</p>
                         </div>
-                        <div className='p-2'>
-                          <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>Approved</p>
-                          <p className='text-lg font-bold text-green-600 dark:text-green-400'>3</p>
+                        <div className='text-center p-4 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/40 rounded-2xl border border-green-200/50 dark:border-green-800/50'>
+                          <p className='text-xs text-green-600 dark:text-green-400 font-black uppercase tracking-wider mb-1'>Approved</p>
+                          <p className='text-2xl font-black text-green-700 dark:text-green-300'>3</p>
                         </div>
-                        <div className='p-2'>
-                          <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>Pending</p>
-                          <p className='text-lg font-bold text-yellow-600 dark:text-yellow-400'>2</p>
+                        <div className='text-center p-4 bg-gradient-to-br from-yellow-50 to-orange-100 dark:from-yellow-900/30 dark:to-orange-900/40 rounded-2xl border border-yellow-200/50 dark:border-yellow-800/50'>
+                          <p className='text-xs text-yellow-600 dark:text-yellow-400 font-black uppercase tracking-wider mb-1'>Pending</p>
+                          <p className='text-2xl font-black text-yellow-700 dark:text-yellow-300'>2</p>
                         </div>
                       </div>
                     </div>
                     
-                    {/* Menu Items */}
-                    <div className='p-3'>
+                    {/* Professional Menu Items */}
+                    <div className='p-4 space-y-2'>
                       <button 
                         onClick={() => setProfileDropdownOpen(false)}
-                        className='w-full flex items-center gap-3 px-4 py-3 text-left text-gray-700 dark:text-gray-300 hover:bg-lime-50 dark:hover:bg-lime-900/20 hover:text-lime-700 dark:hover:text-lime-300 rounded-xl transition-all duration-200 group'
+                        className='w-full flex items-center gap-4 px-5 py-4 text-left text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-900/30 dark:hover:to-indigo-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-2xl transition-all duration-300 group border border-transparent hover:border-blue-200/50 dark:hover:border-blue-800/50 hover:shadow-lg'
                       >
-                        <FiUser className='w-5 h-5 group-hover:scale-110 transition-transform' />
+                        <div className='p-2 bg-blue-100 dark:bg-blue-900/50 rounded-xl group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'>
+                          <FiUser className='w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform' />
+                        </div>
                         <div>
-                          <p className='font-medium'>View Profile</p>
-                          <p className='text-xs text-gray-500 dark:text-gray-400'>Manage your account</p>
+                          <p className='font-bold'>View Profile</p>
+                          <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>Manage your account</p>
                         </div>
                       </button>
-                      <button className='w-full flex items-center gap-3 px-4 py-3 text-left text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 rounded-xl transition-all duration-200 group'>
-                        <FiSettings className='w-5 h-5 group-hover:rotate-90 transition-transform duration-300' />
+                      <button className='w-full flex items-center gap-4 px-5 py-4 text-left text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 dark:hover:from-indigo-900/30 dark:hover:to-purple-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 rounded-2xl transition-all duration-300 group border border-transparent hover:border-indigo-200/50 dark:hover:border-indigo-800/50 hover:shadow-lg'>
+                        <div className='p-2 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800 transition-colors'>
+                          <FiSettings className='w-5 h-5 text-indigo-600 dark:text-indigo-400 group-hover:rotate-180 transition-transform duration-500' />
+                        </div>
                         <div>
-                          <p className='font-medium'>Settings</p>
-                          <p className='text-xs text-gray-500 dark:text-gray-400'>Preferences & privacy</p>
+                          <p className='font-bold'>Settings</p>
+                          <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>Preferences & privacy</p>
                         </div>
                       </button>
-                      <button className='w-full flex items-center gap-3 px-4 py-3 text-left text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 rounded-xl transition-all duration-200 group'>
-                        <HiLightBulb className='w-5 h-5 group-hover:animate-pulse' />
+                      <button className='w-full flex items-center gap-4 px-5 py-4 text-left text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 dark:hover:from-purple-900/30 dark:hover:to-pink-900/30 hover:text-purple-700 dark:hover:text-purple-300 rounded-2xl transition-all duration-300 group border border-transparent hover:border-purple-200/50 dark:hover:border-purple-800/50 hover:shadow-lg'>
+                        <div className='p-2 bg-purple-100 dark:bg-purple-900/50 rounded-xl group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors'>
+                          <HiLightBulb className='w-5 h-5 text-purple-600 dark:text-purple-400 group-hover:animate-bounce' />
+                        </div>
                         <div>
-                          <p className='font-medium'>Help & Support</p>
-                          <p className='text-xs text-gray-500 dark:text-gray-400'>Get assistance</p>
+                          <p className='font-bold'>Help & Support</p>
+                          <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>Get assistance</p>
                         </div>
                       </button>
-                      <hr className='my-3 border-gray-200 dark:border-gray-600' />
+                      <hr className='my-4 border-gray-200/60 dark:border-gray-600/60' />
                       <button 
                         onClick={handleLogout}
-                        className='w-full flex items-center gap-3 px-4 py-3 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200 group'
+                        className='w-full flex items-center gap-4 px-5 py-4 text-left text-red-600 dark:text-red-400 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 dark:hover:from-red-900/30 dark:hover:to-pink-900/30 hover:text-red-700 dark:hover:text-red-300 rounded-2xl transition-all duration-300 group border border-transparent hover:border-red-200/50 dark:hover:border-red-800/50 hover:shadow-lg'
                       >
-                        <FiLogOut className='w-5 h-5 group-hover:translate-x-1 transition-transform' />
+                        <div className='p-2 bg-red-100 dark:bg-red-900/50 rounded-xl group-hover:bg-red-200 dark:group-hover:bg-red-800 transition-colors'>
+                          <FiLogOut className='w-5 h-5 text-red-600 dark:text-red-400 group-hover:translate-x-2 transition-transform duration-300' />
+                        </div>
                         <div>
-                          <p className='font-medium'>Logout</p>
-                          <p className='text-xs text-red-500 dark:text-red-400'>Sign out of your account</p>
+                          <p className='font-bold'>Logout</p>
+                          <p className='text-xs text-red-500 dark:text-red-400 font-medium'>Sign out of your account</p>
                         </div>
                       </button>
                     </div>
@@ -452,66 +487,71 @@ const DashboardLayout = () => {
                 )}
               </div>
 
-              {/* Enhanced Time & Weather Widget */}
-              <div className='hidden xl:flex items-center gap-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-xl shadow-lg backdrop-blur-sm'>
-                <div className='text-center'>
-                  <p className='text-xs font-medium opacity-90'>
+              {/* Professional Time & Date Widget */}
+              <div className='hidden xl:flex items-center gap-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-600 text-white px-6 py-4 rounded-3xl shadow-2xl backdrop-blur-sm relative overflow-hidden'>
+                <div className='absolute inset-0 bg-gradient-to-br from-white/20 to-transparent'></div>
+                <div className='relative text-center'>
+                  <p className='text-xs font-black opacity-90 uppercase tracking-wider'>
                     {currentTime.toLocaleDateString('en-US', { weekday: 'short' })}
                   </p>
-                  <p className='text-sm font-bold'>
+                  <p className='text-lg font-black'>
                     {currentTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </p>
                 </div>
-                <div className='w-px h-8 bg-white/30'></div>
-                <div className='text-center'>
-                  <p className='text-xs font-medium opacity-90'>Time</p>
-                  <p className='text-sm font-bold'>
+                <div className='w-px h-10 bg-white/40'></div>
+                <div className='relative text-center'>
+                  <p className='text-xs font-black opacity-90 uppercase tracking-wider'>Time</p>
+                  <p className='text-lg font-black'>
                     {currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
+                <div className='absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-full blur-xl'></div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Enhanced Mobile Search Bar */}
-        <div className='md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 px-4 py-3 shadow-sm'>
+        {/* Professional Mobile Search Bar */}
+        <div className='md:hidden bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border-b border-white/60 dark:border-gray-700/60 px-4 py-4 shadow-xl'>
           <div className='relative group'>
-            <FiSearch className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-lime-500 transition-colors' />
+            <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-purple-500/10 rounded-3xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500'></div>
+            <FiSearch className='absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-all duration-300 z-10' />
             <input
               type='text'
               value={searchQuery}
               onChange={handleSearchChange}
               onKeyPress={handleSearchSubmit}
               placeholder='Search scholarships, users, applications...'
-              className='w-full pl-12 pr-4 py-3 bg-gray-50/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-lime-500/20 focus:border-lime-500 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 backdrop-blur-sm'
+              className='relative w-full pl-14 pr-6 py-4 bg-white/70 dark:bg-gray-800/70 border border-white/60 dark:border-gray-700/60 rounded-3xl focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-blue-400/30 focus:border-blue-500/50 dark:focus:border-blue-400/50 transition-all duration-500 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 backdrop-blur-xl shadow-xl hover:bg-white/80 dark:hover:bg-gray-800/80 hover:shadow-2xl font-medium'
             />
+            <div className='absolute inset-0 rounded-3xl ring-1 ring-black/5 dark:ring-white/5'></div>
           </div>
         </div>
 
-        {/* Enhanced Content Container */}
-        <div className='flex-1 p-4 lg:p-8 overflow-auto bg-gradient-to-br from-gray-50/30 via-white/50 to-blue-50/30 dark:from-gray-900/30 dark:via-gray-800/50 dark:to-indigo-950/30'>
-          {/* Enhanced Page Header */}
-          <div className='mb-8'>
-            <div className='bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-8 relative overflow-hidden'>
-              {/* Background decoration */}
-              <div className='absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-lime-500/10 to-emerald-500/10 rounded-full blur-3xl -translate-y-32 translate-x-32'></div>
-              <div className='absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl translate-y-24 -translate-x-24'></div>
+        {/* Professional Content Container */}
+        <div className='flex-1 p-4 lg:p-8 overflow-auto bg-gradient-to-br from-gray-50/40 via-white/60 to-blue-50/40 dark:from-gray-900/40 dark:via-gray-800/60 dark:to-indigo-950/40 relative'>
+          {/* Professional Page Header */}
+          <div className='mb-10'>
+            <div className='bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/60 dark:border-gray-700/60 p-10 relative overflow-hidden ring-1 ring-black/5 dark:ring-white/10'>
+              {/* Enhanced Background decoration */}
+              <div className='absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-purple-500/5 rounded-full blur-3xl -translate-y-40 translate-x-40'></div>
+              <div className='absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-cyan-500/5 rounded-full blur-3xl translate-y-32 -translate-x-32'></div>
+              <div className='absolute top-1/2 right-1/4 w-32 h-32 bg-gradient-to-br from-pink-500/10 to-rose-500/5 rounded-full blur-2xl animate-pulse delay-1000'></div>
               
               <div className='relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
                 <div className='flex-1'>
-                  {/* Enhanced Breadcrumb */}
-                  <nav className='flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-4'>
-                    <div className='flex items-center gap-2 px-3 py-1 bg-gray-100/80 dark:bg-gray-800/80 rounded-lg backdrop-blur-sm'>
-                      <FiActivity className='w-4 h-4' />
-                      <span className='font-medium'>Dashboard</span>
+                  {/* Professional Breadcrumb */}
+                  <nav className='flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-6'>
+                    <div className='flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-gray-100/90 to-gray-200/90 dark:from-gray-800/90 dark:to-gray-700/90 rounded-2xl backdrop-blur-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50'>
+                      <FiActivity className='w-4 h-4 text-blue-500 dark:text-blue-400' />
+                      <span className='font-black'>Dashboard</span>
                     </div>
                     {location.pathname !== '/dashboard' && (
                       <>
-                        <FiChevronDown className='w-4 h-4 rotate-[-90deg] text-gray-300 dark:text-gray-600' />
-                        <div className='flex items-center gap-2 px-3 py-1 bg-lime-100/80 dark:bg-lime-900/30 text-lime-700 dark:text-lime-300 rounded-lg backdrop-blur-sm'>
+                        <FiChevronDown className='w-5 h-5 rotate-[-90deg] text-gray-300 dark:text-gray-600' />
+                        <div className='flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-blue-100/90 to-indigo-100/90 dark:from-blue-900/40 dark:to-indigo-900/40 text-blue-700 dark:text-blue-300 rounded-2xl backdrop-blur-xl shadow-lg border border-blue-200/50 dark:border-blue-800/50'>
                           <pageInfo.icon className='w-4 h-4' />
-                          <span className='font-semibold'>{pageInfo.title}</span>
+                          <span className='font-black'>{pageInfo.title}</span>
                         </div>
                       </>
                     )}

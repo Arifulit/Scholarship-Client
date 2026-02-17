@@ -46,12 +46,52 @@ export const imageUpload = async (imageData) => {
 }
 
 export const saveUser = async (user)=>{
-    await axios.post(
-        `${import.meta.env.VITE_API_URL}/users/${user?.email}`,
-        {
-          name: user?.displayName,
-          image: user?.photoURL,
-          email: user?.email,
-        }
-      )
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/users/${user?.email}`,
+            {
+                name: user?.displayName,
+                image: user?.photoURL,
+                email: user?.email,
+            }
+        )
+        console.log('✅ User saved to database:', response.data)
+        return response.data
+    } catch (error) {
+        console.error('❌ Error saving user:', error)
+        // Don't throw error, just log it - user can still use the app
+        return null
+    }
+}
+
+// Get JWT token from server
+export const getToken = async (email) => {
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/jwt`,
+            { email },
+            { withCredentials: true }
+        )
+        console.log('✅ JWT token obtained')
+        return response.data
+    } catch (error) {
+        console.error('❌ Error getting JWT token:', error)
+        return null
+    }
+}
+
+// Clear JWT token from server
+export const clearToken = async () => {
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_API_URL}/logout`,
+            {},
+            { withCredentials: true }
+        )
+        console.log('✅ JWT token cleared')
+        return response.data
+    } catch (error) {
+        console.error('❌ Error clearing JWT token:', error)
+        return null
+    }
 }

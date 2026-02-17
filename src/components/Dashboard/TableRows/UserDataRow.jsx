@@ -8,7 +8,10 @@ import { FaUser, FaEnvelope, FaEdit, FaUserShield, FaCrown, FaUserFriends } from
 const UserDataRow = ({ userData, refetch }) => {
   const axiosSecure = useAxiosSecure()
   const [isOpen, setIsOpen] = useState(false)
-  const { email, role, status, photoURL, displayName, name, firstName, lastName } = userData || {}
+  const { email, role: rawRole, status, photoURL, displayName, name, firstName, lastName } = userData || {}
+  
+  // Map old "customer" role to "student" for display
+  const role = rawRole === 'customer' ? 'student' : rawRole
 
   // Enhanced name display logic
   const getDisplayName = () => {
@@ -61,7 +64,7 @@ const UserDataRow = ({ userData, refetch }) => {
         return <FaCrown className="w-4 h-4 text-red-500" />
       case 'moderator':
         return <FaUserShield className="w-4 h-4 text-blue-500" />
-      case 'customer':
+      case 'student':
         return <FaUserFriends className="w-4 h-4 text-green-500" />
       default:
         return <FaUser className="w-4 h-4 text-gray-500" />
@@ -74,7 +77,7 @@ const UserDataRow = ({ userData, refetch }) => {
         return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
       case 'moderator':
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300'
-      case 'customer':
+      case 'student':
         return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'

@@ -19,6 +19,7 @@
     "chart.js": "^4.4.7",
     "daisyui": "^4.12.23",
     "firebase": "^11.2.0",
+    "framer-motion": "^12.23.21",
     "icons": "^1.0.0",
     "lucide-react": "^0.475.0",
     "prop-types": "^15.8.1",

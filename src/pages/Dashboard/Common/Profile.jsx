@@ -79,7 +79,7 @@ const Profile = () => {
     switch (role) {
       case "admin": return "bg-gradient-to-r from-red-500 to-pink-500";
       case "moderator": return "bg-gradient-to-r from-blue-500 to-indigo-500";
-      case "customer": return "bg-gradient-to-r from-green-500 to-emerald-500";
+      case "student": return "bg-gradient-to-r from-green-500 to-emerald-500";
       default: return "bg-gradient-to-r from-gray-500 to-gray-600";
     }
   };

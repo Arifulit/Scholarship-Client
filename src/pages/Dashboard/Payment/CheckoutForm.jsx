@@ -28,10 +28,19 @@ const CheckoutForm = () => {
 
 
   useEffect(() => {
+    if (!totalFee || totalFee <= 0) {
+      console.error('❌ Invalid fee amount:', totalFee)
+      return
+    }
+    
     axiosSecure.post('/create-payment-intent', { fee: totalFee })
       .then(res => {
-        console.log(res.data.clientSecret);
+        console.log('✅ Payment intent created:', res.data.clientSecret);
         setClientSecret(res.data.clientSecret);
+      })
+      .catch(error => {
+        console.error('❌ Error creating payment intent:', error)
+        setError('Failed to initialize payment. Please try again.')
       })
   }, [axiosSecure, totalFee]);
 
@@ -95,18 +104,31 @@ const CheckoutForm = () => {
         };
 
         // Save payment in the database
-        const res = await axiosSecure.post('/payments', payment);
-        console.log("Payment saved:", res.data);
+        try {
+          const res = await axiosSecure.post('/payments', payment);
+          console.log("✅ Payment saved:", res.data);
 
-        if (res.status === 201) {
+          if (res.status === 201 || res.status === 200) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Payment successful",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            
+            // Navigate after a short delay to ensure state is saved
+            setTimeout(() => {
+              navigate(`/application-modal/${data.id}`);
+            }, 1500);
+          }
+        } catch (saveError) {
+          console.error('❌ Error saving payment:', saveError);
           Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Payment successful",
-            showConfirmButton: false,
-            timer: 1500
+            icon: 'error',
+            title: 'Payment Saved but...',
+            text: 'Payment was successful but there was an issue saving the details. Please contact support.',
           });
-          navigate(`/application-modal/${data.id}`);
         }
       }
     }

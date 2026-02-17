@@ -7,7 +7,7 @@ import { FiEye, FiEyeOff, FiUser, FiMail, FiLock, FiUpload, FiMoon, FiSun, FiUse
 import { useState } from 'react'
 import useTheme from '../../hooks/useTheme'
 
-import { imageUpload, saveUser } from '../../api/utils'
+import { imageUpload, saveUser, getToken } from '../../api/utils'
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth()
@@ -55,7 +55,10 @@ const SignUp = () => {
        //save user in in db user is new 
      await saveUser({...result?.user,displayName:name,photoURL})
 
-      navigate('/')
+      // Get JWT token
+      await getToken(result?.user?.email)
+
+      navigate('/dashboard')
       toast.success('Signup Successful')
     } catch (err) {
       console.log(err)
@@ -68,13 +71,18 @@ const SignUp = () => {
     try {
       //User Registration using google
      const data = await signInWithGoogle()
+     console.log('✅ Google signup successful:', data?.user?.email)
      
       //save user in in db user is new 
       await saveUser(data?.user)
-      navigate('/')
+
+      // Get JWT token
+      await getToken(data?.user?.email)
+
+      navigate('/dashboard')
       toast.success('Signup Successful')
     } catch (err) {
-      console.log(err)
+      console.log('❌ Google signup error:', err)
       toast.error(err?.message)
     }
   }

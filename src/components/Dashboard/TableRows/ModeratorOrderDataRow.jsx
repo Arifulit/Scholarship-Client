@@ -39,7 +39,7 @@ const ModeratorOrderDataRow = ({ orderData, refetch }) => {
     }
 
     try {
-      await axiosSecure.patch(`/orders/feedback/${_id}`, { feedback });
+      await axiosSecure.patch(`/scholar/moderator/${_id}`, { feedback });
       toast.success('Feedback submitted successfully');
       refetch();
       setFeedback('');

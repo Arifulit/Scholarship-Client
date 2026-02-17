@@ -10,7 +10,7 @@ import { GrUserAdmin } from "react-icons/gr"
 import MenuItem from './MenuItem'
 
 
-const CustomerMenu = () => {
+const StudentMenu = () => {
   const { user } = useAuth()
   const axiosSecure = useAxiosSecure()
   const [isOpen, setIsOpen] = useState(false)
@@ -55,4 +55,4 @@ const CustomerMenu = () => {
   )
 }
 
-export default CustomerMenu
+export default StudentMenu

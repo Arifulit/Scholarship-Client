@@ -8,7 +8,7 @@ import { useState } from 'react';
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
-import { saveUser } from "../../api/utils";
+import { saveUser, getToken } from "../../api/utils";
 import useTheme from "../../hooks/useTheme";
 
 const Login = () => {
@@ -16,10 +16,13 @@ const Login = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
+  const from = location?.state?.from?.pathname || "/dashboard";
   const [showPassword, setShowPassword] = useState(false);
 
-  if (user) return <Navigate to={from} replace />;
+  if (user) {
+    console.log('✅ User already logged in, redirecting to:', from);
+    return <Navigate to={from} replace />;
+  }
   if (loading) return <LoadingSpinner />;
 
   // Handle form submission
@@ -30,12 +33,20 @@ const Login = () => {
     const password = form.password.value;
 
     try {
-      await signIn(email, password);
-      navigate(from, { replace: true });
+      const result = await signIn(email, password);
+      console.log('✅ Login successful:', result?.user?.email);
+      
+      // Get JWT token
+      await getToken(result?.user?.email);
+      
+      // Wait for Firebase auth state to update
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       toast.success("Login Successful");
+      navigate(from, { replace: true });
     } catch (err) {
-      console.error(err);
-      toast.error(err?.message);
+      console.error('❌ Login error:', err);
+      toast.error(err?.message || 'Login failed');
     }
   };
 
@@ -43,12 +54,20 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       const data = await signInWithGoogle();
+      console.log('✅ Google login successful:', data?.user?.email);
       await saveUser(data?.user);
-      navigate(from, { replace: true });
+      
+      // Get JWT token
+      await getToken(data?.user?.email);
+      
+      // Wait for Firebase auth state to update
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       toast.success("Login Successful");
+      navigate(from, { replace: true });
     } catch (err) {
-      console.error(err);
-      toast.error(err?.message);
+      console.error('❌ Google login error:', err);
+      toast.error(err?.message || 'Google login failed');
     }
   };
 

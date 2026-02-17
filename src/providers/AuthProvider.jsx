@@ -9,12 +9,23 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  setPersistence,
+  browserLocalPersistence
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
+import { clearToken } from "../api/utils";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
+
+// Set persistence to LOCAL (survives browser close)
+setPersistence(auth, browserLocalPersistence).then(() => {
+  console.log('🔐 Auth persistence set to LOCAL');
+}).catch((error) => {
+  console.error('❌ Error setting persistence:', error);
+});
+
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
@@ -38,6 +49,8 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
+    // Clear JWT token from backend
+    await clearToken();
     return signOut(auth);
   };
 
@@ -52,22 +65,26 @@ const AuthProvider = ({ children }) => {
  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-      console.log('CurrentUser-->', currentUser?.email)
+      console.log('🔐 Auth State Changed -->', currentUser?.email || 'No user')
+      
+      // Set user state first
+      setUser(currentUser)
+      
       if (currentUser?.email) {
-        setUser(currentUser)
-       
         // JWT token endpoint not available in current backend
         // Firebase handles authentication tokens internally
-        console.log('User authenticated:', currentUser.email);
+        console.log('✅ User authenticated:', currentUser.email)
       } else {
-        setUser(currentUser)
         // Backend logout endpoint not available - Firebase handles logout locally
-        console.log('User logged out - Firebase handles this locally');
+        console.log('⚠️ No user found')
       }
+      
+      // Set loading to false after user state is set
       setLoading(false)
     })
+    
     return () => {
-      return unsubscribe()
+      unsubscribe()
     }
   }, [])
 

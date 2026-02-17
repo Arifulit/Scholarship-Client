@@ -38,9 +38,13 @@ const AllAppliedScholarship = () => {
         throw backendError;
       }
     },
+    retry: 1,
+    staleTime: 2 * 60 * 1000,
     onError: (error) => {
       console.error('❌ Query Error:', error);
-      toast.error('Failed to fetch scholarship data');
+      if (error?.response?.status !== 403) {
+        toast.error('Failed to fetch scholarship data');
+      }
     }
   });
 
@@ -267,10 +271,16 @@ const AllAppliedScholarship = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/30 transition-all duration-300 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-tr from-emerald-400/20 to-cyan-600/20 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/80 to-indigo-100/70 dark:from-gray-950 dark:via-blue-950/30 dark:to-indigo-950/40 transition-all duration-500 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute top-0 right-0 w-72 h-72 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] bg-gradient-to-br from-blue-400/25 via-purple-500/20 to-pink-600/15 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-72 h-72 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] bg-gradient-to-tr from-emerald-400/25 via-cyan-500/20 to-teal-600/15 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-r from-violet-400/15 via-purple-500/10 to-indigo-600/15 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
+      
+      {/* Floating Elements */}
+      <div className="absolute top-20 left-20 w-3 h-3 bg-blue-400/40 rounded-full animate-bounce animation-delay-300"></div>
+      <div className="absolute top-40 right-32 w-2 h-2 bg-purple-400/40 rounded-full animate-bounce animation-delay-700"></div>
+      <div className="absolute bottom-32 left-40 w-4 h-4 bg-emerald-400/40 rounded-full animate-bounce animation-delay-500"></div>
       
       <Helmet>
         <title>Manage Applied Scholarships | Dashboard</title>
@@ -279,62 +289,94 @@ const AllAppliedScholarship = () => {
       <div className="relative z-10 space-y-4 sm:space-y-6 lg:space-y-8 p-3 sm:p-4 lg:p-6">
         {/* Statistics Dashboard */}
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
-          {/* Total Applications */}
-          <div className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 border border-white/20 dark:border-gray-700/30 shadow-lg sm:shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 sm:duration-500 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-600/10 dark:from-blue-400/10 dark:to-indigo-500/10"></div>
+          {/* Total Applications - Enhanced */}
+          <div className="group relative bg-gradient-to-br from-white/90 via-white/80 to-blue-50/70 dark:from-gray-800/90 dark:via-gray-800/80 dark:to-blue-900/30 backdrop-blur-2xl rounded-2xl sm:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 lg:p-8 border border-white/40 dark:border-gray-700/40 shadow-xl sm:shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] hover:-translate-y-2 sm:hover:-translate-y-3 transition-all duration-500 sm:duration-700 overflow-hidden hover:border-blue-400/50 dark:hover:border-blue-500/50">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/8 to-purple-600/5 dark:from-blue-400/8 dark:via-indigo-500/10 dark:to-purple-500/5"></div>
+            <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div className="relative flex items-center justify-between">
               <div className="min-w-0 flex-1">
-                <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 mb-1 sm:mb-2 tracking-wider uppercase truncate">Total Applications</p>
-                <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-700 dark:text-blue-300 mb-1 font-display">{stats.total}</p>
-                <p className="text-xs text-blue-500 dark:text-blue-400 font-medium">All submissions</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                  <p className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 tracking-wider uppercase">Total Applications</p>
+                </div>
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 dark:from-blue-400 dark:via-blue-300 dark:to-indigo-400 bg-clip-text mb-2 font-display group-hover:scale-105 transition-transform duration-300">{stats.total}</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-blue-500 to-transparent rounded-full"></div>
+                  <p className="text-xs sm:text-sm text-blue-500 dark:text-blue-400 font-semibold">All submissions</p>
+                </div>
               </div>
-              <div className="p-2 sm:p-3 lg:p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                <FiUsers className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white" />
+              <div className="relative p-3 sm:p-4 lg:p-5 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex-shrink-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl sm:rounded-2xl lg:rounded-3xl"></div>
+                <FiUsers className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white group-hover:scale-110 transition-transform duration-300" />
               </div>
             </div>
           </div>
 
-          {/* Pending Applications */}
-          <div className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 border border-white/20 dark:border-gray-700/30 shadow-lg sm:shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 sm:duration-500 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-600/10 dark:from-yellow-400/10 dark:to-orange-500/10"></div>
+          {/* Pending Applications - Enhanced */}
+          <div className="group relative bg-gradient-to-br from-white/90 via-white/80 to-yellow-50/70 dark:from-gray-800/90 dark:via-gray-800/80 dark:to-yellow-900/30 backdrop-blur-2xl rounded-2xl sm:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 lg:p-8 border border-white/40 dark:border-gray-700/40 shadow-xl sm:shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] hover:-translate-y-2 sm:hover:-translate-y-3 transition-all duration-500 sm:duration-700 overflow-hidden hover:border-yellow-400/50 dark:hover:border-yellow-500/50">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-amber-500/8 to-orange-600/5 dark:from-yellow-400/8 dark:via-amber-500/10 dark:to-orange-500/5"></div>
+            <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-yellow-400/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div className="relative flex items-center justify-between">
               <div className="min-w-0 flex-1">
-                <p className="text-xs sm:text-sm font-semibold text-yellow-600 dark:text-yellow-400 mb-1 sm:mb-2 tracking-wider uppercase truncate">Pending Review</p>
-                <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-700 dark:text-yellow-300 mb-1 font-display">{stats.pending}</p>
-                <p className="text-xs text-yellow-500 dark:text-yellow-400 font-medium">Awaiting action</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full animate-bounce"></div>
+                  <p className="text-xs sm:text-sm font-bold text-yellow-600 dark:text-yellow-400 tracking-wider uppercase">Pending Review</p>
+                </div>
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-gradient-to-r from-yellow-600 via-yellow-700 to-orange-700 dark:from-yellow-400 dark:via-yellow-300 dark:to-orange-400 bg-clip-text mb-2 font-display group-hover:scale-105 transition-transform duration-300">{stats.pending}</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-yellow-500 to-transparent rounded-full"></div>
+                  <p className="text-xs sm:text-sm text-yellow-500 dark:text-yellow-400 font-semibold">Awaiting action</p>
+                </div>
               </div>
-              <div className="p-2 sm:p-3 lg:p-4 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                <FiClock className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white animate-pulse" />
+              <div className="relative p-3 sm:p-4 lg:p-5 bg-gradient-to-br from-yellow-500 via-yellow-600 to-orange-600 rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex-shrink-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl sm:rounded-2xl lg:rounded-3xl"></div>
+                <FiClock className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white group-hover:scale-110 transition-transform duration-300 animate-pulse" />
               </div>
             </div>
           </div>
 
-          {/* Approved Applications */}
-          <div className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 border border-white/20 dark:border-gray-700/30 shadow-lg sm:shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 sm:duration-500 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-600/10 dark:from-green-400/10 dark:to-emerald-500/10"></div>
+          {/* Approved Applications - Enhanced */}
+          <div className="group relative bg-gradient-to-br from-white/90 via-white/80 to-green-50/70 dark:from-gray-800/90 dark:via-gray-800/80 dark:to-green-900/30 backdrop-blur-2xl rounded-2xl sm:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 lg:p-8 border border-white/40 dark:border-gray-700/40 shadow-xl sm:shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] hover:-translate-y-2 sm:hover:-translate-y-3 transition-all duration-500 sm:duration-700 overflow-hidden hover:border-green-400/50 dark:hover:border-green-500/50">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-emerald-500/8 to-teal-600/5 dark:from-green-400/8 dark:via-emerald-500/10 dark:to-teal-500/5"></div>
+            <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-green-400/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div className="relative flex items-center justify-between">
               <div className="min-w-0 flex-1">
-                <p className="text-xs sm:text-sm font-semibold text-green-600 dark:text-green-400 mb-1 sm:mb-2 tracking-wider uppercase truncate">Approved</p>
-                <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-700 dark:text-green-300 mb-1 font-display">{stats.approved}</p>
-                <p className="text-xs text-green-500 dark:text-green-400 font-medium">{stats.approvalRate}% success rate</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <p className="text-xs sm:text-sm font-bold text-green-600 dark:text-green-400 tracking-wider uppercase">Approved</p>
+                </div>
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-gradient-to-r from-green-600 via-green-700 to-emerald-700 dark:from-green-400 dark:via-green-300 dark:to-emerald-400 bg-clip-text mb-2 font-display group-hover:scale-105 transition-transform duration-300">{stats.approved}</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-green-500 to-transparent rounded-full"></div>
+                  <p className="text-xs sm:text-sm text-green-500 dark:text-green-400 font-semibold">{stats.approvalRate}% success rate</p>
+                </div>
               </div>
-              <div className="p-2 sm:p-3 lg:p-4 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                <FiCheckCircle className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white" />
+              <div className="relative p-3 sm:p-4 lg:p-5 bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex-shrink-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl sm:rounded-2xl lg:rounded-3xl"></div>
+                <FiCheckCircle className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white group-hover:scale-110 transition-transform duration-300" />
               </div>
             </div>
           </div>
 
-          {/* Rejected Applications */}
-          <div className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 border border-white/20 dark:border-gray-700/30 shadow-lg sm:shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-300 sm:duration-500 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-pink-600/10 dark:from-red-400/10 dark:to-pink-500/10"></div>
+          {/* Rejected Applications - Enhanced */}
+          <div className="group relative bg-gradient-to-br from-white/90 via-white/80 to-red-50/70 dark:from-gray-800/90 dark:via-gray-800/80 dark:to-red-900/30 backdrop-blur-2xl rounded-2xl sm:rounded-3xl lg:rounded-[2rem] p-5 sm:p-6 lg:p-8 border border-white/40 dark:border-gray-700/40 shadow-xl sm:shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] hover:-translate-y-2 sm:hover:-translate-y-3 transition-all duration-500 sm:duration-700 overflow-hidden hover:border-red-400/50 dark:hover:border-red-500/50">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-pink-500/8 to-rose-600/5 dark:from-red-400/8 dark:via-pink-500/10 dark:to-rose-500/5"></div>
+            <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-red-400/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
             <div className="relative flex items-center justify-between">
               <div className="min-w-0 flex-1">
-                <p className="text-xs sm:text-sm font-semibold text-red-600 dark:text-red-400 mb-1 sm:mb-2 tracking-wider uppercase truncate">Rejected</p>
-                <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-700 dark:text-red-300 mb-1 font-display">{stats.rejected}</p>
-                <p className="text-xs text-red-500 dark:text-red-400 font-medium">Need revision</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                  <p className="text-xs sm:text-sm font-bold text-red-600 dark:text-red-400 tracking-wider uppercase">Rejected</p>
+                </div>
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-gradient-to-r from-red-600 via-red-700 to-pink-700 dark:from-red-400 dark:via-red-300 dark:to-pink-400 bg-clip-text mb-2 font-display group-hover:scale-105 transition-transform duration-300">{stats.rejected}</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-transparent rounded-full"></div>
+                  <p className="text-xs sm:text-sm text-red-500 dark:text-red-400 font-semibold">Need revision</p>
+                </div>
               </div>
-              <div className="p-2 sm:p-3 lg:p-4 bg-gradient-to-br from-red-500 to-pink-600 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                <FiXCircle className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white" />
+              <div className="relative p-3 sm:p-4 lg:p-5 bg-gradient-to-br from-red-500 via-red-600 to-pink-600 rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 flex-shrink-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl sm:rounded-2xl lg:rounded-3xl"></div>
+                <FiXCircle className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white group-hover:scale-110 transition-transform duration-300" />
               </div>
             </div>
           </div>
@@ -596,10 +638,11 @@ const AllAppliedScholarship = () => {
             <>
               {viewMode === 'table' ? (
                 <>
-                  {/* Desktop Table View */}
-                  <div className="hidden lg:block overflow-x-auto relative">
-                    <table className="min-w-full divide-y divide-gray-200/30 dark:divide-gray-700/30">
-                      <thead className="bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                  {/* Desktop Table View - Enhanced */}
+                  <div className="hidden lg:block bg-white/70 dark:bg-gray-800/70 backdrop-blur-2xl rounded-3xl p-2 sm:p-4 border border-white/40 dark:border-gray-700/40 shadow-2xl overflow-hidden">
+                    <div className="overflow-x-auto relative rounded-2xl">
+                      <table className="min-w-full divide-y divide-gray-200/50 dark:divide-gray-700/50">
+                      <thead className="bg-gradient-to-r from-gray-50/80 via-white/60 to-gray-50/80 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50">
                         <tr>
                           <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                             <input
@@ -714,10 +757,11 @@ const AllAppliedScholarship = () => {
                         ))}
                       </tbody>
                     </table>
+                    </div>
                   </div>
                   
                   {/* Mobile Card View - Enhanced Responsive */}
-                  <div className="lg:hidden p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
+                  <div className="lg:hidden bg-white/50 dark:bg-gray-800/50 backdrop-blur-2xl rounded-3xl p-4 sm:p-6 border border-white/40 dark:border-gray-700/40 shadow-2xl space-y-4 sm:space-y-6">
                     {paginatedOrders.map((order) => (
                       <div key={order._id} className="bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 rounded-lg sm:rounded-xl border border-gray-200 dark:border-gray-600 p-3 sm:p-4 shadow-sm hover:shadow-md transition-all duration-300">
                         <div className="flex items-start justify-between mb-3">

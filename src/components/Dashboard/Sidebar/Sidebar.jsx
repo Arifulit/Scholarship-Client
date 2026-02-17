@@ -14,7 +14,7 @@ import useRole from "../../../hooks/useRole";
 import useTheme from "../../../hooks/useTheme";
 import AdminMenu from "./Menu/AdminMenu";
 import ModeratorMenu from "./Menu/ModeratorMenu";
-import CustomerMenu from "./Menu/CustomerMenu";
+import StudentMenu from "./Menu/StudentMenu";
 import logo from "../../../assets/images/logo-flat.png";
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -148,7 +148,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className="space-y-2">
             {!isLoading && (
               <>
-                {role === "customer" && <CustomerMenu />}
+                {role === "student" && <StudentMenu />}
                 {role === "moderator" && <ModeratorMenu />}
                 {role === "admin" && <AdminMenu />}
               </>

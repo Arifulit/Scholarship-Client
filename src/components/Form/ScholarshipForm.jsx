@@ -20,38 +20,20 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-// Utility function to validate environment variables
-const validateEnvVariables = () => {
-  const errors = [];
-  if (!import.meta.env.VITE_IMGBB_API_KEY) {
-    errors.push("⚠️ VITE_IMGBB_API_KEY is not set - Image upload will fail");
-  }
-  if (!import.meta.env.VITE_API_URL) {
-    errors.push("⚠️ VITE_API_URL is not set - Database submission will fail");
-  }
-  return errors;
-};
-
 // Utility function to handle errors
-const handleError = (error, addDebugMessage) => {
-  let errorMessage = "ফর্ম প্রসেসিং এ একটি সমস্যা হয়েছে।";
-  let debugMessage = `❌ Unknown Error: ${error.message}`;
+const handleError = (error) => {
+  let errorMessage = "An error occurred while processing the form.";
 
   if (error.message === "Network Error") {
-    errorMessage = "সার্ভারের সাথে সংযোগ হচ্ছে না। ইন্টারনেট চেক করুন।";
-    debugMessage = "❌ Network Error: Backend server not reachable";
+    errorMessage = "Cannot connect to the server. Please check your internet connection.";
   } else if (error.response?.status === 404) {
-    errorMessage = "API endpoint পাওয়া যায়নি। Server configuration চেক করুন।";
-    debugMessage = "❌ 404 Error: API endpoint not found";
+    errorMessage = "API endpoint not found. Please check server configuration.";
   } else if (error.response?.status === 500) {
-    errorMessage = "Server error। একটু পরে আবার চেষ্টা করুন।";
-    debugMessage = "❌ 500 Error: Server internal error";
+    errorMessage = "Server error. Please try again later.";
   } else if (error.response?.data?.message) {
     errorMessage = error.response.data.message;
-    debugMessage = `❌ Server Error: ${error.response.data.message}`;
   }
 
-  addDebugMessage(debugMessage, "error");
   return errorMessage;
 };
 
@@ -115,23 +97,6 @@ const ScholarshipForm = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
-  const [debugInfo, setDebugInfo] = useState([]);
-  const isProduction = import.meta.env.PROD; // Check if in production
-  const hasInitialized = useRef(false); // Track initialization to prevent duplicate debug messages
-
-  // Add debug message (limited to 50 in production)
-  const addDebugMessage = (message, type = "info") => {
-    if (isProduction && type !== "error") return; // Skip non-error logs in production
-    const timestamp = new Date().toLocaleTimeString();
-    setDebugInfo((prev) => {
-      // Prevent duplicate messages
-      if (prev.some((info) => info.message === message && info.type === type)) {
-        return prev;
-      }
-      const newDebugInfo = [...prev, { message, type, timestamp }];
-      return newDebugInfo.slice(-50); // Keep only the last 50 messages
-    });
-  };
 
   // Initialize default dates and user email
   useEffect(() => {
@@ -147,71 +112,61 @@ const ScholarshipForm = () => {
     }));
   }, [user?.email]);
 
-  // Check environment variables (run only once)
-  useEffect(() => {
-    if (hasInitialized.current) return; // Prevent re-running
-    hasInitialized.current = true;
 
-    const envErrors = validateEnvVariables();
-    envErrors.forEach((error) => addDebugMessage(error, "error"));
-    if (envErrors.length === 0) {
-      addDebugMessage("✅ All environment variables are configured", "success");
-    }
-    addDebugMessage("ℹ️ Ready to create scholarship", "info");
-  }, []);
 
   // Form validation
-  const validateForm = () => {
+ const validateForm = () => {
     const newErrors = {};
 
     if (!formData.scholarshipName.trim()) {
-      newErrors.scholarshipName = "স্কলারশিপের নাম আবশ্যক";
+      newErrors.scholarshipName = "Scholarship name is required.";
     }
     if (!formData.universityName.trim()) {
-      newErrors.universityName = "বিশ্ববিদ্যালয়ের নাম আবশ্যক";
+      newErrors.universityName = "University name is required.";
     }
     if (!formData.universityCountry.trim()) {
-      newErrors.universityCountry = "বিশ্ববিদ্যালয়ের দেশ আবশ্যক";
+      newErrors.universityCountry = "University country is required.";
     }
     if (!formData.universityCity.trim()) {
-      newErrors.universityCity = "বিশ্ববিদ্যালয়ের শহর আবশ্যক";
+      newErrors.universityCity = "University city is required.";
     }
     if (!formData.universityRank || formData.universityRank < 1) {
-      newErrors.universityRank = "সঠিক বিশ্ববিদ্যালয় র‍্যাঙ্ক আবশ্যক";
+      newErrors.universityRank = "Valid university rank is required.";
     }
     if (!formData.subjectCategory) {
-      newErrors.subjectCategory = "বিষয়ের বিভাগ আবশ্যক";
+      newErrors.subjectCategory = "Subject category is required.";
     }
     if (!formData.scholarshipCategory) {
-      newErrors.scholarshipCategory = "স্কলারশিপের বিভাগ আবশ্যক";
+      newErrors.scholarshipCategory = "Scholarship category is required.";
     }
     if (!formData.degree) {
-      newErrors.degree = "ডিগ্রি আবশ্যক";
+      newErrors.degree = "Degree level is required.";
     }
     if (!formData.applicationFees || formData.applicationFees < 0) {
-      newErrors.applicationFees = "সঠিক আবেদন ফি আবশ্যক";
+      newErrors.applicationFees = "Valid application fee is required.";
     }
     if (!formData.serviceCharge || formData.serviceCharge < 0) {
-      newErrors.serviceCharge = "সঠিক সেবা চার্জ আবশ্যক";
+      newErrors.serviceCharge = "Valid service charge is required.";
     }
     if (!formData.applicationDeadline) {
-      newErrors.applicationDeadline = "আবেদনের শেষ তারিখ আবশ্যক";
+      newErrors.applicationDeadline = "Application deadline is required.";
     } else {
       const deadlineDate = new Date(formData.applicationDeadline);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (deadlineDate <= today) {
-        newErrors.applicationDeadline = "শেষ তারিখ ভবিষ্যতের হতে হবে";
+        newErrors.applicationDeadline = "Deadline must be in the future.";
       }
     }
     if (!formData.scholarshipPostDate) {
-      newErrors.scholarshipPostDate = "স্কলারশিপ পোস্ট তারিখ আবশ্যক";
+      newErrors.scholarshipPostDate = "Post date is required.";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+ 
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -290,7 +245,6 @@ const ScholarshipForm = () => {
     setImage(null);
     setImagePreview(null);
     setErrors({});
-    setDebugInfo([]);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -299,13 +253,11 @@ const ScholarshipForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    addDebugMessage("🚀 ফর্ম সাবমিশন শুরু", "info");
 
     if (!validateForm()) {
-      addDebugMessage("❌ ভ্যালিডেশন ব্যর্থ", "error");
       Swal.fire({
-        title: "ভ্যালিডেশন এরর",
-        text: "দয়া করে সব ফিল্ড সঠিকভাবে পূরণ করুন।",
+        title: "Validation error",
+        text: "Please fill all fields correctly.",
         icon: "warning",
         background: "#1f2937",
         color: "#fff",
@@ -313,7 +265,6 @@ const ScholarshipForm = () => {
       return;
     }
 
-    addDebugMessage("✅ ভ্যালিডেশন সফল", "success");
     setIsSubmitting(true);
 
     try {
@@ -321,15 +272,10 @@ const ScholarshipForm = () => {
 
       if (image && import.meta.env.VITE_IMGBB_API_KEY) {
         try {
-          addDebugMessage("📤 ছবি আপলোড শুরু...", "info");
           photoURL = await imageUpload(image);
-          addDebugMessage(`✅ ছবি আপলোড সফল: ${photoURL}`, "success");
         } catch (imageError) {
-          addDebugMessage("⚠️ ছবি আপলোড ব্যর্থ, ডিফল্ট ব্যবহার করা হচ্ছে", "warning");
           console.error("Image upload failed:", imageError);
         }
-      } else {
-        addDebugMessage("ℹ️ ডিফল্ট ছবি ব্যবহার করা হচ্ছে", "info");
       }
 
       const dataToSubmit = {
@@ -353,15 +299,11 @@ const ScholarshipForm = () => {
         status: "active",
       };
 
-      addDebugMessage("📝 ডেটা প্রস্তুত সম্পন্ন", "info");
-      addDebugMessage("🚀 সার্ভারে পাঠানো হচ্ছে...", "info");
-
-      const response = await axiosSecure.post("/scholarship", dataToSubmit);
-      addDebugMessage(`✅ সার্ভার রেসপন্স: ${response.status}`, "success");
+      await axiosSecure.post("/scholarship", dataToSubmit);
 
       Swal.fire({
-        title: "সফল!",
-        text: "স্কলারশিপ সফলভাবে যোগ করা হয়েছে!",
+        title: "Success",
+        text: "Scholarship submitted successfully!",
         icon: "success",
         background: "#1f2937",
         color: "#fff",
@@ -372,7 +314,7 @@ const ScholarshipForm = () => {
       // navigate("/dashboard/manage-scholarship"); // Uncomment if navigation is needed
     } catch (error) {
       console.error("Error submitting scholarship:", error);
-      const errorMessage = handleError(error, addDebugMessage);
+      const errorMessage = handleError(error);
       Swal.fire({
         title: "এরর",
         text: errorMessage,
@@ -747,39 +689,6 @@ const ScholarshipForm = () => {
         </div>
 
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
-          {debugInfo.length > 0 && (
-            <div className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 p-4">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Debug Information
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setDebugInfo([])}
-                  className="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                >
-                  Clear
-                </button>
-              </div>
-              <div className="space-y-1 max-h-32 overflow-y-auto">
-                {debugInfo.map((info, index) => (
-                  <div
-                    key={index}
-                    className={`text-xs p-2 rounded flex items-center gap-2 ${
-                      info.type === "error"
-                        ? "bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300"
-                        : info.type === "success"
-                        ? "bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300"
-                        : "bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
-                    }`}
-                  >
-                    <span className="text-gray-500 dark:text-gray-400 text-xs">{info.timestamp}</span>
-                    <span className="flex-1">{info.message}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="p-10 space-y-10">
             <BasicInformationSection />

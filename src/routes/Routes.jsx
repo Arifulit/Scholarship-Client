@@ -3,17 +3,13 @@ import Home from '../pages/Home/Home'
 import ErrorPage from '../pages/ErrorPage'
 import Login from '../pages/Login/Login'
 import SignUp from '../pages/SignUp/SignUp'
-// import PlantDetails from '../pages/PlantDetails/PlantDetails'
 import PrivateRoute from './PrivateRoute'
 import DashboardLayout from '../layouts/DashboardLayout'
-// import AddPlant from '../pages/Dashboard/Moderator/ManageMadicine'
 import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
 import Profile from '../pages/Dashboard/Common/Profile'
 import Statistics from '../pages/Dashboard/Common/Statistics'
 import MainLayout from '../layouts/MainLayout'
-// import MyInventory from '../pages/Dashboard/Moderator/MyInventory'
-// import ManageOrders from '../pages/Dashboard/Moderator/ManageOrders'
-import MyApplication from '../pages/Dashboard/Customer/MyApplication'
+import MyApplication from '../pages/Dashboard/Student/MyApplication'
 import Managescholarship from '../pages/Dashboard/Moderator/ManageScholarship'
 
 import ScholarDetails from '../pages/ScholarDetails/ScholarDetails'
@@ -21,13 +17,12 @@ import AllScholarship from '../pages/AllScholarship/AllScholarship'
 import AddScholarship from '../pages/Dashboard/Moderator/AddScholarship'
 import Payment from '../pages/Dashboard/Payment/Payment'
 import PaymentHistory from '../pages/Dashboard/PaymentHistory/PaymentHistory'
-// import ApplicationModal from '../components/Modal/ApplicationInModal'
+
 import ApplicationInModal from '../components/Modal/ApplicationInModal'
 import ModeratorRoute from './ModeratorRoute'
 import AdminRoute from './AdminRoute'
 import AllAppliedScholarship from '../pages/Dashboard/Moderator/AllAppliedScholarship'
 import AnalyticsChartPage from '../pages/Dashboard/Admin/AnalyticsChartPage'
-// import ApplicationModal from '../components/Modal/ApplicationModal'
 
 export const router = createBrowserRouter([
   {
@@ -46,21 +41,30 @@ export const router = createBrowserRouter([
       },
       {
         path:`/payment/:id`,
-        element:<Payment></Payment>,
+        element:(
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/checkout/${params.id}`)
-       },
+      },
       {
         path:`/payment-history`,
-        element:  <PaymentHistory></PaymentHistory>
-       
-
-       },
+        element: (
+          <PrivateRoute>
+            <PaymentHistory />
+          </PrivateRoute>
+        )
+      },
       {
         path:`/application-modal/:id`,
-        element: <ApplicationInModal></ApplicationInModal>,
+        element: (
+          <PrivateRoute>
+            <ApplicationInModal />
+          </PrivateRoute>
+        ),
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/checkout/${params.id}`)
-
-       },
+      },
       {
         path:'/all-scholarship' ,
         element:<AllScholarship/>

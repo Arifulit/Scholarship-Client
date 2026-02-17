@@ -30,9 +30,19 @@ const Statistics = () => {
     setIsRefreshing(false)
   }
 
+  console.log('📊 Statistics - User role:', role, 'Loading:', isLoading)
+  
   if (isLoading) return <LoadingSpinner />
-  if (role === 'customer') return <Navigate to='/dashboard/my-application' />
-  if (role === 'moderator') return <Navigate to='/dashboard' />
+  
+  // Admin sees statistics
+  if (role === 'admin') {
+    console.log('✅ Admin user - showing statistics')
+    // Continue rendering statistics page
+  } else {
+    // Non-admin users get redirected
+    console.log('➡️ Non-admin user, redirecting to my-application')
+    return <Navigate to='/dashboard/my-application' replace />
+  }
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 transition-all duration-500">
